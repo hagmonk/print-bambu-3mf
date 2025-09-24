@@ -208,13 +208,21 @@ class BambuProfileExtractor:
 
         return overrides
 
-    def extract_profiles_from_3mf(self, file_path: Path, resolve_inheritance: bool = True, plate_number: Optional[int] = None, include_gcode: bool = False, select_types: List[str] = None) -> Dict:
-        """Extract all profiles from a 3MF file with proper hierarchy resolution"""
-        all_profiles = {}
+    # Legacy flat extractor removed per new structured output requirements
 
-        # Default selection
-        if select_types is None:
-            select_types = ['machine', 'filament', 'process']
+    def extract_structured_from_3mf(self, file_path: Path, resolve_inheritance: bool = True, plate_number: Optional[int] = None, include_gcode: bool = False) -> Dict:
+        """Extract profiles in a structured, scope-aware format.
+
+        Output schema:
+        {
+          'machine': { 'id': str, 'settings': {...} },
+          'process': { 'id': str, 'settings': {...} },
+          'filaments': { 'slotN': { 'id': str, 'settings': {...} }, ... },
+          'plates': { '<n>': { 'objects': [ { name,id,index,extruder, process_id, filament_slot, filament_id, process_overrides }, ... ] }}
+        }
+        If plate_number is specified, only that plate is returned under 'plates'.
+        """
+        result: Dict[str, Any] = {}
 
         try:
             with open(file_path, 'rb') as f:
@@ -224,15 +232,15 @@ class BambuProfileExtractor:
                 file_list = zf.namelist()
 
                 # Load project settings (the main config)
-                project_config = {}
+                project_config: Dict[str, Any] = {}
                 if 'Metadata/project_settings.config' in file_list:
                     content = zf.read('Metadata/project_settings.config')
                     text = content.decode('utf-8', errors='ignore').strip()
                     if text.startswith('{'):
                         project_config = json.loads(text)
 
-                # Load embedded presets (filament_settings_*.config)
-                embedded_presets = {}
+                # Load embedded presets (filament only)
+                embedded_presets: Dict[str, Any] = {}
                 for file_name in file_list:
                     if 'filament_settings' in file_name and file_name.endswith('.config'):
                         try:
@@ -242,108 +250,121 @@ class BambuProfileExtractor:
                                 data = json.loads(text_content)
                                 preset_name = data.get('name', file_name)
                                 embedded_presets[preset_name] = data
-                        except:
+                        except Exception:
                             pass
 
-                # Get preset IDs
+                # IDs
                 process_id = project_config.get('print_settings_id', '')
                 machine_id = project_config.get('printer_settings_id', '')
                 filament_ids = project_config.get('filament_settings_id', [])
                 if isinstance(filament_ids, str):
                     filament_ids = [filament_ids]
 
-                # Resolve process settings
-                if 'process' in select_types:
-                    if process_id and resolve_inheritance:
-                        # Get base process profile
-                        process_base = self.merge_preset_chain(process_id, 'process', embedded_presets)
-                        # Apply project overrides
-                        process_settings = self.apply_project_overrides(process_base, project_config, 'process')
-                        if not include_gcode:
-                            process_settings = self.filter_gcode_keys(process_settings)
-                        all_profiles[f"process/{process_id}"] = process_settings
-                    else:
-                        # Just use project_config as-is for backward compatibility
-                        if process_id:
-                            filtered = project_config if include_gcode else self.filter_gcode_keys(project_config)
-                            all_profiles[f"process/{process_id}"] = filtered
+                # Machine
+                if machine_id:
+                    machine_base = self.merge_preset_chain(machine_id, 'machine', embedded_presets)
+                    machine_settings = self.apply_project_overrides(machine_base, project_config, 'machine') if resolve_inheritance else machine_base
+                    if not include_gcode:
+                        machine_settings = self.filter_gcode_keys(machine_settings)
+                    result['machine'] = {'id': machine_id, 'settings': machine_settings}
 
-                # Resolve machine settings
-                if 'machine' in select_types and machine_id:
-                    if resolve_inheritance:
-                        machine_base = self.merge_preset_chain(machine_id, 'machine', embedded_presets)
-                        machine_settings = self.apply_project_overrides(machine_base, project_config, 'machine')
-                        if not include_gcode:
-                            machine_settings = self.filter_gcode_keys(machine_settings)
-                        all_profiles[f"machine/{machine_id}"] = machine_settings
+                # Process (project-level)
+                process_base = self.merge_preset_chain(process_id, 'process', embedded_presets) if process_id else {}
+                process_settings = self.apply_project_overrides(process_base, project_config, 'process') if resolve_inheritance else (process_base or project_config)
+                if not include_gcode:
+                    process_settings = self.filter_gcode_keys(process_settings)
+                result['process'] = {'id': process_id, 'settings': process_settings}
 
-                # Resolve filament settings for each slot
-                if 'filament' in select_types:
-                    for i, filament_id in enumerate(filament_ids):
-                        if not filament_id:
-                            continue
-
-                        if resolve_inheritance:
-                            # Get base filament profile
-                            filament_base = self.merge_preset_chain(filament_id, 'filament', embedded_presets, i)
-                            # Apply project overrides
-                            filament_settings = self.apply_project_overrides(filament_base, project_config, 'filament', i)
-                            if not include_gcode:
-                                filament_settings = self.filter_gcode_keys(filament_settings)
-                            all_profiles[f"filament/{filament_id}_slot{i}"] = filament_settings
-                        else:
-                            # Check if there's an embedded preset
-                            if filament_id in embedded_presets:
-                                filtered = embedded_presets[filament_id] if include_gcode else self.filter_gcode_keys(embedded_presets[filament_id])
-                                all_profiles[f"filament/{filament_id}"] = filtered
-
-                # Parse model settings for object information
+                # Build object and plate mapping; collect used filament ids with representative slot index
+                plates: Dict[str, Any] = {}
+                used_filaments: Dict[str, int] = {}  # filament_id -> first seen slot index
                 if 'Metadata/model_settings.config' in file_list:
                     try:
                         model_content = zf.read('Metadata/model_settings.config')
                         model_tree = ET.fromstring(model_content)
 
-                        # Extract object-specific overrides
-                        object_index = 0
+                        # All objects list (index across file)
+                        objects: List[Dict[str, Any]] = []
+                        id_to_index: Dict[str, int] = {}
+                        id_to_info: Dict[str, Dict[str, Any]] = {}
+                        idx = 0
                         for obj_elem in model_tree.findall(".//object"):
                             obj_id = obj_elem.get('id')
                             name_elem = obj_elem.find(".//metadata[@key='name']")
                             ext_elem = obj_elem.find(".//metadata[@key='extruder']")
-
                             obj_name = name_elem.get('value') if name_elem is not None else f"object_{obj_id}"
                             extruder = int(ext_elem.get('value')) if ext_elem is not None else 1
+                            info = {
+                                'name': obj_name,
+                                'id': obj_id,
+                                'index': idx,
+                                'extruder': extruder,
+                            }
+                            objects.append(info)
+                            id_to_index[obj_id] = idx
+                            id_to_info[obj_id] = info
+                            idx += 1
 
-                            # Get per-object overrides
-                            if resolve_inheritance:
-                                obj_overrides = self.parse_object_overrides(project_config, object_index)
-                                if obj_overrides:
-                                    all_profiles[f"object/{obj_name}/overrides"] = obj_overrides
+                        # For each plate, collect objects via model_instance -> object_id
+                        for plate_elem in model_tree.findall(".//plate"):
+                            plate_id_elem = plate_elem.find(".//metadata[@key='plater_id']")
+                            if plate_id_elem is None:
+                                continue
+                            plate_id = int(plate_id_elem.get('value'))
+                            if plate_number is not None and plate_id != plate_number:
+                                continue
+                            plate_objects: List[Dict[str, Any]] = []
+                            for instance in plate_elem.findall(".//model_instance"):
+                                obj_id_elem = instance.find(".//metadata[@key='object_id']")
+                                if obj_id_elem is None:
+                                    continue
+                                obj_id = obj_id_elem.get('value')
+                                if obj_id not in id_to_info:
+                                    continue
+                                base = id_to_info[obj_id]
+                                object_index = base['index']
+                                filament_slot = base['extruder'] - 1
+                                filament_id = filament_ids[filament_slot] if filament_slot < len(filament_ids) else None
+                                if filament_id and filament_id not in used_filaments:
+                                    used_filaments[filament_id] = filament_slot
+                                # Per-object overrides
+                                overrides = self.parse_object_overrides(project_config, object_index)
+                                if not include_gcode:
+                                    overrides = self.filter_gcode_keys(overrides)
+                                plate_objects.append({
+                                    'name': base['name'],
+                                    'id': base['id'],
+                                    'index': object_index,
+                                    'extruder': base['extruder'],
+                                    'process_id': process_id,
+                                    'filament_id': filament_id,
+                                    'process_overrides': overrides,
+                                })
+                            plates[str(plate_id)] = {'objects': plate_objects}
 
-                            object_index += 1
-                    except:
+                    except Exception:
                         pass
 
-                # Extract plate information (only selected plate if specified)
-                for file_name in file_list:
-                    if 'plate' in file_name and file_name.endswith('.json'):
-                        # Check if this is the selected plate
-                        if plate_number is not None:
-                            match = re.search(r'plate_?(\d+)\.json', file_name)
-                            if match and int(match.group(1)) != plate_number:
-                                continue  # Skip this plate
+                result['plates'] = plates
 
-                        try:
-                            content = zf.read(file_name)
-                            data = json.loads(content.decode('utf-8'))
-                            all_profiles[file_name] = data
-                        except:
-                            pass
+                # Filaments (only used ones, unique by preset id)
+                filaments: Dict[str, Any] = {}
+                for fid, slot_index in used_filaments.items():
+                    filament_base = self.merge_preset_chain(fid, 'filament', embedded_presets, slot_index)
+                    filament_settings = self.apply_project_overrides(filament_base, project_config, 'filament', slot_index) if resolve_inheritance else filament_base
+                    if not include_gcode:
+                        filament_settings = self.filter_gcode_keys(filament_settings)
+                    filaments[fid] = {
+                        'id': fid,
+                        'settings': filament_settings
+                    }
+                result['filaments'] = filaments
 
         except Exception as e:
             print(f"Error processing {file_path}: {e}", file=sys.stderr)
             return {}
 
-        return all_profiles
+        return result
 
     def get_plate_info(self, file_path: Path) -> Dict[int, Dict]:
         """Get detailed information about all plates in a 3MF file"""
@@ -485,7 +506,7 @@ class BambuProfileExtractor:
 
         return result
 
-    def get_object_settings(self, file_path: Path, object_selector: str, include_gcode: bool = False) -> Dict[str, Any]:
+    def get_object_settings(self, file_path: Path, object_selector: str, include_gcode: bool = False, plate_number: Optional[int] = None) -> Dict[str, Any]:
         """Get complete settings for a specific object by name or index"""
         result = {}
 
@@ -527,11 +548,26 @@ class BambuProfileExtractor:
                     model_content = zf.read('Metadata/model_settings.config')
                     model_tree = ET.fromstring(model_content)
 
+                    # Build a set of allowed object IDs if plate_number is specified
+                    allowed_object_ids = None
+                    if plate_number is not None:
+                        allowed_object_ids = set()
+                        for plate_elem in model_tree.findall(".//plate"):
+                            plate_id_elem = plate_elem.find(".//metadata[@key='plater_id']")
+                            if plate_id_elem is not None and int(plate_id_elem.get('value')) == plate_number:
+                                for instance in plate_elem.findall(".//model_instance"):
+                                    obj_id_elem = instance.find(".//metadata[@key='object_id']")
+                                    if obj_id_elem is not None:
+                                        allowed_object_ids.add(obj_id_elem.get('value'))
+
                     # Check if selector is an integer
                     try:
                         target_index = int(object_selector)
                         idx = 0
                         for obj_elem in model_tree.findall(".//object"):
+                            if allowed_object_ids is not None and obj_elem.get('id') not in allowed_object_ids:
+                                idx += 1
+                                continue
                             if idx == target_index:
                                 object_index = idx
                                 name_elem = obj_elem.find(".//metadata[@key='name']")
@@ -546,6 +582,9 @@ class BambuProfileExtractor:
                         for obj_elem in model_tree.findall(".//object"):
                             name_elem = obj_elem.find(".//metadata[@key='name']")
                             if name_elem is not None and name_elem.get('value') == object_selector:
+                                if allowed_object_ids is not None and obj_elem.get('id') not in allowed_object_ids:
+                                    idx += 1
+                                    continue
                                 object_index = idx
                                 object_name = object_selector
                                 ext_elem = obj_elem.find(".//metadata[@key='extruder']")

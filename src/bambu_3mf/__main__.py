@@ -26,7 +26,7 @@ def main():
     parser.add_argument('--full', action='store_true',
                         help='Include gcode settings (excluded by default)')
     parser.add_argument('--select', type=str, default='machine,filament,process',
-                        help='Comma-separated list of settings to include (default: machine,filament,process)')
+                        help='Comma-separated list of settings to include (choose from: machine,filament,process)')
 
     args = parser.parse_args()
 
@@ -71,14 +71,24 @@ def main():
                     print(f"      ID: {obj['id']}, Extruder: {obj['extruder']}")
         return
 
-    # Handle --object mode
+    # Handle --object mode (Mode 3: plate+object -> flattened machine/process/filament)
     if args.object:
         if len(files) != 1:
             print("Error: --object requires exactly one 3MF file", file=sys.stderr)
             sys.exit(1)
 
         file_path = files[0]
-        result = extractor.get_object_settings(file_path, args.object, include_gcode=args.full)
+        result = extractor.get_object_settings(file_path, args.object, include_gcode=args.full, plate_number=args.plate)
+
+        # Apply select filtering for object mode
+        select_types = {s.strip() for s in args.select.split(',') if s.strip()}
+        filtered = {}
+        for key in ('machine', 'filament', 'process'):
+            if key in select_types and key in result:
+                filtered[key] = result[key]
+        # If select was empty or invalid, fall back to original result
+        if filtered:
+            result = filtered
 
         if 'error' in result:
             print(f"Error: {result['error']}", file=sys.stderr)
@@ -94,44 +104,30 @@ def main():
             print(output_json)
         return
 
-    # Parse select types
-    select_types = [s.strip() for s in args.select.split(',')]
-
-    # Extract profiles from all files (normal mode)
+    # Mode 1 and 2: file-level (all plates and objects) or a specific plate
     all_profiles = {}
     for file_path in files:
-        # First, check how many plates exist
-        plate_info = extractor.get_plate_info(file_path)
-        plate_numbers = list(plate_info.keys())
-
-        if len(plate_numbers) > 1 and args.plate is None:
-            print(f"Error: {file_path.name} contains multiple plates:", file=sys.stderr)
-            for plate_num in sorted(plate_numbers):
-                info = plate_info[plate_num]
-                if info['objects']:
-                    objects_str = ', '.join(info['objects'])
-                    print(f"  Plate {plate_num}: {objects_str}", file=sys.stderr)
-                else:
-                    if info['has_json']:
-                        print(f"  Plate {plate_num}: {info.get('bed_type', 'unknown')} bed, {info.get('nozzle_diameter', '?')}mm nozzle", file=sys.stderr)
-                    else:
-                        print(f"  Plate {plate_num}: (empty or no metadata file)", file=sys.stderr)
-            print(f"\nPlease specify which plate to extract using --plate <number>", file=sys.stderr)
-            print(f"Example: bambu-3mf \"{file_path.name}\" --plate {min(plate_numbers)}", file=sys.stderr)
-            sys.exit(1)
-
-        # Determine which plate to use
-        selected_plate = args.plate if args.plate is not None else (plate_numbers[0] if plate_numbers else None)
-
-        profiles = extractor.extract_profiles_from_3mf(
+        profiles = extractor.extract_structured_from_3mf(
             file_path,
             resolve_inheritance=not args.no_inheritance,
-            plate_number=selected_plate,
+            plate_number=args.plate,
             include_gcode=args.full,
-            select_types=select_types
         )
         if profiles:
-            all_profiles[file_path.name] = profiles
+            # Apply select filtering: remove top-level machine/process/filaments when not requested
+            select_types = {s.strip() for s in args.select.split(',') if s.strip()}
+            to_emit = {}
+            # Always include plates
+            if 'plates' in profiles:
+                to_emit['plates'] = profiles['plates']
+            # Conditionally include selected sections
+            if 'machine' in profiles and ('machine' in select_types or not select_types):
+                to_emit['machine'] = profiles['machine']
+            if 'process' in profiles and ('process' in select_types or not select_types):
+                to_emit['process'] = profiles['process']
+            if 'filaments' in profiles and ('filament' in select_types or not select_types):
+                to_emit['filaments'] = profiles['filaments']
+            all_profiles[file_path.name] = to_emit
 
     # Output results
     output_json = json.dumps(all_profiles, indent=2, sort_keys=True)
