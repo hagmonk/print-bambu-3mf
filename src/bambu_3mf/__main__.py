@@ -27,6 +27,8 @@ def main():
                         help='Include gcode settings (excluded by default)')
     parser.add_argument('--select', type=str, default='machine,filament,process',
                         help='Comma-separated list of settings to include (choose from: machine,filament,process)')
+    parser.add_argument('--friendly-names', action='store_true',
+                        help='Replace setting keys with the labels displayed in Bambu Studio')
 
     args = parser.parse_args()
 
@@ -78,7 +80,13 @@ def main():
             sys.exit(1)
 
         file_path = files[0]
-        result = extractor.get_object_settings(file_path, args.object, include_gcode=args.full, plate_number=args.plate)
+        result = extractor.get_object_settings(
+            file_path,
+            args.object,
+            include_gcode=args.full,
+            plate_number=args.plate,
+            friendly_names=args.friendly_names,
+        )
 
         # Apply select filtering for object mode
         select_types = {s.strip() for s in args.select.split(',') if s.strip()}
@@ -94,7 +102,7 @@ def main():
             print(f"Error: {result['error']}", file=sys.stderr)
             sys.exit(1)
 
-        output_json = json.dumps(result, indent=2, sort_keys=True)
+        output_json = json.dumps(result, indent=2, sort_keys=True, ensure_ascii=False)
 
         if args.output:
             with open(args.output, 'w') as f:
@@ -112,6 +120,7 @@ def main():
             resolve_inheritance=not args.no_inheritance,
             plate_number=args.plate,
             include_gcode=args.full,
+            friendly_names=args.friendly_names,
         )
         if profiles:
             # Apply select filtering: remove top-level machine/process/filaments when not requested
@@ -130,7 +139,7 @@ def main():
             all_profiles[file_path.name] = to_emit
 
     # Output results
-    output_json = json.dumps(all_profiles, indent=2, sort_keys=True)
+    output_json = json.dumps(all_profiles, indent=2, sort_keys=True, ensure_ascii=False)
 
     if args.output:
         with open(args.output, 'w') as f:

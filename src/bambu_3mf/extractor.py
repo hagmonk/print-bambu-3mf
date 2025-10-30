@@ -10,7 +10,9 @@ import xml.etree.ElementTree as ET
 import zipfile
 from io import BytesIO
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
+
+from .labels import get_label_mapper, get_scope_for_key
 
 
 class BambuProfileExtractor:
@@ -18,23 +20,124 @@ class BambuProfileExtractor:
         self.user_dir = Path.home() / "Library" / "Application Support" / "BambuStudio" / "user"
         self.system_dir = Path.home() / "Library" / "Application Support" / "BambuStudio" / "system" / "BBL"
         self.profiles_cache = {}
+        self._label_mapper = None
+        self._scope_cache: Dict[str, tuple[str, ...]] = {}
 
-        # Setting type patterns for categorization
-        self.type_patterns = {
-            'filament': ['filament_', 'nozzle_temp', 'bed_temp', 'chamber_temp',
-                        'fan_', 'overhang_fan', 'pressure_advance', 'retract',
-                        '_plate_temp', 'required_nozzle_HRC'],
-            'process': ['layer_', 'wall_', 'infill_', 'support_', 'bridge_',
-                       'brim_', 'skirt_', 'seam_', 'gap_', 'thin_wall', 'thick_',
-                       'overhang_', 'enable_arc', 'resolution', 'xy_', 'elefant',
-                       'sparse_infill', 'solid_infill', 'top_surface', 'bottom_surface',
-                       'inner_wall', 'outer_wall', 'travel_', 'first_layer', 'top_shell',
-                       'bottom_shell', 'enable_', 'detect_', 'print_', 'spiral_',
-                       'fuzzy_', 'filter_', 'adaptive_', 'support_', 'raft_'],
-            'machine': ['machine_', 'printer_', 'nozzle_diameter', 'printable_',
-                       'gcode_flavor', 'max_print_', 'extruder_', 'scan_',
-                       'head_', 'upward_', 'bed_', 'z_offset']
+        # Mapping of filament override keys to their corresponding process keys.
+        self.filament_override_map = {
+            'filament_retraction_length': 'retraction_length',
+            'filament_retraction_speed': 'retraction_speed',
+            'filament_deretraction_speed': 'deretraction_speed',
+            'filament_retract_restart_extra': 'retract_restart_extra',
+            'filament_retraction_minimum_travel': 'retraction_minimum_travel',
+            'filament_retract_before_wipe': 'retract_before_wipe',
+            'filament_retract_when_changing_layer': 'retract_when_changing_layer',
+            'filament_wipe': 'wipe',
+            'filament_wipe_distance': 'wipe_distance',
+            'filament_z_hop': 'z_hop',
+            'filament_z_hop_types': 'z_hop_types',
+            'filament_retract_lift_above': 'retract_lift_above',
+            'filament_retract_lift_below': 'retract_lift_below',
+            'filament_long_retractions_when_cut': 'long_retractions_when_cut',
+            'filament_retraction_distances_when_cut': 'retraction_distances_when_cut',
         }
+
+    def _get_label_mapper(self):
+        if self._label_mapper is None:
+            try:
+                self._label_mapper = get_label_mapper()
+            except FileNotFoundError:
+                self._label_mapper = False
+        return self._label_mapper if self._label_mapper else None
+
+    def _friendly_settings(self, settings: Dict[str, Any]) -> Dict[str, Any]:
+        mapper = self._get_label_mapper()
+        if not mapper or not isinstance(settings, dict):
+            return settings
+        return mapper.transform(settings)
+
+    def _apply_friendly_structured(self, result: Dict[str, Any]) -> None:
+        if 'machine' in result and 'settings' in result['machine']:
+            result['machine']['settings'] = self._friendly_settings(result['machine']['settings'])
+        if 'process' in result and 'settings' in result['process']:
+            result['process']['settings'] = self._friendly_settings(result['process']['settings'])
+        if 'filaments' in result:
+            for filament in result['filaments'].values():
+                if isinstance(filament, dict) and 'settings' in filament:
+                    filament['settings'] = self._friendly_settings(filament['settings'])
+        for plate in result.get('plates', {}).values():
+            objects = plate.get('objects', []) if isinstance(plate, dict) else []
+            for obj in objects:
+                if isinstance(obj, dict) and 'process_overrides' in obj:
+                    normalized = self._normalize_overrides(obj['process_overrides'])
+                    obj['process_overrides'] = self._friendly_settings(normalized)
+
+    def _apply_friendly_object(self, result: Dict[str, Any]) -> None:
+        for key in ('machine', 'process', 'filament'):
+            if key in result and isinstance(result[key], dict):
+                result[key] = self._friendly_settings(result[key])
+
+    def _scope_matches(self, key: str, target: str, base_settings: Dict[str, Any]) -> bool:
+        scopes = self._scopes_for_key(key)
+        if scopes:
+            return target in scopes
+        if key in base_settings:
+            return True
+        inferred = self._infer_scope_from_key(key)
+        return inferred == target
+
+    def _scopes_for_key(self, key: str) -> tuple[str, ...]:
+        cache_key = key.lower()
+        cached = self._scope_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        scope = get_scope_for_key(key)
+        if scope is None:
+            if cache_key != key:
+                scope = get_scope_for_key(cache_key)
+
+        if scope is None:
+            normalized: tuple[str, ...] = ()
+        elif isinstance(scope, str):
+            normalized = (scope,)
+        else:
+            normalized = tuple(scope)
+
+        self._scope_cache[cache_key] = normalized
+        return normalized
+
+    def _infer_scope_from_key(self, key: str) -> str:
+        key_lower = key.lower()
+        if key_lower in self.filament_override_map or key_lower.startswith('filament_'):
+            return 'filament'
+
+        machine_prefixes = (
+            'printer_',
+            'machine_',
+            'extruder_',
+            'max_print_',
+            'printable_',
+            'scan_',
+            'head_',
+            'z_offset',
+            'bed_',
+            'gcode_',
+            'chamber_',
+        )
+        if key_lower.startswith(machine_prefixes):
+            return 'machine'
+
+        return 'process'
+
+    def _normalize_overrides(self, overrides: Dict[str, Any]) -> Dict[str, Any]:
+        if not isinstance(overrides, dict):
+            return overrides
+        normalized: Dict[str, Any] = {}
+        for key, value in overrides.items():
+            process_key = self.filament_override_map.get(key, key)
+            normalized[process_key] = value
+        return normalized
 
     def find_user_id(self) -> Optional[str]:
         """Find the user ID directory"""
@@ -161,11 +264,7 @@ class BambuProfileExtractor:
                 continue
 
             # Determine if this key belongs to the current setting type
-            belongs = False
-            for pattern in self.type_patterns.get(setting_type, []):
-                if pattern in key.lower():
-                    belongs = True
-                    break
+            belongs = self._scope_matches(key, setting_type, base_settings)
 
             if belongs:
                 if isinstance(value, list):
@@ -177,6 +276,38 @@ class BambuProfileExtractor:
                     result[key] = value
 
         return result
+
+    def resolve_indexed_value(self, value: Any, index: int) -> Optional[Any]:
+        """Return a scalar value from a possibly indexed project setting"""
+        if value is None:
+            return None
+        if isinstance(value, list):
+            if not value:
+                return None
+            if len(value) == 1:
+                return value[0]
+            if index < len(value):
+                return value[index]
+            return value[-1]
+        return value
+
+    def apply_filament_overrides_to_process(self, process_settings: Dict[str, Any], project_config: Dict[str, Any], filament_index: int, object_overrides: Optional[Dict[str, Any]] = None) -> None:
+        """Merge filament override values into process settings for the active extruder"""
+        overrides = object_overrides or {}
+
+        for filament_key, process_key in self.filament_override_map.items():
+            # Priority: object-level override, then project-level per-filament value
+            raw_value = overrides.get(filament_key)
+            if raw_value is None:
+                raw_value = self.resolve_indexed_value(project_config.get(filament_key), filament_index)
+
+            if raw_value is None:
+                continue
+
+            if isinstance(raw_value, str) and raw_value.strip().lower() == 'nil':
+                continue
+
+            process_settings[process_key] = raw_value
 
     def parse_object_overrides(self, project_config: Dict, object_index: int) -> Dict[str, Any]:
         """Parse per-object setting overrides from different_settings_to_system"""
@@ -210,7 +341,14 @@ class BambuProfileExtractor:
 
     # Legacy flat extractor removed per new structured output requirements
 
-    def extract_structured_from_3mf(self, file_path: Path, resolve_inheritance: bool = True, plate_number: Optional[int] = None, include_gcode: bool = False) -> Dict:
+    def extract_structured_from_3mf(
+        self,
+        file_path: Path,
+        resolve_inheritance: bool = True,
+        plate_number: Optional[int] = None,
+        include_gcode: bool = False,
+        friendly_names: bool = False,
+    ) -> Dict:
         """Extract profiles in a structured, scope-aware format.
 
         Output schema:
@@ -364,6 +502,9 @@ class BambuProfileExtractor:
             print(f"Error processing {file_path}: {e}", file=sys.stderr)
             return {}
 
+        if friendly_names:
+            self._apply_friendly_structured(result)
+
         return result
 
     def get_plate_info(self, file_path: Path) -> Dict[int, Dict]:
@@ -506,7 +647,14 @@ class BambuProfileExtractor:
 
         return result
 
-    def get_object_settings(self, file_path: Path, object_selector: str, include_gcode: bool = False, plate_number: Optional[int] = None) -> Dict[str, Any]:
+    def get_object_settings(
+        self,
+        file_path: Path,
+        object_selector: str,
+        include_gcode: bool = False,
+        plate_number: Optional[int] = None,
+        friendly_names: bool = False,
+    ) -> Dict[str, Any]:
         """Get complete settings for a specific object by name or index"""
         result = {}
 
@@ -602,7 +750,7 @@ class BambuProfileExtractor:
                 if isinstance(filament_ids, str):
                     filament_ids = [filament_ids]
 
-                filament_slot = object_extruder - 1
+                filament_slot = max(object_extruder - 1, 0)
                 filament_id = filament_ids[filament_slot] if filament_slot < len(filament_ids) else None
 
                 # Resolve machine settings
@@ -618,7 +766,13 @@ class BambuProfileExtractor:
 
                 # Apply per-object overrides
                 obj_overrides = self.parse_object_overrides(project_config, object_index)
-                process_settings.update(obj_overrides)
+                # Apply non-filament overrides directly to the process block
+                non_filament_overrides = {k: v for k, v in obj_overrides.items() if not k.startswith('filament_')}
+                process_settings.update(non_filament_overrides)
+
+                # Apply filament-scoped overrides to the effective process values
+                if filament_slot is not None:
+                    self.apply_filament_overrides_to_process(process_settings, project_config, filament_slot, obj_overrides)
 
                 if not include_gcode:
                     process_settings = self.filter_gcode_keys(process_settings)
@@ -634,6 +788,9 @@ class BambuProfileExtractor:
 
         except Exception as e:
             result['error'] = str(e)
+
+        if friendly_names and 'error' not in result:
+            self._apply_friendly_object(result)
 
         return result
 
