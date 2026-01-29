@@ -130,6 +130,34 @@ class BambuProfileExtractor:
 
         return 'process'
 
+    def _get_extruder_variant_index(self, project_config: Dict[str, Any]) -> int:
+        """Determine the active extruder variant index from project config.
+
+        Many process settings are stored as arrays indexed by extruder variant
+        (e.g., 'Direct Drive Standard' at index 0, 'Direct Drive High Flow' at index 1).
+        This method detects which variant is active based on nozzle_volume_type.
+        """
+        nozzle_volume_type = project_config.get('nozzle_volume_type', [])
+        print_extruder_variant = project_config.get('print_extruder_variant', [])
+
+        if not nozzle_volume_type or not print_extruder_variant:
+            return 0
+
+        # Get the active nozzle type (e.g., "High Flow", "Standard")
+        active_nozzle = nozzle_volume_type[0] if nozzle_volume_type else None
+        if not active_nozzle:
+            return 0
+
+        # Find which variant index matches this nozzle type
+        # "High Flow" should match "Direct Drive High Flow"
+        # "Standard" should match "Direct Drive Standard"
+        active_nozzle_lower = active_nozzle.lower()
+        for i, variant in enumerate(print_extruder_variant):
+            if active_nozzle_lower in variant.lower():
+                return i
+
+        return 0
+
     def _normalize_overrides(self, overrides: Dict[str, Any]) -> Dict[str, Any]:
         if not isinstance(overrides, dict):
             return overrides
@@ -138,6 +166,85 @@ class BambuProfileExtractor:
             process_key = self.filament_override_map.get(key, key)
             normalized[process_key] = value
         return normalized
+
+    def _apply_differing_overrides(
+        self,
+        inherited_settings: Dict[str, Any],
+        project_config: Dict[str, Any],
+        variant_index: int,
+        embedded_preset: Optional[Dict[str, Any]] = None
+    ) -> Dict[str, Any]:
+        """Apply project config overrides selectively to avoid stale cached values.
+
+        The logic handles two types of staleness:
+        1. Stale project values from a previous preset (e.g., layer_height: 0.3 when
+           current preset inherits 0.2) - these match neither inheritance nor embedded
+        2. Fresh user overrides made after saving the embedded preset (e.g., changing
+           top_surface_pattern from concentric to monotonic)
+
+        We apply project_config values when:
+        - It's a multi-element array (per-variant setting explicitly configured)
+        - OR the value differs from the embedded preset (user changed it after saving)
+
+        We skip project_config values when:
+        - It's a scalar that matches the inherited value (just a cached copy)
+        - It's a scalar that doesn't exist in embedded AND differs from inheritance
+          (likely stale from a previous preset)
+        """
+        result = inherited_settings.copy()
+        embedded = embedded_preset or {}
+
+        # Metadata keys to skip
+        skip_keys = {
+            'name', 'from', 'version', 'filament_settings_id',
+            'print_settings_id', 'printer_settings_id', 'compatible_printers',
+            'different_settings_to_system', 'inherits', 'setting_id',
+            'print_extruder_id', 'print_extruder_variant', 'nozzle_volume_type',
+            'extruder_variant_list', 'filament_extruder_variant', 'printer_extruder_variant'
+        }
+
+        for key, proj_value in project_config.items():
+            if key in skip_keys:
+                continue
+
+            # Only consider process-scoped settings
+            if not self._scope_matches(key, 'process', inherited_settings):
+                continue
+
+            # Extract effective value from project_config
+            if isinstance(proj_value, list):
+                if len(proj_value) == 0:
+                    continue
+                elif len(proj_value) == 1:
+                    effective_proj_value = proj_value[0]
+                    is_multi_element_array = False
+                elif len(proj_value) > variant_index:
+                    effective_proj_value = proj_value[variant_index]
+                    is_multi_element_array = True
+                else:
+                    effective_proj_value = proj_value[-1]
+                    is_multi_element_array = True
+            else:
+                effective_proj_value = proj_value
+                is_multi_element_array = False
+
+            # Always apply multi-element arrays (per-variant settings)
+            if is_multi_element_array:
+                result[key] = effective_proj_value
+                continue
+
+            # For scalars, check if embedded preset has this key
+            embedded_value = embedded.get(key)
+            if embedded_value is not None:
+                # Embedded preset explicitly sets this key
+                # Apply project_config if it differs from embedded (user changed after saving)
+                if str(effective_proj_value) != str(embedded_value):
+                    result[key] = effective_proj_value
+                # If they match, keep the inherited value (embedded might be stale too)
+            # If embedded doesn't have the key, keep the inherited value
+            # (project_config scalar is likely stale from previous preset)
+
+        return result
 
     def find_user_id(self) -> Optional[str]:
         """Find the user ID directory"""
@@ -377,10 +484,13 @@ class BambuProfileExtractor:
                     if text.startswith('{'):
                         project_config = json.loads(text)
 
-                # Load embedded presets (filament only)
+                # Load embedded presets (filament and process)
                 embedded_presets: Dict[str, Any] = {}
+                embedded_process_by_plate: Dict[int, Dict[str, Any]] = {}
                 for file_name in file_list:
-                    if 'filament_settings' in file_name and file_name.endswith('.config'):
+                    is_filament = 'filament_settings' in file_name and file_name.endswith('.config')
+                    is_process = 'process_settings' in file_name and file_name.endswith('.config')
+                    if is_filament or is_process:
                         try:
                             content = zf.read(file_name)
                             text_content = content.decode('utf-8', errors='ignore').strip()
@@ -388,6 +498,13 @@ class BambuProfileExtractor:
                                 data = json.loads(text_content)
                                 preset_name = data.get('name', file_name)
                                 embedded_presets[preset_name] = data
+                                # Track process presets by plate number (e.g., process_settings_1.config -> plate 1)
+                                if is_process:
+                                    import re as re_mod
+                                    match = re_mod.search(r'process_settings_(\d+)\.config', file_name)
+                                    if match:
+                                        plate_num = int(match.group(1))
+                                        embedded_process_by_plate[plate_num] = data
                         except Exception:
                             pass
 
@@ -407,8 +524,44 @@ class BambuProfileExtractor:
                     result['machine'] = {'id': machine_id, 'settings': machine_settings}
 
                 # Process (project-level)
-                process_base = self.merge_preset_chain(process_id, 'process', embedded_presets) if process_id else {}
-                process_settings = self.apply_project_overrides(process_base, project_config, 'process') if resolve_inheritance else (process_base or project_config)
+                # Determine the active extruder variant index for process settings arrays
+                variant_index = self._get_extruder_variant_index(project_config)
+
+                # Use embedded process preset if available (prefer plate 1 or the specified plate)
+                target_plate = plate_number if plate_number is not None else 1
+                embedded_process = embedded_process_by_plate.get(target_plate)
+
+                if embedded_process and resolve_inheritance:
+                    # Use the embedded preset's inheritance chain with variant index
+                    embedded_inherits = embedded_process.get('inherits', '')
+                    process_base = self.merge_preset_chain(embedded_inherits, 'process', embedded_presets, variant_index) if embedded_inherits else {}
+                    # Apply the embedded preset's own settings on top (handling arrays with variant index)
+                    for key, value in embedded_process.items():
+                        if key not in {'name', 'type', 'from', 'inherits', 'version', 'setting_id',
+                                      'instantiation', 'compatible_printers', 'compatible_printers_condition',
+                                      'description', 'print_settings_id', 'print_extruder_id', 'print_extruder_variant'}:
+                            # Handle array values with variant index
+                            if isinstance(value, list):
+                                if len(value) == 1:
+                                    process_base[key] = value[0]
+                                elif len(value) > variant_index:
+                                    process_base[key] = value[variant_index]
+                                elif value:
+                                    process_base[key] = value[-1]
+                            else:
+                                process_base[key] = value
+
+                    # Apply project overrides only for values that differ from inheritance
+                    # This filters out stale cached values while keeping intentional overrides
+                    process_settings = self._apply_differing_overrides(
+                        process_base, project_config, variant_index, embedded_process
+                    )
+                    process_id = embedded_process.get('name', process_id)
+                else:
+                    # Fall back to original behavior
+                    process_base = self.merge_preset_chain(process_id, 'process', embedded_presets, variant_index) if process_id else {}
+                    process_settings = self.apply_project_overrides(process_base, project_config, 'process', variant_index) if resolve_inheritance else (process_base or project_config)
+
                 if not include_gcode:
                     process_settings = self.filter_gcode_keys(process_settings)
                 result['process'] = {'id': process_id, 'settings': process_settings}
@@ -673,10 +826,13 @@ class BambuProfileExtractor:
                     if text.startswith('{'):
                         project_config = json.loads(text)
 
-                # Load embedded presets
+                # Load embedded presets (filament and process)
                 embedded_presets = {}
+                embedded_process_by_plate: Dict[int, Dict[str, Any]] = {}
                 for file_name in file_list:
-                    if 'filament_settings' in file_name and file_name.endswith('.config'):
+                    is_filament = 'filament_settings' in file_name and file_name.endswith('.config')
+                    is_process = 'process_settings' in file_name and file_name.endswith('.config')
+                    if is_filament or is_process:
                         try:
                             content = zf.read(file_name)
                             text_content = content.decode('utf-8', errors='ignore').strip()
@@ -684,6 +840,12 @@ class BambuProfileExtractor:
                                 data = json.loads(text_content)
                                 preset_name = data.get('name', file_name)
                                 embedded_presets[preset_name] = data
+                                # Track process presets by plate number
+                                if is_process:
+                                    match = re.search(r'process_settings_(\d+)\.config', file_name)
+                                    if match:
+                                        plate_num = int(match.group(1))
+                                        embedded_process_by_plate[plate_num] = data
                         except:
                             pass
 
@@ -761,8 +923,37 @@ class BambuProfileExtractor:
                 result['machine'] = machine_settings
 
                 # Resolve process settings
-                process_base = self.merge_preset_chain(process_id, 'process', embedded_presets)
-                process_settings = self.apply_project_overrides(process_base, project_config, 'process')
+                # Determine the active extruder variant index for process settings arrays
+                variant_index = self._get_extruder_variant_index(project_config)
+
+                # Use embedded process preset if available
+                target_plate = plate_number if plate_number is not None else 1
+                embedded_process = embedded_process_by_plate.get(target_plate)
+
+                if embedded_process:
+                    # Use the embedded preset's inheritance chain with variant index
+                    embedded_inherits = embedded_process.get('inherits', '')
+                    process_base = self.merge_preset_chain(embedded_inherits, 'process', embedded_presets, variant_index) if embedded_inherits else {}
+                    # Apply the embedded preset's own settings on top
+                    for key, value in embedded_process.items():
+                        if key not in {'name', 'type', 'from', 'inherits', 'version', 'setting_id',
+                                      'instantiation', 'compatible_printers', 'compatible_printers_condition',
+                                      'description', 'print_settings_id', 'print_extruder_id', 'print_extruder_variant'}:
+                            if isinstance(value, list):
+                                if len(value) == 1:
+                                    process_base[key] = value[0]
+                                elif len(value) > variant_index:
+                                    process_base[key] = value[variant_index]
+                                elif value:
+                                    process_base[key] = value[-1]
+                            else:
+                                process_base[key] = value
+                    # Apply differing overrides from project config
+                    process_settings = self._apply_differing_overrides(process_base, project_config, variant_index, embedded_process)
+                else:
+                    # Fall back to original behavior
+                    process_base = self.merge_preset_chain(process_id, 'process', embedded_presets, variant_index)
+                    process_settings = self.apply_project_overrides(process_base, project_config, 'process', variant_index)
 
                 # Apply per-object overrides
                 obj_overrides = self.parse_object_overrides(project_config, object_index)
