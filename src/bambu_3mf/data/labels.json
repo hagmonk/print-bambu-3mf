@@ -37,13 +37,15 @@
     "tooltip": "Enabling this option means the height of every layer except the first will be automatically calculated"
   },
   "additional_cooling_fan_speed": {
-    "category": "Cooling",
     "friendly": "Fan speed (additional_cooling_fan_speed)",
-    "group": "Auxiliary part cooling fan",
     "label": "Fan speed",
-    "scope": "filament",
     "sidetext": "%",
     "tooltip": "Speed of auxiliary part cooling fan. The auxiliary fan will run at this speed during printing, except for the first several layers, which are defined by no cooling layers"
+  },
+  "additional_fan_full_speed_layer": {
+    "friendly": "Full fan speed at layer (additional_fan_full_speed_layer)",
+    "label": "Full fan speed at layer",
+    "tooltip": "Auxiliary fan speed will be ramped up linearly from layer \"For the first\" to maximum at layer \"Full fan speed at layer\". \"Full fan speed at layer\" will be ignored if lower than \"For the first\", in which case the fan will be running at maximum allowed speed at layer \"For the first\" + 1."
   },
   "align_xy": {
     "friendly": "Align XY",
@@ -70,13 +72,18 @@
     "label": "Allow rotatations when arrange",
     "tooltip": "If enabled, the arrange will allow rotations when place object"
   },
+  "alternate_extra_wall": {
+    "category": "Strength",
+    "friendly": "Alternate extra wall",
+    "group": "Walls",
+    "label": "Alternate extra wall",
+    "scope": "process",
+    "tooltip": "Add an extra wall on alternating layers to improve layer bonding and part strength without the full cost of a permanent extra wall."
+  },
   "apply_scarf_seam_on_circles": {
     "friendly": "Scarf Seam On Compensation Circles",
     "label": "Scarf Seam On Compensation Circles",
     "tooltip": "Scarf seam will be applied on circles for better dimensional accuracy."
-  },
-  "apply_top_surface_compensation": {
-    "friendly": "Apply Top Surface Compensation"
   },
   "area_fill": {
     "category": "General",
@@ -106,6 +113,14 @@
     "label": "Auxiliary part cooling fan",
     "scope": "machine",
     "tooltip": "Enable this option if the machine has an auxiliary part cooling fan"
+  },
+  "avoid_crossing_wall_includes_support": {
+    "category": "Quality",
+    "friendly": "Avoid crossing wall - Includes support",
+    "group": "Advanced",
+    "label": "Avoid crossing wall - Includes support",
+    "scope": "process",
+    "tooltip": "Including support while avoiding crossing wall."
   },
   "avoid_extrusion_cali_region": {
     "friendly": "Avoid extrusion calibrate region when doing arrange",
@@ -171,7 +186,7 @@
     "group": "Top/bottom shells",
     "label": "Bottom paint penetration layers",
     "scope": "process",
-    "tooltip": "This is  the number of layers of top bottom penetration."
+    "tooltip": "This is the number of layers of bottom paint penetration."
   },
   "bottom_shell_layers": {
     "category": "Strength",
@@ -191,6 +206,15 @@
     "scope": "process",
     "sidetext": "mm",
     "tooltip": "The number of bottom solid layers is increased when slicing if the thickness calculated by bottom shells layers is thinner than this value. This can avoid having an overly thin shell when layer height is small. 0 means that this setting is disabled and thickness of bottom shell is determined by bottom shell layers."
+  },
+  "bottom_surface_density": {
+    "category": "Strength",
+    "friendly": "Bottom surface density",
+    "group": "Top/bottom shells",
+    "label": "Bottom surface density",
+    "scope": "process",
+    "sidetext": "%",
+    "tooltip": "Density of bottom surface infill, 100% means a fully solid filled top layer.Lower values create a textured bottom surface, Intended for aesthetic or functional purposes, not to fix issues such as over-extrusion.WARNING: Lowering this value may negatively affect bed adhesion."
   },
   "bottom_surface_pattern": {
     "category": "Strength",
@@ -300,7 +324,7 @@
     "label": "User Customized Offset",
     "scope": "process",
     "sidetext": "mm",
-    "tooltip": "If you want to have tighter or looser assembly, you can set this value. When it is positive, it indicates a tighter fit, otherwise, it indicates a looser fit."
+    "tooltip": "If you want to have tighter or looser assembly, you can set this value. When it is positive, it indicates a looser fit, otherwise, it indicates a tighter fit."
   },
   "circle_compensation_speed": {
     "category": "Filament",
@@ -316,14 +340,23 @@
     "label": "Clone Objects",
     "tooltip": "Clone objects in the load list"
   },
-  "close_fan_the_first_x_layers": {
+  "close_additional_fan_first_x_layers": {
     "category": "Cooling",
-    "friendly": "No cooling for the first",
-    "group": "Cooling for specific layer",
-    "label": "No cooling for the first",
+    "friendly": "For the first (close_additional_fan_first_x_layers)",
+    "group": "Auxiliary part cooling fan",
+    "label": "For the first",
     "scope": "filament",
     "sidetext": "layers",
-    "tooltip": "Turn off all cooling fans for the first few layers. This can be used to improve bed adhesion."
+    "tooltip": "Set special auxiliary cooling fan for the first certain layers."
+  },
+  "close_fan_the_first_x_layers": {
+    "category": "Cooling",
+    "friendly": "For the first (close_fan_the_first_x_layers)",
+    "group": "Part cooling fan",
+    "label": "For the first",
+    "scope": "filament",
+    "sidetext": "layers",
+    "tooltip": "Set special cooling fan for the first certain layers.The part cooling fan of the first layer used to be closed to get better build plate adhesion and used for auto cooling function"
   },
   "compatible_machine_expression_group": {
     "friendly": "Compatible Machine Expression Group"
@@ -392,6 +425,35 @@
     "scope": "filament",
     "sidetext": "°C",
     "tooltip": "This is the bed temperature of the first layer. A value of 0 means the filament does not support printing on the Cool Plate."
+  },
+  "cooling_filter_enabled": {
+    "category": "Basic information",
+    "friendly": "Use cooling filter",
+    "group": "Accessory",
+    "label": "Use cooling filter",
+    "scope": "machine",
+    "tooltip": "Enable this if printer support cooling filter"
+  },
+  "cooling_perimeter_transition_distance": {
+    "category": "Cooling",
+    "friendly": "Perimeter transition distance",
+    "group": "Part cooling fan",
+    "label": "Perimeter transition distance",
+    "scope": "filament",
+    "sidetext": "mm",
+    "tooltip": "Distance in millimeters before the end of slowed perimeters where the original print speed is gradually restored. This reduces quality issues when transitioning from slowed features to fast external perimeter printing.\n\nOnly applies when 'Consistent surface' cooling logic is selected.\nRecommended value: 5-10mm. Set to 0 to disable."
+  },
+  "cooling_slowdown_logic": {
+    "category": "Cooling",
+    "enum_values": [
+      "uniform_cooling",
+      "consistent_surface"
+    ],
+    "friendly": "Cooling slowdown logic",
+    "group": "Part cooling fan",
+    "label": "Cooling slowdown logic",
+    "scope": "filament",
+    "tooltip": "Determines how the printer slows down when minimum layer time isn't reached.\n\n'Uniform cooling' slows down all print features equally (current default behavior).\n\n'Consistent surface' prioritizes slowing infill and internal perimeters first, preserving external perimeter speed for better surface finish on glossy filaments. This helps reduce VFA (Vertical Fine Artifacts) and maintains consistent surface shine."
   },
   "copy": {
     "friendly": "Copy",
@@ -683,6 +745,14 @@
     "group": "Corrections",
     "scope": "machine"
   },
+  "embedding_wall_into_infill": {
+    "category": "Strength",
+    "friendly": "Embedding the wall into the infill",
+    "group": "Walls",
+    "label": "Embedding the wall into the infill",
+    "scope": "process",
+    "tooltip": "Embedding the wall into parts where the wall loops are absent ensures that the wall connects seamlessly to the infill."
+  },
   "enable_arc_fitting": {
     "category": "Quality",
     "friendly": "Arc fitting",
@@ -699,6 +769,11 @@
     "scope": "process",
     "tooltip": "Experimental feature to compensate the circle holes and circle contour. This feature is used to improve the accuracy of the circle holes and contour within the diameter below 50mm. Only support PLA Basic, PLA CF, PET CF, PETG CF and PETG HF."
   },
+  "enable_filament_dynamic_map": {
+    "friendly": "Enable filament dynamic map",
+    "label": "Enable filament dynamic map",
+    "tooltip": "Support filament map to different nozzle"
+  },
   "enable_height_slowdown": {
     "category": "Speed",
     "friendly": "Slow down by height",
@@ -709,6 +784,14 @@
   },
   "enable_long_retraction_when_cut": {
     "friendly": "Enable Long Retraction When Cut"
+  },
+  "enable_mixed_color_sublayer": {
+    "category": "Quality",
+    "friendly": "Mixed color sublayer",
+    "group": "Layer height",
+    "label": "Mixed color sublayer",
+    "scope": "process",
+    "tooltip": "Enable mixed color sublayer splitting. When enabled, layers containing mixed color filaments will be split into sub-layers to achieve color mixing effects."
   },
   "enable_overhang_bridge_fan": {
     "category": "Cooling",
@@ -753,10 +836,26 @@
     "scope": "process",
     "tooltip": "Enable support generation."
   },
+  "enable_support_ironing": {
+    "category": "Support",
+    "friendly": "Enable ironing support interface",
+    "group": "Support ironing",
+    "label": "Enable ironing support interface",
+    "scope": "process",
+    "tooltip": "Ironing is using small flow to print on same height of surface again to make flat surface more smooth. This setting controls whether support interface or raft interface will be ironned.Support ironing could only works on solid interface,that is, support_interface_spacing was zero and support_interface_pattern was't grid"
+  },
   "enable_timelapse": {
     "friendly": "Enable timeplapse for print",
     "label": "Enable timeplapse for print",
     "tooltip": "If enabled, this slicing will be considered using timelapse"
+  },
+  "enable_tower_interface_features": {
+    "category": "Others",
+    "friendly": "Enable tower interface features",
+    "group": "Prime tower",
+    "label": "Enable tower interface features",
+    "scope": "process",
+    "tooltip": "When enabled, use dedicated temperature, pre-extrusion and purge settings for prime tower interface layers (where different materials meet), to improve multi-material tool change quality."
   },
   "enable_wrapping_detection": {
     "category": "Others",
@@ -813,6 +912,11 @@
     "label": "Ensure vertical shell thickness",
     "scope": "process",
     "tooltip": "Add solid infill near sloping surfaces to guarantee the vertical shell thickness (top+bottom solid layers)."
+  },
+  "estimate_mode": {
+    "friendly": "Estimate mode",
+    "label": "Estimate mode",
+    "tooltip": "When enabled, automatically fill filament presets and extruder state for machine estimation after machine switch"
   },
   "exclude_object": {
     "category": "Others",
@@ -934,6 +1038,25 @@
     "label": "Extruder Color",
     "tooltip": "Only used as a visual help on UI"
   },
+  "extruder_max_nozzle_count": {
+    "friendly": "Extruder Max Nozzle Count"
+  },
+  "extruder_nozzle_count": {
+    "friendly": "extruder nozzle count",
+    "label": "extruder nozzle count",
+    "tooltip": "extruder nozzle count"
+  },
+  "extruder_nozzle_stats": {
+    "friendly": "Extruder Nozzle Stats"
+  },
+  "extruder_nozzle_volume_type": {
+    "enum_values": [
+      "TPU High Flow"
+    ],
+    "friendly": "extruder nozzle volume type",
+    "label": "extruder nozzle volume type",
+    "tooltip": "extruder nozzle volume type"
+  },
   "extruder_offset": {
     "category": "Single extruder MM setup",
     "friendly": "Extruder offset",
@@ -987,6 +1110,20 @@
     "sidetext": "s",
     "tooltip": "The part cooling fan will be enabled for layers where the estimated time is shorter than this value. Fan speed is interpolated between the minimum and maximum fan speeds according to layer printing time."
   },
+  "fan_direction": {
+    "category": "Basic information",
+    "enum_values": [
+      "undefine",
+      "left",
+      "right",
+      "both"
+    ],
+    "friendly": "Fan direction",
+    "group": "Accessory",
+    "label": "Fan direction",
+    "scope": "machine",
+    "tooltip": "Cooling fan direction of the printer"
+  },
   "fan_max_speed": {
     "category": "Cooling",
     "friendly": "Fan speed (fan_max_speed)",
@@ -1027,14 +1164,29 @@
     "scope": "filament",
     "tooltip": "Filament category"
   },
+  "filament_bridge_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Bridge Speed",
+    "group": "Speed",
+    "scope": "filament"
+  },
   "filament_change_length": {
     "category": "Filament",
-    "friendly": "Filament ramming length",
+    "friendly": "Extruder change (filament_change_length)",
     "group": "Basic information",
-    "label": "Filament ramming length",
+    "label": "Extruder change",
     "scope": "filament",
     "sidetext": "mm",
     "tooltip": "When changing the extruder, it is recommended to extrude a certain length of filament from the original extruder. This helps minimize nozzle oozing."
+  },
+  "filament_change_length_nc": {
+    "category": "Filament",
+    "friendly": "Hotend change (filament_change_length_nc)",
+    "group": "Basic information",
+    "label": "Hotend change",
+    "scope": "filament",
+    "sidetext": "mm",
+    "tooltip": "When changing the hotend, it is recommended to extrude a certain length of filament from the original nozzle. This helps minimize nozzle oozing."
   },
   "filament_colour": {
     "category": "Filament",
@@ -1046,6 +1198,15 @@
   },
   "filament_colour_type": {
     "friendly": "Filament Colour Type"
+  },
+  "filament_cooling_before_tower": {
+    "category": "Filament",
+    "friendly": "Wipe tower cooling",
+    "group": "Basic information",
+    "label": "Wipe tower cooling",
+    "scope": "filament",
+    "sidetext": "°C",
+    "tooltip": "Temperature drop before entering filament tower"
   },
   "filament_cost": {
     "category": "Filament",
@@ -1065,6 +1226,30 @@
     "sidetext": "g/cm³",
     "tooltip": "Filament density. For statistics only"
   },
+  "filament_dev_ams_drying_ams_limitations": {
+    "friendly": "Filament Dev Ams Drying Ams Limitations"
+  },
+  "filament_dev_ams_drying_heat_distortion_temperature": {
+    "friendly": "Filament Dev Ams Drying Heat Distortion Temperature"
+  },
+  "filament_dev_ams_drying_temperature": {
+    "friendly": "Filament Dev Ams Drying Temperature"
+  },
+  "filament_dev_ams_drying_time": {
+    "friendly": "Filament Dev Ams Drying Time"
+  },
+  "filament_dev_chamber_drying_bed_temperature": {
+    "friendly": "Filament Dev Chamber Drying Bed Temperature"
+  },
+  "filament_dev_chamber_drying_time": {
+    "friendly": "Filament Dev Chamber Drying Time"
+  },
+  "filament_dev_drying_cooling_temperature": {
+    "friendly": "Filament Dev Drying Cooling Temperature"
+  },
+  "filament_dev_drying_softening_temperature": {
+    "friendly": "Filament Dev Drying Softening Temperature"
+  },
   "filament_diameter": {
     "category": "Filament",
     "friendly": "Diameter",
@@ -1074,10 +1259,21 @@
     "sidetext": "mm",
     "tooltip": "Filament diameter is used to calculate extrusion variables in G-code, so it is important that this is accurate and precise."
   },
+  "filament_enable_overhang_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Enable Overhang Speed",
+    "group": "Speed",
+    "scope": "filament"
+  },
   "filament_end_gcode": {
     "friendly": "End G-code (filament_end_gcode)",
     "label": "End G-code",
     "tooltip": "End G-code when finish the printing of this filament"
+  },
+  "filament_extruder_compatibility": {
+    "friendly": "Filament-extruder compatibility",
+    "label": "Filament-extruder compatibility",
+    "tooltip": "A single 32-bit int encoding the compatibility level of a filament across all extruders (up to 10). Every 3 bits represent one extruder (bits [3*i, 3*i+2] for extruder i). 0: printable, 1: error, 2: critical warning, 3: warning, 4-7: reserved"
   },
   "filament_extruder_id": {
     "friendly": "Filament extruder id",
@@ -1099,24 +1295,29 @@
   },
   "filament_flush_temp": {
     "category": "Multi Filament",
-    "friendly": "Flush temperature",
+    "friendly": "Purge temperature",
     "group": "Multi Filament",
     "label": "Flush temperature",
     "scope": "filament",
     "sidetext": "°C",
-    "tooltip": "temperature when flushing filament. 0 indicates the upper bound of the recommended nozzle temperature range"
+    "tooltip": "temperature when purging filament. 0 indicates the upper bound of the recommended nozzle temperature range"
   },
   "filament_flush_volumetric_speed": {
     "category": "Multi Filament",
-    "friendly": "Flush volumetric speed",
+    "friendly": "Purge volumetric speed",
     "group": "Multi Filament",
     "label": "Flush volumetric speed",
     "scope": "filament",
     "sidetext": "mm³/s",
-    "tooltip": "Volumetric speed when flushing filament. 0 indicates the max volumetric speed"
+    "tooltip": "Volumetric speed when purging filament. 0 indicates the max volumetric speed"
   },
   "filament_ids": {
     "friendly": "Filament Ids"
+  },
+  "filament_is_mixed": {
+    "friendly": "Is mixed filament",
+    "label": "Is mixed filament",
+    "tooltip": "Whether this filament slot is a mixed filament composed of multiple physical filaments"
   },
   "filament_is_support": {
     "category": "Filament",
@@ -1131,11 +1332,17 @@
     "label": "Filament map to extruder",
     "tooltip": "Filament map to extruder"
   },
+  "filament_map_2": {
+    "friendly": "Filament map plus for multi nozzle",
+    "label": "Filament map plus for multi nozzle",
+    "tooltip": "Filament map to the index identified by extruder and nozzle_volume_type"
+  },
   "filament_map_mode": {
     "enum_values": [
       "Auto For Flush",
       "Auto For Match",
       "Manual",
+      "Nozzle Manual",
       "Default"
     ],
     "friendly": "filament mapping mode",
@@ -1151,6 +1358,20 @@
     "sidetext": "mm³/s",
     "tooltip": "This setting is the volume of filament that can be melted and extruded per second. Printing speed is limited by max volumetric speed, in case of too high and unreasonable speed setting. This value cannot be zero."
   },
+  "filament_metal_stickiness": {
+    "category": "Filament",
+    "enum_values": [
+      "None",
+      "Low",
+      "Medium",
+      "High"
+    ],
+    "friendly": "Metal stickiness",
+    "group": "Basic information",
+    "label": "Metal stickiness",
+    "scope": "filament",
+    "tooltip": "Indicates how strongly the filament tends to stick to the metal nozzle and leave residue. \"None\" means untested or custom filament, behaves the same as Low. Low: e.g. PLA - retraction can be safely skipped in infill areas. Medium: moderate stickiness - use with caution. High: e.g. PETG - retraction should not be skipped to avoid oozing artifacts on outer walls."
+  },
   "filament_minimal_purge_on_wipe_tower": {
     "category": "Advanced",
     "friendly": "Minimal purge on wipe tower",
@@ -1160,6 +1381,31 @@
     "sidetext": "mm³",
     "tooltip": "After a tool change, the exact position of the newly loaded filament inside"
   },
+  "filament_mixed_components": {
+    "friendly": "Mixed filament components",
+    "label": "Mixed filament components",
+    "tooltip": "Comma-separated 1-based indices of component filaments, e.g. \"1,3\""
+  },
+  "filament_mixed_gradient": {
+    "friendly": "Mixed filament gradient",
+    "label": "Mixed filament gradient",
+    "tooltip": "Enable Z-direction gradient mode for mixed filament sub-layers. When enabled, the sub-layer ratios vary linearly across layers."
+  },
+  "filament_mixed_gradient_per_part": {
+    "friendly": "Mixed filament per-part gradient",
+    "label": "Mixed filament per-part gradient",
+    "tooltip": "When gradient mode is enabled, apply the gradient to each part of an assembly independently rather than treating the whole assembly as one Z range."
+  },
+  "filament_mixed_gradient_range": {
+    "friendly": "Mixed filament gradient range",
+    "label": "Mixed filament gradient range",
+    "tooltip": "Start and end ratios for the first component in gradient mode. Comma-separated pair, e.g. \"0.10,0.90\" means 10% to 90%."
+  },
+  "filament_mixed_sublayer_ratios": {
+    "friendly": "Mixed filament sublayer ratios",
+    "label": "Mixed filament sublayer ratios",
+    "tooltip": "Comma-separated ratio values summing to 1.0, e.g. \"0.7,0.3\""
+  },
   "filament_multi_colour": {
     "friendly": "Filament Multi Colour"
   },
@@ -1168,49 +1414,140 @@
     "label": "Filament notes",
     "tooltip": "You can put your notes regarding the filament here."
   },
+  "filament_nozzle_map": {
+    "friendly": "Filament Nozzle Map"
+  },
+  "filament_overhang_1_4_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Overhang 1 4 Speed",
+    "group": "Speed",
+    "scope": "filament",
+    "section": "Overhang speed"
+  },
+  "filament_overhang_2_4_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Overhang 2 4 Speed",
+    "group": "Speed",
+    "scope": "filament",
+    "section": "Overhang speed"
+  },
+  "filament_overhang_3_4_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Overhang 3 4 Speed",
+    "group": "Speed",
+    "scope": "filament",
+    "section": "Overhang speed"
+  },
+  "filament_overhang_4_4_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Overhang 4 4 Speed",
+    "group": "Speed",
+    "scope": "filament",
+    "section": "Overhang speed"
+  },
+  "filament_overhang_totally_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Filament Overhang Totally Speed",
+    "group": "Speed",
+    "scope": "filament",
+    "section": "Overhang speed"
+  },
   "filament_pre_cooling_temperature": {
     "category": "Filament",
     "enum_values": [
       "-1"
     ],
-    "friendly": "Precooling target temperature",
+    "friendly": "Extruder change (filament_pre_cooling_temperature)",
     "group": "Basic information",
-    "label": "Precooling target temperature",
+    "label": "Extruder change",
     "scope": "filament",
     "sidetext": "°C",
     "tooltip": "To prevent oozing, the nozzle temperature will be cooled during ramming. Therefore, the ramming time must be greater than the cooldown time. 0 means disabled."
   },
+  "filament_pre_cooling_temperature_nc": {
+    "category": "Filament",
+    "friendly": "Hotend change (filament_pre_cooling_temperature_nc)",
+    "group": "Basic information",
+    "label": "Hotend change",
+    "scope": "filament",
+    "sidetext": "°C",
+    "tooltip": "To prevent oozing, the nozzle temperature will be cooled during ramming. Note: only a cooldown command and fan activation are triggered, reaching the target temperature is not guaranteed. 0 means disabled."
+  },
+  "filament_preheat_temperature_delta": {
+    "friendly": "Preheat temperature delta",
+    "label": "Preheat temperature delta",
+    "sidetext": "°C",
+    "tooltip": "Temperature delta applied during pre-heating before tool change."
+  },
   "filament_prime_volume": {
     "category": "Filament",
-    "friendly": "Filament prime volume",
+    "friendly": "Filament change",
     "group": "Basic information",
-    "label": "Filament prime volume",
+    "label": "Filament change",
     "scope": "filament",
+    "section": "Filament prime volume",
     "sidetext": "mm³",
     "tooltip": "This is the volume of material to prime the extruder with on the tower."
   },
+  "filament_prime_volume_nc": {
+    "category": "Filament",
+    "friendly": "Hotend change (filament_prime_volume_nc)",
+    "group": "Basic information",
+    "label": "Hotend change",
+    "scope": "filament",
+    "section": "Filament prime volume",
+    "sidetext": "mm³",
+    "tooltip": "The volume of material required to prime the extruder for a hotend change on the tower."
+  },
   "filament_printable": {
+    "category": "Filament",
     "friendly": "Filament printable",
+    "group": "Basic information",
     "label": "Filament printable",
+    "scope": "filament",
     "tooltip": "The filament is printable in extruder"
   },
   "filament_ramming_travel_time": {
     "category": "Filament",
-    "friendly": "Travel time after ramming",
+    "friendly": "Extruder change (filament_ramming_travel_time)",
     "group": "Basic information",
-    "label": "Travel time after ramming",
+    "label": "Extruder change",
+    "scope": "filament",
+    "sidetext": "s",
+    "tooltip": "To prevent oozing, the nozzle will perform a reverse travel movement for a certain period after the ramming is complete. The setting define the travel time."
+  },
+  "filament_ramming_travel_time_nc": {
+    "category": "Filament",
+    "friendly": "Hotend change (filament_ramming_travel_time_nc)",
+    "group": "Basic information",
+    "label": "Hotend change",
     "scope": "filament",
     "sidetext": "s",
     "tooltip": "To prevent oozing, the nozzle will perform a reverse travel movement for a certain period after the ramming is complete. The setting define the travel time."
   },
   "filament_ramming_volumetric_speed": {
     "category": "Filament",
-    "friendly": "Ramming volumetric speed",
+    "friendly": "Extruder change (filament_ramming_volumetric_speed)",
     "group": "Volumetric speed limitation",
-    "label": "Ramming volumetric speed",
+    "label": "Extruder change",
     "scope": "filament",
     "sidetext": "mm³/s",
-    "tooltip": "The maximum volumetric speed for ramming, where -1 means using the maximum volumetric speed."
+    "tooltip": "The maximum volumetric speed for ramming before extruder change, where -1 means using the maximum volumetric speed."
+  },
+  "filament_ramming_volumetric_speed_nc": {
+    "category": "Filament",
+    "friendly": "Hotend change (filament_ramming_volumetric_speed_nc)",
+    "group": "Volumetric speed limitation",
+    "label": "Hotend change",
+    "scope": "filament",
+    "sidetext": "mm³/s",
+    "tooltip": "The maximum volumetric speed for ramming before a hotend change, where -1 means using the maximum volumetric speed."
+  },
+  "filament_retract_length_nc": {
+    "friendly": "length when change hotend",
+    "label": "length when change hotend",
+    "sidetext": "mm",
+    "tooltip": "When this retraction value is modified, it will be used as the amount of filament retracted inside the hotend before changing hotends."
   },
   "filament_scarf_gap": {
     "category": "Filament",
@@ -1282,6 +1619,51 @@
     "label": "Start G-code",
     "tooltip": "Start G-code when start the printing of this filament"
   },
+  "filament_tower_interface_pre_extrusion_dist": {
+    "category": "Filament",
+    "friendly": "Interface layer pre-extrusion distance",
+    "group": "Basic information",
+    "label": "Interface layer pre-extrusion distance",
+    "scope": "filament",
+    "sidetext": "mm",
+    "tooltip": "Pre-extrusion distance for prime tower interface layer (where different materials meet)."
+  },
+  "filament_tower_interface_pre_extrusion_length": {
+    "category": "Filament",
+    "friendly": "Interface layer pre-extrusion length",
+    "group": "Basic information",
+    "label": "Interface layer pre-extrusion length",
+    "scope": "filament",
+    "sidetext": "mm",
+    "tooltip": "Pre-extrusion length for prime tower interface layer (where different materials meet)."
+  },
+  "filament_tower_interface_print_temp": {
+    "category": "Filament",
+    "friendly": "Interface layer print temperature",
+    "group": "Basic information",
+    "label": "Interface layer print temperature",
+    "scope": "filament",
+    "sidetext": "°C",
+    "tooltip": "Print temperature for prime tower interface layer (where different materials meet). If set to -1, use max recommended nozzle temperature."
+  },
+  "filament_tower_interface_purge_volume": {
+    "category": "Filament",
+    "friendly": "Interface layer purge length",
+    "group": "Basic information",
+    "label": "Interface layer purge length",
+    "scope": "filament",
+    "sidetext": "mm",
+    "tooltip": "Purge length for prime tower interface layer (where different materials meet)."
+  },
+  "filament_tower_ironing_area": {
+    "category": "Filament",
+    "friendly": "Tower ironing area",
+    "group": "Basic information",
+    "label": "Tower ironing area",
+    "scope": "filament",
+    "sidetext": "mm²",
+    "tooltip": "Ironing area at the prime tower starting point."
+  },
   "filament_type": {
     "enum_values": [
       "PLA",
@@ -1338,10 +1720,21 @@
     "scope": "filament",
     "tooltip": "Vendor of filament. For show only"
   },
+  "filament_volume_map": {
+    "friendly": "Filament Volume Map"
+  },
   "filename_format": {
     "friendly": "Filename format",
     "label": "Filename format",
     "tooltip": "User can self-define the project file name when export"
+  },
+  "fill_multiline": {
+    "category": "Strength",
+    "friendly": "Fill multiline",
+    "group": "Sparse infill",
+    "label": "Fill multiline",
+    "scope": "process",
+    "tooltip": "Using multiple lines for the infill pattern, if supported by infill pattern."
   },
   "filter_out_gap_fill": {
     "category": "Strength",
@@ -1349,7 +1742,8 @@
     "group": "Sparse infill",
     "label": "Filter out tiny gaps",
     "scope": "process",
-    "tooltip": "Filter out gaps smaller than the threshold specified. This setting won't affect top/bottom layers."
+    "sidetext": "mm",
+    "tooltip": "Filter out gaps smaller than the threshold specified. Gaps smaller than this threshold will be ignored"
   },
   "first_layer_print_sequence": {
     "friendly": "First layer print sequence",
@@ -1364,34 +1758,52 @@
     "friendly": "First layer filament sequence",
     "label": "First layer filament sequence"
   },
+  "first_x_layer_fan_speed": {
+    "category": "Cooling",
+    "friendly": "Fan speed (first_x_layer_fan_speed)",
+    "group": "Auxiliary part cooling fan",
+    "label": "Fan speed",
+    "scope": "filament",
+    "sidetext": "%",
+    "tooltip": "Special auxiliary cooling fan speed, effective only for the first x layers"
+  },
+  "first_x_layer_part_fan_speed": {
+    "category": "Cooling",
+    "friendly": "Fan speed (first_x_layer_part_fan_speed)",
+    "group": "Part cooling fan",
+    "label": "Fan speed",
+    "scope": "filament",
+    "sidetext": "%",
+    "tooltip": "Part cooling fan speed for the first few layers. Set to 0 to disable the part cooling fan on the initial layers for better bed adhesion"
+  },
   "flush_into_infill": {
-    "category": "Flush options",
-    "friendly": "Flush into objects' infill",
-    "group": "Flush options",
+    "category": "Purge options",
+    "friendly": "Purge into objects' infill",
+    "group": "Purge options",
     "label": "Flush into objects' infill",
     "scope": "process",
     "tooltip": "Purging after filament change will be done inside objects' infills. This may lower the amount of waste and decrease the print time. If the walls are printed with transparent filament, the mixed color infill will be visible. It will not take effect unless the prime tower is enabled."
   },
   "flush_into_objects": {
-    "category": "Flush options",
-    "friendly": "Flush into this object",
-    "group": "Flush options",
+    "category": "Purge options",
+    "friendly": "Purge into this object",
+    "group": "Purge options",
     "label": "Flush into this object",
     "scope": "process",
     "tooltip": "This object will be used to purge the nozzle after a filament change to save filament and decrease the print time. Colors of the objects will be mixed as a result. It will not take effect unless the prime tower is enabled."
   },
   "flush_into_support": {
-    "category": "Flush options",
-    "friendly": "Flush into objects' support",
-    "group": "Flush options",
+    "category": "Purge options",
+    "friendly": "Purge into objects' support",
+    "group": "Purge options",
     "label": "Flush into objects' support",
     "scope": "process",
     "tooltip": "Purging after filament change will be done inside objects' support. This may lower the amount of waste and decrease the print time. It will not take effect unless a prime tower is enabled."
   },
   "flush_multiplier": {
-    "friendly": "Flush multiplier",
+    "friendly": "Purge multiplier",
     "label": "Flush multiplier",
-    "tooltip": "The actual flushing volumes is equal to the flush multiplier value multiplied by the flushing volumes in the table."
+    "tooltip": "The actual purging volumes is equal to the purge multiplier value multiplied by the purging volumes in the table."
   },
   "flush_volumes_matrix": {
     "friendly": "Purging volumes",
@@ -1404,11 +1816,8 @@
     "tooltip": "This vector saves required volumes to change from/to each tool used on the"
   },
   "full_fan_speed_layer": {
-    "category": "Cooling",
-    "friendly": "Full fan speed at layer",
-    "group": "Cooling for specific layer",
+    "friendly": "Full fan speed at layer (full_fan_speed_layer)",
     "label": "Full fan speed at layer",
-    "scope": "filament",
     "tooltip": "Fan speed will be ramped up linearly from zero at layer \"close_fan_the_first_x_layers\""
   },
   "fuzzy_skin": {
@@ -1417,13 +1826,59 @@
       "none",
       "external",
       "all",
-      "allwalls"
+      "allwalls",
+      "disabled_fuzzy"
     ],
     "friendly": "Fuzzy Skin",
     "group": "Special mode",
     "label": "Fuzzy Skin",
     "scope": "process",
     "tooltip": "This setting makes the toolhead randomly jitter while printing walls so that the surface has a rough textured look. This setting controls the fuzzy position."
+  },
+  "fuzzy_skin_first_layer": {
+    "category": "Others",
+    "friendly": "Apply fuzzy skin to first layer",
+    "group": "Special mode",
+    "label": "Apply fuzzy skin to first layer",
+    "scope": "process",
+    "tooltip": "Whether to apply fuzzy skin on the first layer."
+  },
+  "fuzzy_skin_mode": {
+    "category": "Others",
+    "enum_values": [
+      "displacement",
+      "extrusion",
+      "combined"
+    ],
+    "friendly": "Fuzzy skin generator mode",
+    "group": "Special mode",
+    "label": "Fuzzy skin generator mode",
+    "scope": "process",
+    "tooltip": "Displacement: Pattern is formed by shifting the nozzle sideways from the original path.\nExtrusion: Pattern is formed by varying the amount of extruded plastic (nozzle path stays straight).\nCombined: Displacement + Extrusion. Similar look to Displacement but fills gaps between perimeters.\nNote: Extrusion and Combined only work when fuzzy skin thickness is not greater than the printed line width."
+  },
+  "fuzzy_skin_noise_type": {
+    "category": "Others",
+    "friendly": "Fuzzy skin noise type",
+    "group": "Special mode",
+    "label": "Fuzzy skin noise type",
+    "scope": "process",
+    "tooltip": "Noise type to use for fuzzy skin generation:\nClassic: Classic uniform random noise.\nPerlin: Perlin noise, which gives a more consistent texture.\nBillow: Similar to perlin noise, but clumpier.\nRidged Multifractal: Ridged noise with sharp, jagged features. Creates marble-like textures.\nVoronoi: Divides the surface into voronoi cells, and displaces each one by a random amount. Creates a patchwork texture."
+  },
+  "fuzzy_skin_octaves": {
+    "category": "Others",
+    "friendly": "Fuzzy skin noise octaves",
+    "group": "Special mode",
+    "label": "Fuzzy skin noise octaves",
+    "scope": "process",
+    "tooltip": "The number of octaves of coherent noise to use. Higher values increase the detail of the noise, but also increase computation time."
+  },
+  "fuzzy_skin_persistence": {
+    "category": "Others",
+    "friendly": "Fuzzy skin noise persistence",
+    "group": "Special mode",
+    "label": "Fuzzy skin noise persistence",
+    "scope": "process",
+    "tooltip": "The decay rate for higher octaves of the coherent noise. Lower values will result in smoother noise."
   },
   "fuzzy_skin_point_distance": {
     "category": "Others",
@@ -1433,6 +1888,15 @@
     "scope": "process",
     "sidetext": "mm",
     "tooltip": "The average distance between the random points introduced on each line segment"
+  },
+  "fuzzy_skin_scale": {
+    "category": "Others",
+    "friendly": "Fuzzy skin feature size",
+    "group": "Special mode",
+    "label": "Fuzzy skin feature size",
+    "scope": "process",
+    "sidetext": "mm",
+    "tooltip": "The base size of the coherent noise features, in mm. Higher values will result in larger features."
   },
   "fuzzy_skin_thickness": {
     "category": "Others",
@@ -1483,6 +1947,14 @@
     "friendly": "Grab length",
     "label": "Grab length",
     "sidetext": "mm"
+  },
+  "group_algo_with_time": {
+    "friendly": "Group Algo With Time"
+  },
+  "has_filament_switcher": {
+    "friendly": "Has filament switcher",
+    "label": "Has filament switcher",
+    "tooltip": "Whether a filament switcher is connected to the printer"
   },
   "has_scarf_joint_seam": {
     "friendly": "Has Scarf Joint Seam"
@@ -1647,9 +2119,17 @@
     "sidetext": "°",
     "tooltip": "This is the angle for sparse infill pattern, which controls the start or main direction of lines."
   },
+  "infill_instead_top_bottom_surfaces": {
+    "category": "Strength",
+    "friendly": "Using infill instead of top and bottom surfaces",
+    "group": "Top/bottom shells",
+    "label": "Use infill instead of top and bottom surfaces",
+    "scope": "process",
+    "tooltip": "Using infill instead of top and bottom surfaces."
+  },
   "infill_jerk": {
     "category": "Speed",
-    "friendly": "Infill (infill_jerk)",
+    "friendly": "Infill",
     "group": "Jerk(XY)",
     "label": "Infill",
     "scope": "process",
@@ -1924,6 +2404,15 @@
     "sidetext": "°",
     "tooltip": "Angle for ironing, which controls the relative angle between the top surface and ironing"
   },
+  "ironing_fan_speed": {
+    "category": "Cooling",
+    "friendly": "Ironing fan speed",
+    "group": "Part cooling fan",
+    "label": "Ironing fan speed",
+    "scope": "filament",
+    "sidetext": "%",
+    "tooltip": "This part cooling fan speed is applied when ironing. Setting this parameter to a lower than regular speed reduces possible nozzle clogging due to the low volumetric flow rate, making the interface smoother. Set to -1 to disable it."
+  },
   "ironing_flow": {
     "category": "Quality",
     "friendly": "Ironing flow",
@@ -2116,7 +2605,7 @@
     "group": "Retraction when switching material",
     "label": "Long retraction when cut(experimental)",
     "scope": "machine",
-    "tooltip": "Experimental feature: Retracting and cutting off the filament at a longer distance during changes to minimize purge.While this reduces flush significantly, it may also raise the risk of nozzle clogs or other printing problems."
+    "tooltip": "Experimental feature: Retracting and cutting off the filament at a longer distance during changes to minimize purge.While this reduces purge significantly, it may also raise the risk of nozzle clogs or other printing problems."
   },
   "long_retractions_when_ec": {
     "category": "Multi Filament",
@@ -2129,6 +2618,15 @@
     "friendly": "End G-code (machine_end_gcode)",
     "label": "End G-code",
     "tooltip": "End G-code when finish the whole printing"
+  },
+  "machine_hotend_change_time": {
+    "category": "Basic information",
+    "friendly": "Hotend change time",
+    "group": "Advanced",
+    "label": "Hotend change time",
+    "scope": "machine",
+    "sidetext": "s",
+    "tooltip": "Time to change hotend."
   },
   "machine_load_filament_time": {
     "category": "Basic information",
@@ -2421,6 +2919,15 @@
     "sidetext": "mm",
     "tooltip": "Maximum width of a segmented region. A value of 0 disables this feature."
   },
+  "monotonic_travel_into_wall": {
+    "category": "Strength",
+    "friendly": "Monotonic line travel extend",
+    "group": "Advanced",
+    "label": "Monotonic line travel extend",
+    "scope": "process",
+    "sidetext": "%",
+    "tooltip": "Enable this option to extend the travel distance between lines, improving the adhesion between the monotonic line infill and the walls.(percent to line width)"
+  },
   "mstpp": {
     "friendly": "mstpp",
     "label": "mstpp",
@@ -2435,6 +2942,14 @@
     "friendly": "No check",
     "label": "No check",
     "tooltip": "Do not run any validity checks, such as gcode path conflicts check."
+  },
+  "no_slow_down_for_cooling_on_outwalls": {
+    "category": "Cooling",
+    "friendly": "Don't slow down outer walls",
+    "group": "Part cooling fan",
+    "label": "Don't slow down outer walls",
+    "scope": "filament",
+    "tooltip": "If enabled, this setting will ensure external perimeters are not slowed down to meet the minimum layer time. This is particularly helpful in the below scenarios:\n1. To avoid changes in shine when printing glossy filaments\n2. To avoid changes in external wall speed which may create slight wall artifacts that appear like Z banding\n3. To avoid printing at speeds which cause VFAs (fine artifacts) on the external walls"
   },
   "normative_check": {
     "friendly": "Normative check",
@@ -2485,7 +3000,6 @@
     "group": "Basic information",
     "label": "Max",
     "scope": "filament",
-    "section": "Recommended nozzle temperature",
     "sidetext": "°C"
   },
   "nozzle_temperature_range_low": {
@@ -2494,7 +3008,6 @@
     "group": "Basic information",
     "label": "Min",
     "scope": "filament",
-    "section": "Recommended nozzle temperature",
     "sidetext": "°C"
   },
   "nozzle_type": {
@@ -2709,7 +3222,15 @@
     "group": "Seam",
     "label": "Override filament scarf seam setting",
     "scope": "process",
-    "tooltip": "Overrider filament scarf seam setting and could control settings by modifier."
+    "tooltip": "Override filament scarf seam setting and could control settings by modifier."
+  },
+  "override_process_overhang_speed": {
+    "category": "Setting Overrides",
+    "friendly": "Override overhang speed",
+    "group": "Speed",
+    "label": "Override overhang speed",
+    "scope": "filament",
+    "tooltip": "Override the overhang speed in process page"
   },
   "pad_around_object": {
     "category": "Pad",
@@ -2806,7 +3327,7 @@
     "group": "Precision",
     "label": "Precise wall",
     "scope": "process",
-    "tooltip": "Improve shell precision by adjusting outer wall spacing. This also improves layer consistency."
+    "tooltip": "Improve shell precision by adjusting outer wall spacing. This also improves layer consistency. NOTE: This option will be ignored unless the order of walls is set to inner/outer"
   },
   "precise_z_height": {
     "category": "Quality",
@@ -2911,7 +3432,7 @@
     "label": "Rib width",
     "scope": "process",
     "sidetext": "mm",
-    "tooltip": "Rib width"
+    "tooltip": "Rib width is always less than half the prime tower side length."
   },
   "prime_tower_skip_points": {
     "category": "Others",
@@ -2935,6 +3456,13 @@
     "label": "Prime volume",
     "sidetext": "mm³",
     "tooltip": "This is the volume of material to prime the extruder with on the tower."
+  },
+  "prime_volume_mode": {
+    "enum_values": [
+      "Default",
+      "Saving"
+    ],
+    "friendly": "Prime Volume Mode"
   },
   "print_compatible_printers": {
     "friendly": "Print Compatible Printers"
@@ -2966,6 +3494,14 @@
     "friendly": "Device UI",
     "label": "Device UI",
     "tooltip": "Specify the URL of your device user interface if it's not the same as print_host"
+  },
+  "print_in_clockwise": {
+    "category": "Basic information",
+    "friendly": "Print loops in clockwise",
+    "group": "Advanced",
+    "label": "Print loops in clockwise",
+    "scope": "machine",
+    "tooltip": "Print in clockwise when enabled, or counterclockwise when not enabled, not work for spiral vase mode"
   },
   "print_sequence": {
     "category": "Plate Settings",
@@ -3135,7 +3671,7 @@
     "group": "Advanced",
     "label": "Avoid crossing wall",
     "scope": "process",
-    "tooltip": "Detour and avoid traveling across walls to avoid the possibility of creating blobs on surfaces"
+    "tooltip": "Detour and avoid traveling across wall which may cause blob on surface (when travel length greater than Travel distance threshold)"
   },
   "reduce_fan_stop_start_freq": {
     "category": "Cooling",
@@ -3145,13 +3681,18 @@
     "scope": "filament",
     "tooltip": "Enabling this setting means that the part cooling fan will run continuously at minimum speed instead of stopping to reduce the frequency of starting and stopping."
   },
-  "reduce_infill_retraction": {
+  "reduce_infill_retraction_mode": {
     "category": "Others",
+    "enum_values": [
+      "Disabled",
+      "Auto",
+      "Enabled"
+    ],
     "friendly": "Reduce infill retraction",
     "group": "G-code output",
     "label": "Reduce infill retraction",
     "scope": "process",
-    "tooltip": "Don't retract when the travel is entirely in an infill area. That means the oozing can't been seen. This can reduce times of retraction for complex model and save printing time, but make slicing and G-code generation slower."
+    "tooltip": "Controls whether retraction is skipped when traveling within the infill area. \"Auto\" enables this optimization for filaments with low metal stickiness (e.g. PLA) and disables it for medium/high metal stickiness filaments (e.g. PETG) to avoid oozing artifacts. \"Enabled\" always skips retraction in infill areas regardless of filament type. \"Disabled\" always retracts normally."
   },
   "relative_correction": {
     "friendly": "Relative Correction"
@@ -3236,7 +3777,7 @@
     "label": "Extra length on restart",
     "scope": "machine",
     "sidetext": "mm",
-    "tooltip": "When the retraction is compensated after the travel move, the extruder will push"
+    "tooltip": "When the retraction is compensated after the travel move, the extruder will push this additional amount of filament. This setting is rarely needed."
   },
   "retract_restart_extra_toolchange": {
     "category": "Single extruder MM setup",
@@ -3245,7 +3786,7 @@
     "label": "Extra length on restart",
     "scope": "machine",
     "sidetext": "mm",
-    "tooltip": "When the retraction is compensated after changing tool, the extruder will push"
+    "tooltip": "When the retraction is compensated after changing tool, the extruder will push this additional amount of filament."
   },
   "retract_when_changing_layer": {
     "category": "Single extruder MM setup",
@@ -3713,7 +4254,9 @@
   "solid_infill_filament": {
     "category": "Extruders",
     "friendly": "Solid infill",
+    "group": "Advanced",
     "label": "Solid infill",
+    "scope": "process",
     "tooltip": "Filament to print solid infill"
   },
   "spaghetti_detector": {
@@ -3761,9 +4304,29 @@
   },
   "sparse_infill_filament": {
     "category": "Extruders",
-    "friendly": "Infill (sparse_infill_filament)",
-    "label": "Infill",
+    "friendly": "Sparse infill filament",
+    "group": "Advanced",
+    "label": "Sparse infill filament",
+    "scope": "process",
     "tooltip": "Filament to print internal sparse infill."
+  },
+  "sparse_infill_lattice_angle_1": {
+    "category": "Strength",
+    "friendly": "Lattice angle 1",
+    "group": "Sparse infill",
+    "label": "Lattice angle 1",
+    "scope": "process",
+    "sidetext": "°",
+    "tooltip": "The angle of the first set of 2D lattice elements in the Z direction. Zero is vertical."
+  },
+  "sparse_infill_lattice_angle_2": {
+    "category": "Strength",
+    "friendly": "Lattice angle 2",
+    "group": "Sparse infill",
+    "label": "Lattice angle 2",
+    "scope": "process",
+    "sidetext": "°",
+    "tooltip": "The angle of the second set of 2D lattice elements in the Z direction. Zero is vertical."
   },
   "sparse_infill_line_width": {
     "category": "Quality",
@@ -3797,7 +4360,8 @@
       "crosshatch",
       "zigzag",
       "crosszag",
-      "lockedzag"
+      "lockedzag",
+      "2dlattice"
     ],
     "friendly": "Sparse infill pattern",
     "group": "Sparse infill",
@@ -3963,6 +4527,9 @@
     "scope": "machine",
     "tooltip": "This option is enabled if machine support controlling chamber temperature"
   },
+  "support_cooling_filter": {
+    "friendly": "Support Cooling Filter"
+  },
   "support_critical_angle": {
     "category": "Supports",
     "friendly": "Support Critical Angle",
@@ -4066,7 +4633,7 @@
     "label": "Top interface spacing",
     "scope": "process",
     "sidetext": "mm",
-    "tooltip": "Spacing of interface lines. Zero means solid interface"
+    "tooltip": "Spacing of interface lines. Zero means solid interface.And zero spacing is required to access the enable_support_ironing option"
   },
   "support_interface_speed": {
     "category": "Speed",
@@ -4091,6 +4658,62 @@
     "scope": "process",
     "sidetext": "layers",
     "tooltip": "Number of top interface layers"
+  },
+  "support_ironing_direction": {
+    "category": "Support",
+    "friendly": "Support ironing direction",
+    "group": "Support ironing",
+    "label": "Support ironing direction",
+    "scope": "process",
+    "sidetext": "°",
+    "tooltip": "Angle for ironing, which controls the relative angle between the top surface and ironing"
+  },
+  "support_ironing_flow": {
+    "category": "Support",
+    "friendly": "Support ironing flow",
+    "group": "Support ironing",
+    "label": "Support ironing flow",
+    "scope": "process",
+    "sidetext": "%",
+    "tooltip": "This is the amount of material to be extruded during ironing. It is relative to the flow of normal layer height. Too high a value will result in overextrusion on the surface."
+  },
+  "support_ironing_inset": {
+    "category": "Support",
+    "friendly": "Support ironing inset",
+    "group": "Support ironing",
+    "label": "Support ironing inset",
+    "scope": "process",
+    "sidetext": "mm",
+    "tooltip": "The distance to keep the from the edges of ironing line. 0 means not apply."
+  },
+  "support_ironing_pattern": {
+    "category": "Support",
+    "enum_values": [
+      "concentric",
+      "zig-zag"
+    ],
+    "friendly": "Support ironing pattern",
+    "group": "Support ironing",
+    "label": "Support ironing pattern",
+    "scope": "process"
+  },
+  "support_ironing_spacing": {
+    "category": "Support",
+    "friendly": "Support ironing line spacing",
+    "group": "Support ironing",
+    "label": "Support ironing line spacing",
+    "scope": "process",
+    "sidetext": "mm",
+    "tooltip": "The distance between the lines of ironing"
+  },
+  "support_ironing_speed": {
+    "category": "Support",
+    "friendly": "Support ironing speed",
+    "group": "Support ironing",
+    "label": "Support ironing speed",
+    "scope": "process",
+    "sidetext": "mm/s",
+    "tooltip": "Print speed of ironing lines"
   },
   "support_line_width": {
     "category": "Quality",
@@ -4129,6 +4752,9 @@
     "scope": "process",
     "sidetext": "mm",
     "tooltip": "XY separation between an object and its support at the first layer."
+  },
+  "support_object_skip_flush": {
+    "friendly": "Support Object Skip Flush"
   },
   "support_object_xy_distance": {
     "category": "Support",
@@ -4394,6 +5020,15 @@
     "sidetext": "mm/s²",
     "tooltip": "This is the acceleration of top surface infill. Using a lower value may improve top surface quality."
   },
+  "top_surface_density": {
+    "category": "Strength",
+    "friendly": "Top surface density",
+    "group": "Top/bottom shells",
+    "label": "Top surface density",
+    "scope": "process",
+    "sidetext": "%",
+    "tooltip": "Density of top surface infill, 100% means a fully solid filled top layer.Lower values create a textured top surface, at 0%, only the walls are created on the top layer.Intended for aesthetic or functional purposes, not to fix issues such as over-extrusion."
+  },
   "top_surface_jerk": {
     "category": "Speed",
     "friendly": "Top surface (top_surface_jerk)",
@@ -4439,6 +5074,14 @@
     "sidetext": "mm/s",
     "tooltip": "Speed of top surface infill which is solid"
   },
+  "top_z_overrides_xy_distance": {
+    "category": "Support",
+    "friendly": "Z overrides X/Y",
+    "group": "Advanced",
+    "label": "Z overrides X/Y",
+    "scope": "process",
+    "tooltip": "When top z distance overrides support/object xy distance, give priority to ensuring that supports are generated beneath overhangs, and a gap of the same size as top z distance is leaved with the model. Whereas in the opposite case, the gap between supports and the model follows support/object xy distance all the time. Only recommended to enable when using HybridTree."
+  },
   "travel_acceleration": {
     "category": "Speed",
     "friendly": "Travel (travel_acceleration)",
@@ -4456,6 +5099,15 @@
     "scope": "process",
     "sidetext": "mm/s",
     "tooltip": "Jerk of travel"
+  },
+  "travel_short_distance_acceleration": {
+    "category": "Speed",
+    "friendly": "Short travel",
+    "group": "Acceleration",
+    "label": "Short travel",
+    "scope": "process",
+    "sidetext": "mm/s²",
+    "tooltip": "Acceleration used for short travel moves near external perimeters. Short travels are moves shorter than the 'Retraction minimum travel' distance.\n\nLower values (e.g., 250-500 mm/s²) reduce ringing artifacts on sharp corners without significantly impacting print time.\n\nSet to 0 to disable (uses normal travel acceleration)."
   },
   "travel_speed": {
     "category": "Speed",
@@ -4575,7 +5227,9 @@
   "wall_filament": {
     "category": "Extruders",
     "friendly": "Walls",
+    "group": "Advanced",
     "label": "Walls",
+    "scope": "process",
     "tooltip": "Filament to print walls"
   },
   "wall_generator": {
@@ -4731,7 +5385,7 @@
     "group": "Advanced",
     "label": "Smoothing wall speed along Z(experimental)",
     "scope": "process",
-    "tooltip": "Smoothing outer wall speed in z direction to get better surface quality: Print time will increase. This is not work in spiral vase mode."
+    "tooltip": "Smoothing outwall speed in z direction to get better surface quality. Print time will increases. This does not work on spiral vase mode."
   },
   "z_hop": {
     "category": "Single extruder MM setup",

@@ -158,6 +158,81 @@ class BambuProfileExtractor:
 
         return 0
 
+    def _resolve_filament_variant_index(self, project_config: Dict[str, Any]) -> int:
+        """Return the variant offset within a single filament's stride.
+
+        Per-(filament × variant) arrays in project_config are laid out as
+        contiguous strides — each filament occupies len(filament_extruder_variant)
+        / len(filament_settings_id) entries, and within that stride entries follow
+        the order in filament_extruder_variant. This returns the index within
+        that stride matching the active nozzle volume type (e.g. 'High Flow').
+        """
+        nozzle_volume_type = project_config.get('nozzle_volume_type') or []
+        filament_extruder_variant = project_config.get('filament_extruder_variant') or []
+        if not nozzle_volume_type or not filament_extruder_variant:
+            return 0
+
+        filament_count = max(1, len(project_config.get('filament_settings_id') or []))
+        stride = max(1, len(filament_extruder_variant) // filament_count)
+
+        active = nozzle_volume_type[0].lower()
+        for i in range(min(stride, len(filament_extruder_variant))):
+            if active in filament_extruder_variant[i].lower():
+                return i
+        return 0
+
+    def _resolve_filament_array_value(
+        self,
+        value: List[Any],
+        slot_index: int,
+        variant_index: int,
+        filament_count: int,
+    ) -> Any:
+        """Pick the right element from a project-level filament array.
+
+        Arrays come in three flavours: length 1 (shared), length == filament_count
+        (one per slot), or length == filament_count * stride (per-(slot × variant)).
+        """
+        if not value:
+            return None
+        if len(value) == 1:
+            return value[0]
+        filament_count = max(1, filament_count)
+        if len(value) == filament_count:
+            return value[slot_index] if slot_index < len(value) else value[-1]
+        if len(value) % filament_count == 0:
+            stride = len(value) // filament_count
+            rel = min(variant_index, stride - 1)
+            abs_idx = slot_index * stride + rel
+            if abs_idx < len(value):
+                return value[abs_idx]
+        return value[slot_index] if slot_index < len(value) else value[-1]
+
+    def _read_printer_model_id(
+        self,
+        zf: zipfile.ZipFile,
+        file_list: List[str],
+        plate_number: Optional[int],
+    ) -> Optional[str]:
+        if 'Metadata/slice_info.config' not in file_list:
+            return None
+        try:
+            tree = ET.fromstring(zf.read('Metadata/slice_info.config'))
+        except ET.ParseError:
+            return None
+
+        for plate_elem in tree.findall('.//plate'):
+            if plate_number is not None:
+                idx_elem = plate_elem.find("./metadata[@key='index']")
+                if idx_elem is None or idx_elem.get('value') != str(plate_number):
+                    continue
+            value_elem = plate_elem.find("./metadata[@key='printer_model_id']")
+            if value_elem is not None:
+                value = value_elem.get('value')
+                if value:
+                    return value
+        return None
+
     def _normalize_overrides(self, overrides: Dict[str, Any]) -> Dict[str, Any]:
         if not isinstance(overrides, dict):
             return overrides
@@ -359,8 +434,21 @@ class BambuProfileExtractor:
 
         return merged
 
-    def apply_project_overrides(self, base_settings: Dict, project_config: Dict, setting_type: str, index: int = 0) -> Dict:
-        """Apply project_settings.config overrides to base settings"""
+    def apply_project_overrides(
+        self,
+        base_settings: Dict,
+        project_config: Dict,
+        setting_type: str,
+        index: int = 0,
+        *,
+        variant_index: int = 0,
+        filament_count: int = 1,
+    ) -> Dict:
+        """Apply project_settings.config overrides to base settings.
+
+        For filament scope, list values may be laid out per-slot or
+        per-(slot × variant); `variant_index` selects the variant within a slot.
+        """
         result = base_settings.copy()
 
         for key, value in project_config.items():
@@ -375,7 +463,13 @@ class BambuProfileExtractor:
 
             if belongs:
                 if isinstance(value, list):
-                    if len(value) > index:
+                    if setting_type == 'filament':
+                        resolved = self._resolve_filament_array_value(
+                            value, index, variant_index, filament_count
+                        )
+                        if resolved is not None:
+                            result[key] = resolved
+                    elif len(value) > index:
                         result[key] = value[index]
                     elif value:
                         result[key] = value[-1]
@@ -484,6 +578,10 @@ class BambuProfileExtractor:
                     if text.startswith('{'):
                         project_config = json.loads(text)
 
+                # Canonical printer model id (e.g. "N6" for X2D) — only present in
+                # sliced 3MFs, written per-plate into slice_info.config.
+                model_id = self._read_printer_model_id(zf, file_list, plate_number)
+
                 # Load embedded presets (filament and process)
                 embedded_presets: Dict[str, Any] = {}
                 embedded_process_by_plate: Dict[int, Dict[str, Any]] = {}
@@ -521,7 +619,7 @@ class BambuProfileExtractor:
                     machine_settings = self.apply_project_overrides(machine_base, project_config, 'machine') if resolve_inheritance else machine_base
                     if not include_gcode:
                         machine_settings = self.filter_gcode_keys(machine_settings)
-                    result['machine'] = {'id': machine_id, 'settings': machine_settings}
+                    result['machine'] = {'id': machine_id, 'model_id': model_id, 'settings': machine_settings}
 
                 # Process (project-level)
                 # Determine the active extruder variant index for process settings arrays
@@ -640,9 +738,23 @@ class BambuProfileExtractor:
 
                 # Filaments (only used ones, unique by preset id)
                 filaments: Dict[str, Any] = {}
+                filament_variant_idx = self._resolve_filament_variant_index(project_config)
+                filament_count = len(filament_ids) if filament_ids else 1
                 for fid, slot_index in used_filaments.items():
-                    filament_base = self.merge_preset_chain(fid, 'filament', embedded_presets, slot_index)
-                    filament_settings = self.apply_project_overrides(filament_base, project_config, 'filament', slot_index) if resolve_inheritance else filament_base
+                    # Preset arrays are per-variant only (e.g. one filament profile
+                    # holds nozzle_temperature for all variants); index by variant.
+                    filament_base = self.merge_preset_chain(
+                        fid, 'filament', embedded_presets, filament_variant_idx
+                    )
+                    if resolve_inheritance:
+                        filament_settings = self.apply_project_overrides(
+                            filament_base, project_config, 'filament',
+                            index=slot_index,
+                            variant_index=filament_variant_idx,
+                            filament_count=filament_count,
+                        )
+                    else:
+                        filament_settings = filament_base
                     if not include_gcode:
                         filament_settings = self.filter_gcode_keys(filament_settings)
                     filaments[fid] = {
