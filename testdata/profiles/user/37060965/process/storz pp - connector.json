@@ -1,0 +1,45 @@
+{
+    "bottom_surface_pattern": "concentric",
+    "brim_type": "outer_and_inner",
+    "detect_overhang_wall": "0",
+    "enable_prime_tower": "0",
+    "from": "User",
+    "infill_combination": "1",
+    "infill_wall_overlap": "20%",
+    "inherits": "0.18mm Standard @BBL X1C 0.6 nozzle",
+    "min_bead_width": "50%",
+    "name": "storz pp - connector",
+    "outer_wall_acceleration": [
+        "2500"
+    ],
+    "print_extruder_id": [
+        "1"
+    ],
+    "print_extruder_variant": [
+        "Direct Drive Standard"
+    ],
+    "print_settings_id": "storz pp - connector",
+    "seam_gap": "0%",
+    "seam_slope_conditional": "0",
+    "seam_slope_type": "all",
+    "small_perimeter_speed": [
+        "80%"
+    ],
+    "sparse_infill_anchor": "200%",
+    "sparse_infill_pattern": "zigzag",
+    "thick_bridges": "1",
+    "top_one_wall_type": "not apply",
+    "top_shell_layers": "5",
+    "top_surface_acceleration": [
+        "1000"
+    ],
+    "top_surface_pattern": "monotonic",
+    "top_surface_speed": [
+        "35"
+    ],
+    "version": "2.2.0.3",
+    "vertical_shell_speed": [
+        "100%"
+    ],
+    "wall_generator": "arachne"
+}

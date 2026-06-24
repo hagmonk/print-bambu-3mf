@@ -28,8 +28,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("src/bambu_3mf/data/labels.json"),
-        help="Destination JSON file for the extracted labels",
+        default=Path("internal/bambu/labels.json"),
+        help="Destination JSON file for the extracted labels (embedded into the Go binary)",
     )
     return parser.parse_args()
 

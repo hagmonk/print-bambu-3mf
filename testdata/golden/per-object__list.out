@@ -1,0 +1,115 @@
+
+per-object.3mf:
+----------------------------------------
+
+Plates:
+  Plate 1:
+    - louise.step
+    - Genesis.step
+    - Margot.step
+    - Sandy.step
+  Plate 2:
+    - a.step
+    - b.step
+    - c.step
+    - d.step
+  Plate 3:
+    - Randy.step
+    - Assembly
+  Plate 4:
+    - Assembly
+    - Ron.step
+    - Caroline.step
+    - Cassidy.step
+  Plate 5:
+    - iSarah.step
+    - Caroline.step
+    - Dave.step
+    - Ying Jian.step
+  Plate 6:
+    - Chief Unfucking.step
+    - Biff.step
+    - Ivan.step
+  Plate 7:
+    - Chief Creative.step
+    - Sara.step
+  Plate 8:
+    - Sandy.step
+  Plate 9:
+    - Ivan.step
+  Plate 10:
+    - a.step
+  Plate 11:
+    - b.step
+  Plate 12:
+    - c.step
+  Plate 13:
+    - d.step
+  Plate 14:
+    - Randy.step
+  Plate 15:
+    - Assembly
+  Plate 16:
+    - Assembly
+  Plate 17:
+    - Ron.step
+  Plate 18:
+    - Caroline.step
+  Plate 19:
+    - Cassidy.step
+  Plate 20:
+    - iSarah.step
+  Plate 21:
+    - Caroline.step
+  Plate 22:
+    - Dave.step
+  Plate 23:
+    - Ying Jian.step
+
+Objects:
+  [0] louise.step
+      ID: 9, Extruder: 1
+  [1] Ivan.step
+      ID: 69, Extruder: 1
+  [2] Sandy.step
+      ID: 60, Extruder: 1
+  [3] a.step
+      ID: 88, Extruder: 1
+  [4] b.step
+      ID: 107, Extruder: 1
+  [5] Chief Creative.step
+      ID: 12, Extruder: 1
+  [6] Chief Unfucking.step
+      ID: 15, Extruder: 1
+  [7] Sara.step
+      ID: 33, Extruder: 1
+  [8] Genesis.step
+      ID: 24, Extruder: 1
+  [9] Biff.step
+      ID: 51, Extruder: 1
+  [10] Margot.step
+      ID: 42, Extruder: 1
+  [11] c.step
+      ID: 126, Extruder: 1
+  [12] d.step
+      ID: 145, Extruder: 1
+  [13] Randy.step
+      ID: 174, Extruder: 1
+  [14] Assembly
+      ID: 200, Extruder: 6
+  [15] Assembly
+      ID: 222, Extruder: 3
+  [16] Ron.step
+      ID: 247, Extruder: 1
+  [17] Caroline.step
+      ID: 270, Extruder: 1
+  [18] Cassidy.step
+      ID: 291, Extruder: 1
+  [19] iSarah.step
+      ID: 315, Extruder: 1
+  [20] Caroline.step
+      ID: 341, Extruder: 1
+  [21] Dave.step
+      ID: 355, Extruder: 1
+  [22] Ying Jian.step
+      ID: 384, Extruder: 1

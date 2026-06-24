@@ -1,0 +1,762 @@
+{
+  "saved-process.3mf": {
+    "filaments": {
+      "floor protector": {
+        "id": "floor protector",
+        "settings": {
+          "Advanced": {
+            "Wipe tower parameters": {
+              "Minimal purge on wipe tower": "15 mm³"
+            }
+          },
+          "Cooling": {
+            "Exhaust fan": {
+              "Activate air filtration": "0",
+              "Fan speed (complete_print_exhaust_fan_speed)": "70 %",
+              "Fan speed (during_print_exhaust_fan_speed)": "70 %"
+            },
+            "Part cooling fan": {
+              "Cooling overhang threshold": "95%",
+              "Fan speed (fan_max_speed)": "25 %",
+              "Fan speed (fan_min_speed)": "25 %",
+              "Fan speed for overhangs": "25 %",
+              "For the first (close_fan_the_first_x_layers)": "1 layers",
+              "Force cooling for overhangs and bridges": "1",
+              "Keep fan always on": "1",
+              "Layer time (fan_cooling_layer_time)": "200 s",
+              "Layer time (slow_down_layer_time)": "4 s",
+              "Min print speed": "10 mm/s",
+              "Overhang threshold for participating cooling": "95%",
+              "Pre start fan time": "0 s",
+              "Slow printing down for better layer cooling": "0"
+            }
+          },
+          "Filament": {
+            "Basic information": {
+              "Adhesiveness Category": "902",
+              "Color": "#000000",
+              "Default color": "",
+              "Density": "1.05 g/cm³",
+              "Diameter": "1.75 mm",
+              "Enable pressure advance": "1",
+              "Extruder change (filament_change_length)": "10 mm",
+              "Extruder change (filament_pre_cooling_temperature)": "0 °C",
+              "Extruder change (filament_ramming_travel_time)": "0 s",
+              "Filament prime volume": {
+                "Filament change": "45 mm³"
+              },
+              "Filament printable": "3",
+              "Flow ratio": "0.98",
+              "Impact Strength Z": "10",
+              "Max (nozzle_temperature_range_high)": "225 °C",
+              "Min (nozzle_temperature_range_low)": "220 °C",
+              "Pressure advance": "0.02",
+              "Price": "34.99 money/kg",
+              "Required nozzle HRC": "3",
+              "Shrinkage": "100%",
+              "Softening temperature": "110",
+              "Soluble material": "0",
+              "Support material": "0",
+              "Velocity Adaptation Factor": "1",
+              "Vendor": "Fiberlogy"
+            },
+            "Filament circle compensation setting": {
+              "Circle Compensation Speed": "200 mm/s",
+              "Contour Coef 2": "0.008",
+              "Contour Coef 3": "-0.041 mm",
+              "Contour limit max": "0.033 mm",
+              "Contour limit min": "-0.035 mm",
+              "Counter Coef 1": "0",
+              "Diameter limit": "50 mm",
+              "Hole Coef 1": "0",
+              "Hole Coef 2": "-0.008",
+              "Hole Coef 3": "0.23415 mm",
+              "Hole limit max": "0.22 mm",
+              "Hole limit min": "0.088 mm"
+            },
+            "Filament scarf seam settings": {
+              "Scarf length (filament_scarf_length)": "10 mm",
+              "Scarf seam type (filament_scarf_seam_type)": "none",
+              "Scarf slope gap (filament_scarf_gap)": "0%",
+              "Scarf start height (filament_scarf_height)": "10%"
+            },
+            "Print temperature": {
+              "Bed temperature (cool_plate_temp)": "65 °C",
+              "Bed temperature (eng_plate_temp)": "0 °C",
+              "Bed temperature (hot_plate_temp)": "55 °C",
+              "Bed temperature (supertack_plate_temp)": "0 °C",
+              "Bed temperature (textured_plate_temp)": "55 °C",
+              "Chamber temperature": "0 °C",
+              "Initial layer bed temperature (cool_plate_temp_initial_layer)": "65 °C",
+              "Initial layer bed temperature (eng_plate_temp_initial_layer)": "0 °C",
+              "Initial layer bed temperature (hot_plate_temp_initial_layer)": "55 °C",
+              "Initial layer bed temperature (supertack_plate_temp_initial_layer)": "0 °C",
+              "Initial layer bed temperature (textured_plate_temp_initial_layer)": "55 °C",
+              "Initial layer nozzle temperature": "240 °C",
+              "Nozzle temperature": "240 °C"
+            },
+            "Volumetric speed limitation": {
+              "Adaptive volumetric speed": "0",
+              "Extruder change (filament_ramming_volumetric_speed)": "-1 mm³/s",
+              "Max volumetric speed": "22 mm³/s"
+            }
+          },
+          "Multi Filament": {
+            "Multi Filament": {
+              "Long retraction when changing extruders": "0",
+              "Purge temperature": "0 °C",
+              "Purge volumetric speed": "0 mm³/s",
+              "Retraction distance when changing extruders": "0 mm"
+            }
+          },
+          "Other": {
+            "Compatible process profiles": null,
+            "Compatible process profiles condition": "",
+            "Fan speed (additional_cooling_fan_speed)": "70 %",
+            "Filament Colour Type": "1",
+            "Filament Deretraction Speed": "nil",
+            "Filament Id": "P2b82b9b",
+            "Filament Ids": "P2b82b9b",
+            "Filament Long Retractions When Cut": "nil",
+            "Filament Multi Colour": "#000000",
+            "Filament Retract Before Wipe": "nil",
+            "Filament Retract Restart Extra": "nil",
+            "Filament Retract When Changing Layer": "nil",
+            "Filament Retraction Distances When Cut": "nil",
+            "Filament Retraction Length": "0.8",
+            "Filament Retraction Minimum Travel": "nil",
+            "Filament Retraction Speed": "nil",
+            "Filament Settings Id": "floor protector",
+            "Filament Wipe": "1",
+            "Filament Wipe Distance": "nil",
+            "Filament Z Hop": "0",
+            "Filament Z Hop Types": "Auto Lift",
+            "Filament map to extruder": "1",
+            "Filament notes": "",
+            "Filament self index": "2",
+            "Filament's extruder variant": "Direct Drive Standard",
+            "Full fan speed at layer (full_fan_speed_layer)": "0",
+            "Max volumetric speed multinomial coefficients": "",
+            "Type (filament_type)": "PP",
+            "filament mapping mode": "Auto For Flush"
+          }
+        }
+      }
+    },
+    "machine": {
+      "id": "Bambu Lab X1 Carbon 0.6 nozzle - PP",
+      "model_id": null,
+      "settings": {
+        "Basic information": {
+          "Accessory": {
+            "Air filtration enhancement": "0",
+            "Auxiliary part cooling fan": "1",
+            "Fan direction": "left",
+            "Nozzle type": "hardened_steel",
+            "Support controlling chamber temperature": "0",
+            "Use cooling filter": "0"
+          },
+          "Advanced": {
+            "Bed temperature type": "by_first_filament",
+            "Extruder switch time": "0 s",
+            "Filament load time": "29 s",
+            "Filament unload time": "28 s",
+            "Hotend change time": "0 s",
+            "Print loops in clockwise": "0",
+            "Printer structure": "corexy",
+            "Scan first layer": "1",
+            "Use firmware retraction": "0",
+            "Use relative E distances": "1"
+          },
+          "Capabilities": {
+            "Single Extruder Multi Material": "1"
+          },
+          "Extruder Clearance": {
+            "Distance to rod": "33 mm",
+            "Height to lid": "90 mm",
+            "Height to rod": "34 mm",
+            "Max Radius": "68 mm"
+          },
+          "Firmware": {
+            "Supports silent mode": "0"
+          },
+          "Printable space": {
+            "Best object position": "0.5,0.5"
+          }
+        },
+        "General": {
+          "Size and coordinates": {
+            "Printable height": "250 mm"
+          }
+        },
+        "Machine limits": {
+          "Maximum acceleration for extruding": "20000 mm/s²",
+          "Maximum acceleration for retracting": "5000 mm/s²",
+          "Maximum acceleration for travel": "9000 mm/s²",
+          "Minimum speed for extruding": "0 mm/s",
+          "Minimum travel speed": "0 mm/s"
+        },
+        "Other": {
+          "Bed custom model": "",
+          "Bed custom texture": "",
+          "Bed exclude area": "0x0",
+          "Default filament profile": "Bambu PLA Basic @BBL X1C",
+          "Default process profile": "0.30mm Standard @BBL X1C 0.6 nozzle",
+          "Enable Long Retraction When Cut": "2",
+          "Enable Pre Heating": "0",
+          "Extruder Clearance Radius": "57",
+          "Extruder Color": "#018001",
+          "Extruder Height Gap": "0",
+          "Extruder Max Nozzle Count": "1",
+          "Extruder ams count": "1#0|4#0",
+          "Extruder printable area": null,
+          "Extruder variant list": "Direct Drive Standard",
+          "Grab length": "0 mm",
+          "Group Algo With Time": "0",
+          "Head wrap detect zone": null,
+          "Hotend Cooling Rate": "2",
+          "Hotend Heating Rate": "2",
+          "Include": "Bambu Lab X1 Carbon 0.6 nozzle template machine_start_gcode",
+          "Machine Bed Mass Y": "0",
+          "Machine Max Acceleration E": "5000",
+          "Machine Max Acceleration X": "20000",
+          "Machine Max Acceleration Y": "20000",
+          "Machine Max Acceleration Z": "500",
+          "Machine Max Force Y": "0",
+          "Machine Max Jerk E": "2.5",
+          "Machine Max Jerk X": "9",
+          "Machine Max Jerk Y": "9",
+          "Machine Max Jerk Z": "3",
+          "Machine Max Printed Mass": "0",
+          "Machine Max Speed E": "30",
+          "Machine Max Speed X": "500",
+          "Machine Max Speed Y": "500",
+          "Machine Max Speed Z": "20",
+          "Machine Prepare Compensation Time": "260",
+          "Map the logical extruder to physical extruder": "0",
+          "Master extruder id": "1",
+          "Nozzle Flush Dataset": "0",
+          "Nozzle height": "4.2 mm",
+          "Printable area": "0x0",
+          "Printer Settings Id": "Bambu Lab X1 Carbon 0.6 nozzle - PP",
+          "Printer extruder id": "1",
+          "Printer notes": "",
+          "Printer technology": "FFF",
+          "Printer type": "Bambu Lab X1 Carbon",
+          "Printer variant": "0.6",
+          "Printer's extruder variant": "Direct Drive Standard",
+          "Probing exclude area of clumping": null,
+          "Support Cooling Filter": "0",
+          "Support Fast Purge Mode": "0",
+          "Support Object Skip Flush": "0",
+          "upward compatible machine": "Bambu Lab P1S 0.6 nozzle"
+        },
+        "Quality": {
+          "Corrections": {
+            "Elephant foot compensation": "0.15 mm"
+          }
+        },
+        "Single extruder MM setup": {
+          "Basic information": {
+            "Default Nozzle Volume Type": "Standard",
+            "Extruder printable height": null,
+            "Nozzle diameter": "0.6 mm",
+            "Nozzle volume": "107 mm³",
+            "Type (extruder_type)": "Direct Drive"
+          },
+          "Layer height limits": {
+            "Max (max_layer_height)": "0.42 mm",
+            "Min (min_layer_height)": "0.12 mm"
+          },
+          "Position": {
+            "Extruder offset": "0x2 mm"
+          },
+          "Retraction": {
+            "Deretraction Speed": "30 mm/s",
+            "Extra length on restart (retract_restart_extra)": "0 mm",
+            "Retract amount before wipe": "0%",
+            "Retract when change layer": "1",
+            "Retraction Length": "1.4 mm",
+            "Retraction Speed": "30 mm/s",
+            "Travel distance threshold": "3 mm",
+            "Wipe Distance": "2 mm",
+            "Wipe while retracting": "1",
+            "Z Hop Type": "Auto Lift",
+            "Z hop lower boundary": "0 mm",
+            "Z hop upper boundary": "249 mm",
+            "Z hop when retract": "0.4 mm"
+          },
+          "Retraction when switching material": {
+            "Extra length on restart (retract_restart_extra_toolchange)": "0 mm",
+            "Long retraction when cut (experimental)": "0",
+            "Retraction Length (Toolchange)": "2 mm",
+            "Retraction distance when cut": "18"
+          }
+        }
+      }
+    },
+    "plates": {
+      "1": {
+        "objects": [
+          {
+            "extruder": 2,
+            "filament_id": "floor protector",
+            "id": "6",
+            "index": 1,
+            "name": "storz pipe AP2.step",
+            "process_id": "storz pp - connector",
+            "process_overrides": {
+              "Cooling": {
+                "Part cooling fan": {
+                  "Fan speed (fan_max_speed)": "25 %",
+                  "Fan speed (fan_min_speed)": "25 %",
+                  "Fan speed for overhangs": "25 %",
+                  "Layer time (fan_cooling_layer_time)": "200 s",
+                  "Slow printing down for better layer cooling": "0"
+                }
+              },
+              "Filament": {
+                "Basic information": {
+                  "Flow ratio": "0.98",
+                  "Shrinkage": "100%"
+                },
+                "Print temperature": {
+                  "Bed temperature (cool_plate_temp)": "65 °C",
+                  "Initial layer bed temperature (cool_plate_temp_initial_layer)": "65 °C",
+                  "Initial layer nozzle temperature": "240 °C",
+                  "Nozzle temperature": "240 °C"
+                },
+                "Volumetric speed limitation": {
+                  "Max volumetric speed": "22 mm³/s"
+                }
+              },
+              "Single extruder MM setup": {
+                "Retraction": {
+                  "Deretraction Speed": "nil",
+                  "Retract when change layer": "nil",
+                  "Retraction Length": "0.8 mm",
+                  "Retraction Speed": "nil",
+                  "Travel distance threshold": "nil",
+                  "Wipe while retracting": "1",
+                  "Z Hop Type": "Auto Lift",
+                  "Z hop when retract": "0 mm"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "process": {
+      "id": "storz pp - connector",
+      "settings": {
+        "Advanced": {
+          "Advanced": {
+            "Interlocking beam layers": "2",
+            "Interlocking beam width": "0.8 mm",
+            "Interlocking boundary avoidance": "2",
+            "Interlocking depth": "2",
+            "Interlocking depth of a segmented region": "0 mm",
+            "Interlocking direction": "22.5 °",
+            "Maximum width of a segmented region": "0 mm",
+            "Use beam interlocking": "0"
+          }
+        },
+        "Cooling": {
+          "Part cooling fan": {
+            "Pre start fan time": "0 s"
+          }
+        },
+        "Extruders": {
+          "Advanced": {
+            "Solid infill": "1",
+            "Sparse infill filament": "1",
+            "Walls": "1"
+          }
+        },
+        "Other": {
+          "Apply Top Surface Compensation": "0",
+          "Authorization Type": "key",
+          "Default filament profile": "Bambu PLA Basic @BBL X1C",
+          "Default process profile": "0.30mm Standard @BBL X1C 0.6 nozzle",
+          "Enable (ooze_prevention)": "0",
+          "Enable Long Retraction When Cut": "2",
+          "Enable Pre Heating": "0",
+          "Fan speed (additional_cooling_fan_speed)": "70 %",
+          "Filename format": "{input_filename_base}_{filament_type[0]}_{print_time}.gcode",
+          "First layer print sequence": "0",
+          "Full fan speed at layer (full_fan_speed_layer)": "0",
+          "Grab length": "0 mm",
+          "Has Scarf Joint Seam": "0",
+          "Host Type": "OctoPrint (octoprint)",
+          "Hotend Cooling Rate": "2",
+          "Hotend Heating Rate": "2",
+          "Ignore HTTPS certificate revocation checks": "0",
+          "Inherits Group": "0.18mm Standard @BBL X1C 0.6 nozzle",
+          "Layer Time Smoothing": "0",
+          "Layer Time Smoothing Threshold": "30",
+          "Layers of clumping detection by probing": "20",
+          "Map the logical extruder to physical extruder": "0",
+          "Master extruder id": "1",
+          "Max volumetric speed multinomial coefficients": "",
+          "No sparse layers (EXPERIMENTAL)": "0",
+          "Nozzle Flush Dataset": "0",
+          "Nozzle Volume Type": "Standard",
+          "Nozzle height": "4.2 mm",
+          "Only One Wall Top": "1",
+          "Other layers print sequence": "0",
+          "Position X": "165 mm",
+          "Position Y": "215.978 mm",
+          "Prime Tower Flat Ironing": "0",
+          "Prime Tower Lift Height": "-1",
+          "Prime Tower Lift Speed": "90",
+          "Print Compatible Printers": "Bambu Lab X1 Carbon 0.6 nozzle",
+          "Print Settings Id": "storz pp - connector",
+          "Print extruder id": "1",
+          "Print's extruder variant": "Direct Drive Standard",
+          "Process notes": "",
+          "Purge multiplier": "1.5",
+          "Purging volumes": "0",
+          "Purging volumes - load/unload volumes": "140",
+          "Reduce Infill Retraction": "1",
+          "Scarf Seam On Compensation Circles": "1",
+          "Skirt Per Object": "1",
+          "Start end points": "30x-3",
+          "Temperature variation": "-5 ∆°C",
+          "The number of other layers print sequence": "0",
+          "Thumbnail size": "50x50",
+          "Wall Infill Order": "inner wall/outer wall/infill",
+          "Wipe tower rotation angle": "0 °",
+          "Z travel": "0 mm/s",
+          "upward compatible machine": "Bambu Lab P1S 0.6 nozzle"
+        },
+        "Others": {
+          "Advanced": {
+            "Enable clumping detection by probing": "0"
+          },
+          "Bed adhesion": {
+            "Draft shield": "Disabled (disabled)",
+            "Skirt distance": "2 mm",
+            "Skirt height": "1 layers",
+            "Skirt loops": "0"
+          },
+          "G-code output": {
+            "Exclude objects": "1",
+            "Reduce infill retraction": "Auto"
+          },
+          "Prime tower": {
+            "Brim width (prime_tower_brim_width)": "3 mm",
+            "Enable (enable_prime_tower)": "0",
+            "Enable tower interface features": "0",
+            "Extra rib length": "0 mm",
+            "Fillet wall": "1",
+            "Infill gap": "150%",
+            "Internal ribs": "0",
+            "Max speed": "90 mm/s",
+            "Rib wall": "1",
+            "Rib width": "8 mm",
+            "Skip points": "1",
+            "Width": "35 mm"
+          },
+          "Special mode": {
+            "Apply fuzzy skin to first layer": "0",
+            "Fuzzy Skin": "none",
+            "Fuzzy skin feature size": "1.0 mm",
+            "Fuzzy skin generator mode": "displacement",
+            "Fuzzy skin noise octaves": "4",
+            "Fuzzy skin noise persistence": "0.5",
+            "Fuzzy skin noise type": "classic",
+            "Fuzzy skin point distance": "0.8 mm",
+            "Fuzzy skin thickness": "0.3 mm",
+            "Max XY Smoothing": "200%",
+            "Smooth Spiral": "0",
+            "Timelapse": "0"
+          }
+        },
+        "Plate Settings": {
+          "Plate type": "Cool Plate",
+          "Special mode": {
+            "Print sequence": "by layer",
+            "Spiral vase": "0"
+          }
+        },
+        "Purge options": {
+          "Purge options": {
+            "Purge into objects' infill": "0",
+            "Purge into objects' support": "1",
+            "Purge into this object": "0"
+          }
+        },
+        "Quality": {
+          "Adaptive layer height": "0",
+          "Advanced": {
+            "Avoid crossing wall": "0",
+            "Avoid crossing wall - Includes support": "0",
+            "Avoid crossing wall - Max detour length": "0 mm or %",
+            "Bridge flow": "1",
+            "Detect overhang walls": "0",
+            "Initial layer flow ratio": "1",
+            "Object flow ratio": "1",
+            "Only one wall on first layer": "0",
+            "Only one wall on top surfaces": "not apply",
+            "Order of walls": "inner wall/outer wall",
+            "Print infill first": "0",
+            "Smooth coefficient": "150",
+            "Smooth speed discontinuity area": "1",
+            "Smoothing wall speed along Z(experimental)": "0",
+            "Thick bridges": "1",
+            "Top area threshold": "200%",
+            "Top surface flow ratio": "1"
+          },
+          "Corrections": {
+            "Elephant foot compensation": "0.15 mm"
+          },
+          "Ironing": {
+            "Ironing Pattern": "zig-zag",
+            "Ironing Type": "no ironing",
+            "Ironing flow": "10%",
+            "Ironing inset": "0.31 mm",
+            "Ironing line spacing": "0.15 mm",
+            "Ironing speed": "30 mm/s",
+            "ironing direction": "45 °"
+          },
+          "Layer height": {
+            "Initial layer height": "0.3 mm"
+          },
+          "Layers": {
+            "Layer height": "0.18 mm"
+          },
+          "Line width": {
+            "Default (line_width)": "0.62 mm",
+            "Initial layer (initial_layer_line_width)": "0.62 mm",
+            "Inner wall (inner_wall_line_width)": "0.62 mm",
+            "Internal solid infill (internal_solid_infill_line_width)": "0.62 mm",
+            "Outer wall (outer_wall_line_width)": "0.62 mm",
+            "Sparse infill (sparse_infill_line_width)": "0.62 mm",
+            "Support (support_line_width)": "0.62 mm",
+            "Top surface (top_surface_line_width)": "0.62 mm"
+          },
+          "Precision": {
+            "Arc fitting": "1",
+            "Auto circle contour-hole compensation": "0",
+            "Precise Z height": "0",
+            "Precise wall": "0",
+            "Resolution": "0.012 mm",
+            "User Customized Offset": "0 mm",
+            "X-Y contour compensation": "0 mm",
+            "X-Y hole compensation": "0 mm"
+          },
+          "Seam": {
+            "Override filament scarf seam setting": "0",
+            "Role-based wipe speed": "1",
+            "Scarf application angle threshold": "155 °",
+            "Scarf around entire wall": "0",
+            "Scarf joint for inner walls": "1",
+            "Scarf length (seam_slope_min_length)": "10 mm",
+            "Scarf seam type (seam_slope_type)": "all",
+            "Scarf slope gap (seam_slope_gap)": "0 mm/%",
+            "Scarf start height (seam_slope_start_height)": "10%",
+            "Scarf steps": "10",
+            "Seam gap": "0%",
+            "Seam placement away from overhangs(experimental)": "0",
+            "Seam position": "aligned",
+            "Smart scarf seam application": "0",
+            "Wipe speed": "80%"
+          },
+          "Slicing": {
+            "Slice gap closing radius": "0.049 mm"
+          },
+          "Top/bottom shells": {
+            "Interface shells": "0"
+          },
+          "Wall generator": {
+            "Minimum feature size": "25%",
+            "Minimum wall width": "85%",
+            "Wall distribution count": "1",
+            "Wall generator": "arachne",
+            "Wall transition length": "100%",
+            "Wall transitioning filter margin": "25%",
+            "Wall transitioning threshold angle": "10 °"
+          }
+        },
+        "Speed": {
+          "Acceleration": {
+            "Enable accel_to_decel": "0",
+            "Initial layer (initial_layer_acceleration)": "500 mm/s²",
+            "Initial layer travel": "6000 mm/s²",
+            "Inner wall (inner_wall_acceleration)": "0 mm/s²",
+            "Normal printing": "10000 mm/s²",
+            "Outer wall (outer_wall_acceleration)": "2500 mm/s²",
+            "Short travel": "250 mm/s²",
+            "Sparse infill (sparse_infill_acceleration)": "100%",
+            "Top surface (top_surface_acceleration)": "1000 mm/s²",
+            "Travel (travel_acceleration)": "10000 mm/s²",
+            "accel_to_decel": "50%"
+          },
+          "Initial layer speed": {
+            "Initial layer (initial_layer_speed)": "35 mm/s",
+            "Initial layer infill": "55 mm/s"
+          },
+          "Jerk(XY)": {
+            "Default (default_jerk)": "0 mm/s",
+            "First layer": "9 mm/s",
+            "Infill": "9 mm/s",
+            "Inner wall (inner_wall_jerk)": "9 mm/s",
+            "Outer wall (outer_wall_jerk)": "9 mm/s",
+            "Top surface (top_surface_jerk)": "9 mm/s",
+            "Travel (travel_jerk)": "9 mm/s"
+          },
+          "Other layers speed": {
+            "Acceleration at ending height": "100000 mm/s²",
+            "Acceleration at starting height": "100000 mm/s²",
+            "Bridge": "30 mm/s",
+            "Ending height": "400 mm",
+            "Gap infill": "50 mm/s",
+            "Inner wall (inner_wall_speed)": "150 mm/s",
+            "Internal solid infill (internal_solid_infill_speed)": "150 mm/s",
+            "Outer wall (outer_wall_speed)": "120 mm/s",
+            "Overhang speed": {
+              "10%": "0 mm/s",
+              "100%": "10 mm/s",
+              "25%": "50 mm/s",
+              "50%": "15 mm/s",
+              "75%": "10 mm/s"
+            },
+            "Slow down by height": "0",
+            "Slow down for overhangs": "0",
+            "Small perimeter threshold": "0 mm",
+            "Small perimeters": "80%",
+            "Sparse infill (sparse_infill_speed)": "100 mm/s",
+            "Speed at ending height": "1000 mm/s",
+            "Speed at starting height": "1000 mm/s",
+            "Starting height": "0 mm",
+            "Support (support_speed)": "150 mm/s",
+            "Support interface": "80 mm/s",
+            "Top surface (top_surface_speed)": "35 mm/s",
+            "Vertical shell speed": "100%"
+          },
+          "Travel speed": {
+            "Travel (travel_speed)": "500 mm/s"
+          }
+        },
+        "Strength": {
+          "Advanced": {
+            "Bridge direction": "0 °",
+            "Detect floating vertical shells": "1",
+            "Detect narrow internal solid infill": "1",
+            "Ensure vertical shell thickness": "enabled",
+            "Infill combination": "1",
+            "Infill direction": "45 °",
+            "Infill/Wall overlap": "20%",
+            "Internal bridge support thickness": "0.8 mm",
+            "Minimum sparse infill threshold": "15 mm²",
+            "Monotonic line travel extend": "0.0 %"
+          },
+          "Sparse infill": {
+            "Fill multiline": "1",
+            "Filter out tiny gaps": "0 mm",
+            "Infill lock depth": "1 mm",
+            "Infill rotate step": "0 °",
+            "Infill shift step": "0.4 mm",
+            "Lattice angle 1": "-45 °",
+            "Lattice angle 2": "45 °",
+            "Length of sparse infill anchor": "400%",
+            "Maximum length of sparse infill anchor": "20",
+            "Skeleton infill density": "15%",
+            "Skeleton infill pattern": "zigzag",
+            "Skeleton line width": "0.62 mm",
+            "Skin infill density": "15%",
+            "Skin infill depth": "2 mm",
+            "Skin infill pattern": "crosszag",
+            "Skin line width": "0.62 mm",
+            "Sparse infill density": "15%",
+            "Sparse infill pattern": "zigzag",
+            "Symmetric infill y axis": "0"
+          },
+          "Top/bottom shells": {
+            "Bottom paint penetration layers": "3",
+            "Bottom shell layers": "3",
+            "Bottom shell thickness": "0 mm",
+            "Bottom surface density": "100 %",
+            "Bottom surface pattern": "concentric",
+            "Internal solid infill pattern": "zig-zag",
+            "Top paint penetration layers": "3",
+            "Top shell thickness": "0.8 mm",
+            "Top solid layers": "5",
+            "Top surface density": "100 %",
+            "Top surface pattern": "monotonic",
+            "Using infill instead of top and bottom surfaces": "0"
+          },
+          "Walls": {
+            "Detect thin wall": "0",
+            "Wall loops": "2"
+          }
+        },
+        "Support": {
+          "Advanced": {
+            "Base pattern": "default",
+            "Base pattern spacing": "2.5 mm",
+            "Bottom Z distance": "0.18 mm",
+            "Bottom interface layers": "2 layers",
+            "Bottom interface spacing": "0.5 mm",
+            "Don't support bridges": "0",
+            "Independent support layer height": "1",
+            "Initial layer density": "90%",
+            "Initial layer expansion": "-1 mm",
+            "Interface pattern": "auto",
+            "Interface use loop pattern": "0",
+            "Max bridge length": "0 mm",
+            "Normal Support expansion": "0 mm",
+            "Pattern angle": "0 °",
+            "Support wall loops": "-1",
+            "Support/object first layer gap": "0.2 mm",
+            "Support/object xy distance": "0.35 mm",
+            "Top Z distance": "0.18 mm",
+            "Top interface layers": "2 layers",
+            "Top interface spacing": "0.5 mm"
+          },
+          "Bed adhesion": {
+            "Brim type": "outer_and_inner",
+            "Brim width (brim_width)": "5 mm",
+            "Brim-object gap": "0.1 mm"
+          },
+          "Filament for Supports": {
+            "Avoid interface filament for base": "1",
+            "Support/raft base": "0",
+            "Support/raft interface": "0"
+          },
+          "Raft": {
+            "Raft contact Z distance": "0.1 mm",
+            "Raft layers": "0 layers"
+          },
+          "Raft expansion": "1.5 mm",
+          "Support": {
+            "Enable support": "0",
+            "Enforce support for the first n layers": "0 layers",
+            "On build plate only": "0",
+            "Remove small overhangs": "1",
+            "Style": "default",
+            "Support critical regions only": "0",
+            "Threshold angle": "30 °",
+            "Type (support_type)": "tree(auto)"
+          },
+          "Support ironing": {
+            "Enable ironing support interface": "0",
+            "Support ironing direction": "0 °",
+            "Support ironing flow": "10%",
+            "Support ironing inset": "0.0 mm",
+            "Support ironing line spacing": "0.15 mm",
+            "Support ironing pattern": "zig-zag",
+            "Support ironing speed": "30 mm/s"
+          },
+          "Tree Support": {
+            "Branch angle": "45 °",
+            "Branch diameter": "2 mm",
+            "Branch diameter angle": "5 °",
+            "Branch distance": "5 mm"
+          }
+        }
+      }
+    }
+  }
+}

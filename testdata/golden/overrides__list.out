@@ -1,0 +1,11 @@
+
+overrides.3mf:
+----------------------------------------
+
+Plates:
+  Plate 1:
+    - F2 ultra power supply mount - mount.step
+
+Objects:
+  [0] F2 ultra power supply mount - mount.step
+      ID: 2, Extruder: 8

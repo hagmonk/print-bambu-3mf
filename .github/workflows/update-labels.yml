@@ -1,0 +1,64 @@
+name: Update labels
+
+# Refresh internal/bambu/labels.json from a BambuStudio release, then open a PR.
+# Merge the PR and push a vX.Y.Z tag to cut a new release with the updated labels.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "BambuStudio git ref (tag or branch) to harvest from"
+        required: true
+        default: "master"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Sparse + shallow clone BambuStudio
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none --no-checkout --depth 1 \
+            --branch "${{ github.event.inputs.ref }}" \
+            https://github.com/bambulab/BambuStudio bs
+          git -C bs sparse-checkout init --cone
+          git -C bs sparse-checkout set src/libslic3r src/slic3r/GUI bbl/i18n/en
+          git -C bs checkout
+
+      - name: Regenerate labels.json
+        run: |
+          set -euo pipefail
+          PO=$(find bs/bbl/i18n/en -name 'BambuStudio_en.po' | head -1)
+          echo "Using PO catalog: $PO"
+          uv run --no-project python scripts/update_labels.py \
+            --studio-path bs \
+            --po-file "$PO" \
+            --output internal/bambu/labels.json
+
+      - name: Sanity-check the regenerated file
+        run: |
+          set -euo pipefail
+          test -s internal/bambu/labels.json
+          python3 -c "import json,sys; d=json.load(open('internal/bambu/labels.json')); print(f'{len(d)} keys')"
+          go build ./...
+
+      - name: Open PR if labels changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: "labels/bambustudio-${{ github.event.inputs.ref }}"
+          title: "labels: refresh from BambuStudio ${{ github.event.inputs.ref }}"
+          commit-message: "labels: refresh from BambuStudio ${{ github.event.inputs.ref }}"
+          body: |
+            Regenerated `internal/bambu/labels.json` from BambuStudio
+            `${{ github.event.inputs.ref }}`.
+
+            Spot-check the diff before merging — entries without a UI binding get a
+            `friendly` label but no `scope`, and fall back to prefix-based scope
+            inference in the extractor. After merge, push a `vX.Y.Z` tag to release.

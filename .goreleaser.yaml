@@ -1,0 +1,76 @@
+# GoReleaser config — builds macOS binaries and publishes a Homebrew Cask to
+# hagmonk/homebrew-tap. Run locally with `goreleaser release --snapshot --clean`
+# to validate without publishing.
+#
+# Cask (not Formula): GoReleaser deprecated `brews` in favor of `homebrew_casks`,
+# the tap already uses a Casks/ directory, and this tool is macOS-only (it reads
+# ~/Library/Application Support/BambuStudio), so a macOS-only Cask is the right
+# fit on every axis.
+version: 2
+
+project_name: print-bambu-3mf
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: print-bambu-3mf
+    main: ./cmd/print-bambu-3mf
+    binary: print-bambu-3mf
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+universal_binaries:
+  - id: print-bambu-3mf
+    replace: true
+
+archives:
+  - id: print-bambu-3mf
+    formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+homebrew_casks:
+  - name: print-bambu-3mf
+    repository:
+      owner: hagmonk
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Casks
+    homepage: "https://github.com/hagmonk/print-bambu-3mf"
+    description: "Extract printer, process, and filament settings from Bambu Studio 3MF files"
+    commit_author:
+      name: goreleaserbot
+      email: goreleaserbot@users.noreply.github.com
+    # Unsigned binary downloaded via brew: strip the Gatekeeper quarantine xattr
+    # on install so it runs without a security prompt.
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr",
+                           args: ["-dr", "com.apple.quarantine", "#{staged_path}/print-bambu-3mf"]
+          end

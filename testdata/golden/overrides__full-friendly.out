@@ -1,0 +1,820 @@
+{
+  "overrides.3mf": {
+    "filaments": {
+      "Bambu ABS @BBL H2D": {
+        "id": "Bambu ABS @BBL H2D",
+        "settings": {
+          "Advanced": {
+            "Wipe tower parameters": {
+              "Minimal purge on wipe tower": "15 mm³"
+            }
+          },
+          "Cooling": {
+            "Auxiliary part cooling fan": {
+              "For the first (close_additional_fan_first_x_layers)": "3 layers"
+            },
+            "Exhaust fan": {
+              "Activate air filtration": "1",
+              "Fan speed (complete_print_exhaust_fan_speed)": "70 %",
+              "Fan speed (during_print_exhaust_fan_speed)": "70 %"
+            },
+            "Part cooling fan": {
+              "Cooling overhang threshold": "25%",
+              "Cooling slowdown logic": "uniform_cooling",
+              "Don't slow down outer walls": "0",
+              "Fan speed (fan_max_speed)": "60 %",
+              "Fan speed (fan_min_speed)": "10 %",
+              "Fan speed for overhangs": "80 %",
+              "For the first (close_fan_the_first_x_layers)": "3 layers",
+              "Force cooling for overhangs and bridges": "1",
+              "Keep fan always on": "1",
+              "Layer time (fan_cooling_layer_time)": "30 s",
+              "Layer time (slow_down_layer_time)": "12 s",
+              "Min print speed": "20 mm/s",
+              "Overhang threshold for participating cooling": "95%",
+              "Perimeter transition distance": "10 mm",
+              "Pre start fan time": "0 s",
+              "Slow printing down for better layer cooling": "1"
+            }
+          },
+          "Filament": {
+            "Basic information": {
+              "Adhesiveness Category": "200",
+              "Color": "#00AE42",
+              "Default color": "",
+              "Density": "1.04 g/cm³",
+              "Diameter": "1.75 mm",
+              "Enable pressure advance": "0",
+              "Extruder change (filament_change_length)": "10 mm",
+              "Extruder change (filament_pre_cooling_temperature)": "0 °C",
+              "Extruder change (filament_ramming_travel_time)": "0 s",
+              "Filament prime volume": {
+                "Filament change": "45 mm³",
+                "Hotend change (filament_prime_volume_nc)": "60 mm³"
+              },
+              "Filament printable": "3",
+              "Flow ratio": "0.95",
+              "Hotend change (filament_pre_cooling_temperature_nc)": "0 °C",
+              "Hotend change (filament_ramming_travel_time_nc)": "0 s",
+              "Impact Strength Z": "7.4",
+              "Interface layer pre-extrusion distance": "10 mm",
+              "Interface layer pre-extrusion length": "0 mm",
+              "Interface layer print temperature": "-1 °C",
+              "Interface layer purge length": "20 mm",
+              "Max (nozzle_temperature_range_high)": "280 °C",
+              "Metal stickiness": "None",
+              "Min (nozzle_temperature_range_low)": "240 °C",
+              "Pressure advance": "0.02",
+              "Price": "24.99 money/kg",
+              "Required nozzle HRC": "3",
+              "Shrinkage": "100%",
+              "Softening temperature": "100",
+              "Soluble material": "0",
+              "Support material": "0",
+              "Tower ironing area": "4 mm²",
+              "Velocity Adaptation Factor": "1",
+              "Vendor": "Bambu Lab",
+              "Wipe tower cooling": "10 °C"
+            },
+            "Filament circle compensation setting": {
+              "Circle Compensation Speed": "200 mm/s",
+              "Contour Coef 2": "0.008",
+              "Contour Coef 3": "-0.041 mm",
+              "Contour limit max": "0.033 mm",
+              "Contour limit min": "-0.035 mm",
+              "Counter Coef 1": "0",
+              "Diameter limit": "50 mm",
+              "Hole Coef 1": "0",
+              "Hole Coef 2": "-0.008",
+              "Hole Coef 3": "0.23415 mm",
+              "Hole limit max": "0.22 mm",
+              "Hole limit min": "0.088 mm"
+            },
+            "Filament scarf seam settings": {
+              "Scarf length (filament_scarf_length)": "10 mm",
+              "Scarf seam type (filament_scarf_seam_type)": "none",
+              "Scarf slope gap (filament_scarf_gap)": "0%",
+              "Scarf start height (filament_scarf_height)": "10%"
+            },
+            "Print temperature": {
+              "Bed temperature (cool_plate_temp)": "0 °C",
+              "Bed temperature (eng_plate_temp)": "90 °C",
+              "Bed temperature (hot_plate_temp)": "90 °C",
+              "Bed temperature (supertack_plate_temp)": "0 °C",
+              "Bed temperature (textured_plate_temp)": "90 °C",
+              "Chamber temperature": "65 °C",
+              "Initial layer bed temperature (cool_plate_temp_initial_layer)": "0 °C",
+              "Initial layer bed temperature (eng_plate_temp_initial_layer)": "90 °C",
+              "Initial layer bed temperature (hot_plate_temp_initial_layer)": "90 °C",
+              "Initial layer bed temperature (supertack_plate_temp_initial_layer)": "0 °C",
+              "Initial layer bed temperature (textured_plate_temp_initial_layer)": "90 °C",
+              "Initial layer nozzle temperature": "260 °C",
+              "Nozzle temperature": "270 °C"
+            },
+            "Volumetric speed limitation": {
+              "Adaptive volumetric speed": "0",
+              "Extruder change (filament_ramming_volumetric_speed)": "-1 mm³/s",
+              "Hotend change (filament_ramming_volumetric_speed_nc)": "-1 mm³/s",
+              "Max volumetric speed": "30 mm³/s"
+            }
+          },
+          "Multi Filament": {
+            "Multi Filament": {
+              "Long retraction when changing extruders": "1",
+              "Purge temperature": "0 °C",
+              "Purge volumetric speed": "0 mm³/s",
+              "Retraction distance when changing extruders": "10 mm"
+            }
+          },
+          "Other": {
+            "End G-code (filament_end_gcode)": "; filament end gcode \n",
+            "Fan speed (additional_cooling_fan_speed)": "0 %",
+            "Filament Colour Type": "0",
+            "Filament Contact Safe": "1",
+            "Filament Deretraction Speed": "nil",
+            "Filament Dev Ams Drying Ams Limitations": "1",
+            "Filament Dev Ams Drying Heat Distortion Temperature": "90",
+            "Filament Dev Ams Drying Temperature": "80",
+            "Filament Dev Ams Drying Time": "8.0",
+            "Filament Dev Chamber Drying Bed Temperature": "90.0",
+            "Filament Dev Chamber Drying Time": "12.0",
+            "Filament Dev Drying Cooling Temperature": "75",
+            "Filament Dev Drying Softening Temperature": "80",
+            "Filament Emission Safe": "1",
+            "Filament Flush Temp Fast": "0",
+            "Filament Id": "GFB00",
+            "Filament Ids": "GFB00",
+            "Filament Ingredients Safe": "1",
+            "Filament Long Retractions When Cut": "nil",
+            "Filament Long Retractions When Ec": "nil",
+            "Filament Multi Colour": "#00AE42",
+            "Filament Retract Before Wipe": "nil",
+            "Filament Retract Restart Extra": "nil",
+            "Filament Retract When Changing Layer": "nil",
+            "Filament Retraction Distances When Cut": "nil",
+            "Filament Retraction Distances When Ec": "nil",
+            "Filament Retraction Length": "0.4",
+            "Filament Retraction Minimum Travel": "nil",
+            "Filament Retraction Speed": "nil",
+            "Filament Settings Id": "",
+            "Filament Wipe": "1",
+            "Filament Wipe Distance": "1",
+            "Filament Z Hop": "nil",
+            "Filament Z Hop Types": "Spiral Lift",
+            "Filament map to extruder": "1",
+            "Filament notes": "",
+            "Filament self index": "8",
+            "Filament's extruder variant": "Direct Drive High Flow",
+            "Filament-extruder compatibility": "0",
+            "Full fan speed at layer (additional_fan_full_speed_layer)": "0",
+            "Full fan speed at layer (full_fan_speed_layer)": "0",
+            "Include": "fdm_filament_template_direct_dual",
+            "Max volumetric speed multinomial coefficients": "0 0 0 0 0 0",
+            "Preheat temperature delta": "0 °C",
+            "Start G-code (filament_start_gcode)": "; filament start gcode\n",
+            "Type (filament_type)": "ABS",
+            "filament mapping mode": "Auto For Flush",
+            "length when change hotend": "14 mm"
+          },
+          "Setting Overrides": {
+            "Speed": {
+              "Filament Bridge Speed": "25",
+              "Filament Enable Overhang Speed": "1",
+              "Overhang speed": {
+                "Filament Overhang 1 4 Speed": "0",
+                "Filament Overhang 2 4 Speed": "50",
+                "Filament Overhang 3 4 Speed": "30",
+                "Filament Overhang 4 4 Speed": "10",
+                "Filament Overhang Totally Speed": "10"
+              },
+              "Override overhang speed": "0"
+            }
+          }
+        }
+      }
+    },
+    "machine": {
+      "id": "Bambu Lab H2D 0.4 nozzle",
+      "model_id": null,
+      "settings": {
+        "Basic information": {
+          "Accessory": {
+            "Air filtration enhancement": "0",
+            "Auxiliary part cooling fan": "1",
+            "Fan direction": "left",
+            "Nozzle type": "hardened_steel",
+            "Support controlling chamber temperature": "1",
+            "Use cooling filter": "0"
+          },
+          "Advanced": {
+            "Bed temperature type": "by_highest_temp",
+            "Extruder switch time": "5.6 s",
+            "Filament load time": "30 s",
+            "Filament unload time": "30 s",
+            "G-code flavor": "marlin",
+            "Hotend change time": "0 s",
+            "Print loops in clockwise": "0",
+            "Printer structure": "corexy",
+            "Scan first layer": "0",
+            "Use firmware retraction": "0",
+            "Use relative E distances": "1"
+          },
+          "Capabilities": {
+            "Single Extruder Multi Material": "1"
+          },
+          "Extruder Clearance": {
+            "Distance to rod": "50 mm",
+            "Height to lid": "201 mm",
+            "Height to rod": "47.4 mm",
+            "Max Radius": "96 mm"
+          },
+          "Firmware": {
+            "Supports silent mode": "0"
+          },
+          "Printable space": {
+            "Best object position": "0.3,0.5"
+          }
+        },
+        "General": {
+          "Size and coordinates": {
+            "Printable height": "325 mm"
+          }
+        },
+        "Machine limits": {
+          "Maximum acceleration for extruding": "20000 mm/s²",
+          "Maximum acceleration for retracting": "5000 mm/s²",
+          "Maximum acceleration for travel": "9000 mm/s²",
+          "Minimum speed for extruding": "0 mm/s",
+          "Minimum travel speed": "0 mm/s"
+        },
+        "Other": {
+          "Bed custom model": "",
+          "Bed custom texture": "",
+          "Bed exclude area": null,
+          "Change filament G-code": ";======== H2D ========\n;===== 20250729 =====\nM993 A2 B2 C2 ; nozzle cam detection allow status save.\nM993 A0 B0 C0 ; nozzle cam detection not allowed.\n\n{if (filament_type[next_extruder] == \"PLA\") ||  (filament_type[next_extruder] == \"PETG\")\n ||  (filament_type[next_extruder] == \"PLA-CF\")  ||  (filament_type[next_extruder] == \"PETG-CF\")}\nM1015.4 S1 K0 ;disable E air printing detect\n{else}\nM1015.4 S0 ; disable E air printing detect\n{endif}\n\nM620 S[next_extruder]A\nM1002 gcode_claim_action : 4\nM204 S9000\n\nG1 Z{max_layer_z + 3.0} F1200\n\nM400\nM106 P1 S0\nM106 P2 S0\n\n{if toolchange_count == 2}\n; get travel path for change filament\n;M620.1 X[travel_point_1_x] Y[travel_point_1_y] F21000 P0\n;M620.1 X[travel_point_2_x] Y[travel_point_2_y] F21000 P1\n;M620.1 X[travel_point_3_x] Y[travel_point_3_y] F21000 P2\n{endif}\n\n{if ((filament_type[current_extruder] == \"PLA\") || (filament_type[current_extruder] == \"PLA-CF\") || (filament_type[current_extruder] == \"PETG\")) && (nozzle_diameter[current_extruder] == 0.2)}\nM620.10 A0 F74.8347 L[flush_length] H{nozzle_diameter[current_extruder]} T{flush_temperatures[current_extruder]} P{nozzle_temperature[current_extruder]} S1\n{else}\nM620.10 A0 F{flush_volumetric_speeds[current_extruder]/2.4053*60} L[flush_length] H{nozzle_diameter[current_extruder]} T{flush_temperatures[current_extruder]} P{nozzle_temperature[current_extruder]} S1\n{endif}\n\n{if ((filament_type[next_extruder] == \"PLA\") || (filament_type[next_extruder] == \"PLA-CF\") || (filament_type[next_extruder] == \"PETG\")) && (nozzle_diameter[next_extruder] == 0.2)}\nM620.10 A1 F74.8347 L[flush_length] H{nozzle_diameter[next_extruder]} T{flush_temperatures[next_extruder]} P{nozzle_temperature[next_extruder]} S1\n{else}\nM620.10 A1 F{flush_volumetric_speeds[next_extruder]/2.4053*60} L[flush_length] H{nozzle_diameter[next_extruder]} T{flush_temperatures[next_extruder]} P{nozzle_temperature[next_extruder]} S1\n{endif}\n\n{if long_retraction_when_cut}\nM620.11 P1 I[current_extruder] E-{retraction_distance_when_cut} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 P0 I[current_extruder] E0\n{endif}\n\n{if long_retraction_when_ec}\nM620.11 K1 I[current_extruder] R{retraction_distance_when_ec} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 K0 I[current_extruder] R0\n{endif}\n\nM628 S1\n{if filament_type[current_extruder] == \"TPU\"}\nM620.11 S0 L0 I[current_extruder] E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\n{if (filament_type[current_extruder] == \"PA\") || (filament_type[current_extruder] == \"PA-GF\")}\nM620.11 S1 L0 I[current_extruder] R4 D2 E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 S1 L0 I[current_extruder] R10 D8 E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{endif}\n{endif}\nM629\n\n{if filament_type[current_extruder] == \"TPU\" || filament_type[next_extruder] == \"TPU\"}\nM620.11 H2 C331\n{else}\nM620.11 H0\n{endif}\n\nT[next_extruder]\n\n;deretract\n{if filament_type[next_extruder] == \"TPU\"}\n{else}\n{if (filament_type[next_extruder] == \"PA\") || (filament_type[next_extruder] == \"PA-GF\")}\n;VG1 E1 F{max(new_filament_e_feedrate, 200)}\n;VG1 E1 F{max(new_filament_e_feedrate/2, 100)}\n{else}\n;VG1 E4 F{max(new_filament_e_feedrate, 200)}\n;VG1 E4 F{max(new_filament_e_feedrate/2, 100)}\n{endif}\n{endif}\n\n; VFLUSH_START\n\n{if flush_length>41.5}\n;VG1 E41.5 F{min(old_filament_e_feedrate,new_filament_e_feedrate)}\n;VG1 E{flush_length-41.5} F{new_filament_e_feedrate}\n{else}\n;VG1 E{flush_length} F{min(old_filament_e_feedrate,new_filament_e_feedrate)}\n{endif}\n\nSYNC T{ceil(flush_length / 125) * 5}\n\n; VFLUSH_END\n\nM1002 set_filament_type:{filament_type[next_extruder]}\n\nM400\nM83\n{if next_extruder < 255}\n\nM620.10 R{retract_length_toolchange[filament_map[next_extruder]-1]}\nM628 S0\n;VM109 S[new_filament_temp]\nM629\nM400\n\nM983.3 F{filament_max_volumetric_speed[next_extruder]/2.4} A0.4 R{retract_length_toolchange[filament_map[next_extruder]-1]}\n\nM400\n{if wipe_avoid_perimeter}\nG1 Y320 F30000\nG1 X{wipe_avoid_pos_x} F30000\n{endif}\nG1 Y295 F30000\nG1 Y265 F18000\nG1 Z{max_layer_z + 3.0} F3000\n{if layer_z <= (initial_layer_print_height + 0.001)}\nM204 S[initial_layer_acceleration]\n{else}\nM204 S[default_acceleration]\n{endif}\n{else}\nG1 X[x_after_toolchange] Y[y_after_toolchange] Z[z_after_toolchange] F12000\n{endif}\nM621 S[next_extruder]A\n\nM993 A3 B3 C3 ; nozzle cam detection allow status restore.\n\n{if (filament_type[next_extruder]  == \"TPU\")}\nM1015.3 S1;enable tpu clog detect\n{else}\nM1015.3 S0;disable tpu clog detect\n{endif}\n\n{if (filament_type[next_extruder] == \"PLA\") ||  (filament_type[next_extruder] == \"PETG\")\n ||  (filament_type[next_extruder] == \"PLA-CF\")  ||  (filament_type[next_extruder] == \"PETG-CF\")}\nM1015.4 S1 K1 H[nozzle_diameter] ;enable E air printing detect\n{else}\nM1015.4 S0 ; disable E air printing detect\n{endif}\n\nM620.6 I[next_extruder] W1 ;enable ams air printing detect\nM1002 gcode_claim_action : 0\n",
+          "Default filament profile": "Bambu PLA Basic @BBL H2D",
+          "Default process profile": "0.20mm Standard @BBL H2D",
+          "Deretract Speed Extruder Change": "15",
+          "Enable Long Retraction When Cut": "2",
+          "Enable Pre Heating": "1",
+          "End G-code (machine_end_gcode)": ";===== date: 2025/05/16 =====================\n;===== H2D =====================\nG392 S0 ;turn off nozzle clog detect\nM993 A0 B0 C0 ; nozzle cam detection not allowed.\n\nM400 ; wait for buffer to clear\nG92 E0 ; zero the extruder\nG1 E-0.8 F1800 ; retract\nG1 Z{max_layer_z + 0.5} F900 ; lower z a little\n\nG90\nM141 S0 ; turn off chamber heating\nM140 S0 ; turn off bed\nM106 S0 ; turn off fan\nM106 P2 S0 ; turn off remote part cooling fan\nM106 P3 S0 ; turn off chamber cooling fan\n\n; pull back filament to AMS\nM620 S65535\nT65535\nG150.2\nM621 S65535\n\nM620 S65279\nT65279\nG150.2\nM621 S65279\n\nG150.3\n\nM1002 judge_flag timelapse_record_flag\nM622 J1\n    M400 ; wait all motion done\n    M991 S0 P-1 ;end smooth timelapse at safe pos\n    M400 S5 ;wait for last picture to be taken\nM623  ;end of \"timelapse_record_flag\"\n\nM104 S0 T0; turn off hotend\nM104 S0 T1; turn off hotend\n\nM400 ; wait all motion done\nM17 S\nM17 Z0.4 ; lower z motor current to reduce impact if there is something in the bottom\n{if (max_layer_z + 100.0) < 320}\n    G1 Z{max_layer_z + 100.0} F600\n    G1 Z{max_layer_z +98.0}\n{else}\n    G1 Z320 F600\n    G1 Z320\n{endif}\nM400 P100\nM17 R ; restore z current\n\nM220 S100  ; Reset feedrate magnitude\nM201.2 K1.0 ; Reset acc magnitude\nM73.2   R1.0 ;Reset left time magnitude\nM1002 set_gcode_claim_speed_level : 0\n\nM1015.4 S0 K0 ;disable air printing detect\n;=====printer finish  sound=========\nM17\nM400 S1\nM1006 S1\nM1006 A53 B10 L99 C53 D10 M99 E53 F10 N99 \nM1006 A57 B10 L99 C57 D10 M99 E57 F10 N99 \nM1006 A0 B15 L0 C0 D15 M0 E0 F15 N0 \nM1006 A53 B10 L99 C53 D10 M99 E53 F10 N99 \nM1006 A57 B10 L99 C57 D10 M99 E57 F10 N99 \nM1006 A0 B15 L0 C0 D15 M0 E0 F15 N0 \nM1006 A48 B10 L99 C48 D10 M99 E48 F10 N99 \nM1006 A0 B15 L0 C0 D15 M0 E0 F15 N0 \nM1006 A60 B10 L99 C60 D10 M99 E60 F10 N99 \nM1006 W\n;=====printer finish  sound=========\nM400\nM18\n\n",
+          "Extruder Clearance Radius": "49",
+          "Extruder Color": "#018001",
+          "Extruder Height Gap": "5",
+          "Extruder Max Nozzle Count": "1",
+          "Extruder ams count": "1#0|4#1",
+          "Extruder printable area": "0x0,325x0,325x320,0x320",
+          "Extruder variant list": "Direct Drive Standard,Direct Drive High Flow",
+          "G-code of clumping detection by probing": ";======== H2D 20250729 clumping ========\n{if !spiral_mode}\n    M622.1 S0 ; for previous firmware, default turn off\n    M1002 set_flag g39_forced_detection_flag=1\n    M1002 judge_flag g39_forced_detection_flag\n    M622 J1\n        {if layer_num == 3 || layer_num == 10 || layer_num == 19}\n            M993 A2 B2 C2 ; nozzle cam detection allow status save.\n            M993 A0 B0 C0 ; nozzle cam detection not allowed.\n\n            M400 P100\n\n            G39\n\n            G90\n            G1 Y295 F30000\n            G1 Y265 F18000\n            \n            M993 A3 B3 C3 ; nozzle cam detection allow status restore.\n        {endif}\n    M623\n{endif}\n",
+          "Grab length": "0 mm",
+          "Group Algo With Time": "0",
+          "Head wrap detect zone": null,
+          "Hotend Cooling Rate": "2",
+          "Hotend Heating Rate": "3.6",
+          "Include": "Bambu Lab H2D 0.4 nozzle template machine_start_gcode",
+          "Layer change G-code": ";======== H2D 20250710 layer_change ========\n; layer num/total_layer_count: {layer_num+1}/[total_layer_count]\n; update layer progress\nM73 L{layer_num+1}\nM991 S0 P{layer_num} ;notify layer change\n",
+          "Machine Bed Mass Y": "0",
+          "Machine Max Acceleration E": "5000",
+          "Machine Max Acceleration X": "20000",
+          "Machine Max Acceleration Y": "20000",
+          "Machine Max Acceleration Z": "500",
+          "Machine Max Force Y": "0",
+          "Machine Max Jerk E": "2.5",
+          "Machine Max Jerk X": "9",
+          "Machine Max Jerk Y": "9",
+          "Machine Max Jerk Z": "3",
+          "Machine Max Printed Mass": "0",
+          "Machine Max Speed E": "50",
+          "Machine Max Speed X": "1000",
+          "Machine Max Speed Y": "1000",
+          "Machine Max Speed Z": "30",
+          "Machine Prepare Compensation Time": "260",
+          "Map the logical extruder to physical extruder": "1",
+          "Master extruder id": "2",
+          "Nozzle Flush Dataset": "1",
+          "Nozzle height": "4 mm",
+          "Pause G-code": "M400 U1",
+          "Printable area": "0x0",
+          "Printer Settings Id": "",
+          "Printer extruder id": "1",
+          "Printer notes": "",
+          "Printer technology": "FFF",
+          "Printer type": "Bambu Lab H2D",
+          "Printer variant": "0.4",
+          "Printer's extruder variant": "Direct Drive Standard",
+          "Probing exclude area of clumping": "145x310",
+          "Start G-code (machine_start_gcode)": ";===== machine: H2D start ======\n;===== date: 20250821 =====================\n\n;M1002 set_flag extrude_cali_flag=1\n;M1002 set_flag g29_before_print_flag=1\n;M1002 set_flag auto_cali_toolhead_offset_flag=1\n;M1002 set_flag build_plate_detect_flag=1\n\nM993 A0 B0 C0 ; nozzle cam detection not allowed.\n\nM400\n;M73 P99\n\n;=====printer start sound ===================\nM17\nM400 S1\nM1006 S1\nM1006 A53 B9 L99 C53 D9 M99 E53 F9 N99 \nM1006 A56 B9 L99 C56 D9 M99 E56 F9 N99 \nM1006 A61 B9 L99 C61 D9 M99 E61 F9 N99 \nM1006 A53 B9 L99 C53 D9 M99 E53 F9 N99 \nM1006 A56 B9 L99 C56 D9 M99 E56 F9 N99 \nM1006 A61 B18 L99 C61 D18 M99 E61 F18 N99 \nM1006 W\n;=====printer start sound ===================\n\n;===== reset machine status =================\nM204 S10000\nM630 S0 P0\n\nG90\nM17 D ; reset motor current to default\nM960 S5 P1 ; turn on logo lamp\nG90\nM220 S100 ;Reset Feedrate\nM221 S100 ;Reset Flowrate\nM73.2   R1.0 ;Reset left time magnitude\nG29.1 Z{+0.0} ; clear z-trim value first\nM983.1 M1 \nM901 D4\nM481 S0 ; turn off cutter pos comp\n;===== reset machine status =================\n\nM620 M ;enable remap\n\n;===== avoid end stop =================\nG91\nG380 S2 Z27 F1200\nG380 S2 Z-12 F1200\nG90\n;===== avoid end stop =================\n\n;==== set airduct mode ==== \n\n{if (overall_chamber_temperature >= 40)}\n\n    M145 P1 ; set airduct mode to heating mode for heating\n    M106 P2 S0 ; turn off auxiliary fan\n    M106 P3 S0 ; turn off chamber fan\n\n{else}\n    M145 P0 ; set airduct mode to cooling mode for cooling\n    M106 P2 S178 ; turn on auxiliary fan for cooling\n    M106 P3 S127 ; turn on chamber fan for cooling\n    M140 S0 ; stop heatbed from heating\n\n    M1002 gcode_claim_action : 29\n    M191 S0 ; wait for chamber temp\n    M106 P2 S0 ; turn off auxiliary fan\n    {if (min_vitrification_temperature <= 50)}\n        {if (nozzle_diameter == 0.2)}\n            M142 P1 R30 S35 T40 U0.3 V0.5 W0.8 O40 ; set PLA/TPU ND0.2 chamber autocooling\n        {else}\n            M142 P1 R30 S40 T45 U0.3 V0.5 W0.8 O45; set PLA/TPU ND0.4 chamber autocooling\n        {endif}\n    {else}\n        {if (!is_all_bbl_filament)}\n            M142 P1 R35 S40 T45 U0.3 V0.5 W0.8 O45 L1 ; set third-party PETG chamber autocooling\n        {else}\n            {if (nozzle_diameter == 0.2)}\n                M142 P1 R35 S45 T50 U0.3 V0.5 W0.8 O50 L1 ; set PETG ND0.2 chamber autocooling\n            {else}\n                M142 P1 R35 S50 T55 U0.3 V0.5 W0.8 O55 L1 ; set PETG ND0.4 chamber autocooling\n            {endif}\n        {endif}\n    {endif}\n{endif}\n;==== set airduct mode ==== \n\n;===== start to heat heatbed & hotend==========\n\n    M1002 set_filament_type:{filament_type[initial_no_support_extruder]}\n\n    M104 S140 A\n    M140 S[bed_temperature_initial_layer_single]\n\n    ;===== set chamber temperature ==========\n    {if (overall_chamber_temperature >= 40)}\n        M145 P1 ; set airduct mode to heating mode\n        M141 S[overall_chamber_temperature] ; Let Chamber begin to heat\n    {endif}\n    ;===== set chamber temperature ==========\n\n;===== start to heat heatbead & hotend==========\n\n;====== cog noise reduction=================\nM982.2 S1 ; turn on cog noise reduction\n\n;===== first homing start =====\nM1002 gcode_claim_action : 13\n\nG28 X T300\n\nG150.1 F18000 ; wipe mouth to avoid filament stick to heatbed\nG150.3 F18000\nM400 P200\nM972 S24 P0 T2000\n\n{if curr_bed_type==\"Textured PEI Plate\"}\nM972 S26 P0 C0\n{elsif curr_bed_type==\"High Temp Plate\"}\nM972 S36 P0 C0 X1\n{endif}\nM972 S35 P0 C0\n\nM972 S41 P0 T5000 ; trash can anti-collision\n\nM1009 Q1 L1\nG90\nG1 X175 Y160 F30000\nG28 Z P0 T250\nM1009 Q1 L0\n\n;===== first homing end =====\n\nM400\n;M73 P99\n\n;===== detection start =====\n\n    T1001\n    G383.4 ; left-extruder load status detection\n    \n    M104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]-80} A ; rise temp in advance\n\nM1002 judge_flag build_plate_detect_flag\nM622 S1\n    M972 S19 P0 C0    ; heatbed presence detection\n    M972 S31 P0 T5000 ; toolhead camera dirty detection\n    M972 S34 P0 T5000 ; heatbed plate offset detection\nM623\n\n    M972 S14 P0 ; nozzle type detection\n\n;===== detection end =====\n\nM400\n;M73 P99\n\n;===== prepare print temperature and material ==========\nM400\nM211 X0 Y0 Z0 ;turn off soft endstop\nM975 S1 ; turn on input shaping\n\nG29.2 S0 ; avoid invalid abl data\n\n{if ((filament_type[initial_no_support_extruder] == \"PLA\") || (filament_type[initial_no_support_extruder] == \"PLA-CF\") || (filament_type[initial_no_support_extruder] == \"PETG\")) && (nozzle_diameter[initial_no_support_extruder] == 0.2)}\nM620.10 A0 F74.8347 H{nozzle_diameter[initial_no_support_extruder]} T{flush_temperatures[initial_no_support_extruder]} P{nozzle_temperature_initial_layer[initial_no_support_extruder]} S1\nM620.10 A1 F74.8347 H{nozzle_diameter[initial_no_support_extruder]} T{flush_temperatures[initial_no_support_extruder]} P{nozzle_temperature_initial_layer[initial_no_support_extruder]} S1\n{else}\nM620.10 A0 F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60} H{nozzle_diameter[initial_no_support_extruder]} T{flush_temperatures[initial_no_support_extruder]} P{nozzle_temperature_initial_layer[initial_no_support_extruder]} S1\nM620.10 A1 F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60} H{nozzle_diameter[initial_no_support_extruder]} T{flush_temperatures[initial_no_support_extruder]} P{nozzle_temperature_initial_layer[initial_no_support_extruder]} S1\n{endif}\n\nM620.11 P0 I[initial_no_support_extruder] E0\n\n{if long_retraction_when_ec }\nM620.11 K1 I[initial_no_support_extruder] R{retraction_distance_when_ec} F{max((flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60), 200)}\n{else}\nM620.11 K0 I[initial_no_support_extruder] R0\n{endif}\n\nM628 S1\n{if filament_type[initial_no_support_extruder] == \"TPU\"}\n    M620.11 S0 L0 I[initial_no_support_extruder] E-{retraction_distances_when_cut[initial_no_support_extruder]} F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60}\n{else}\n{if (filament_type[initial_no_support_extruder] == \"PA\") ||  (filament_type[initial_no_support_extruder] == \"PA-GF\")}\n    M620.11 S1 L0 I[initial_no_support_extruder] R4 D2 E-{retraction_distances_when_cut[initial_no_support_extruder]} F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60}\n{else}\n    M620.11 S1 L0 I[initial_no_support_extruder] R10 D8 E-{retraction_distances_when_cut[initial_no_support_extruder]} F{flush_volumetric_speeds[initial_no_support_extruder]/2.4053*60}\n{endif}\n{endif}\nM629\n\nM620 S[initial_no_support_extruder]A   ; switch material if AMS exist\nM1002 gcode_claim_action : 4\nM1002 set_filament_type:UNKNOWN\nM400\nT[initial_no_support_extruder]\nM400\nM628 S0\nM629\nM400\nM1002 set_filament_type:{filament_type[initial_no_support_extruder]}\nM621 S[initial_no_support_extruder]A\n\nM104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}\nM400\nM106 P1 S0\n\nG29.2 S1\n;===== prepare print temperature and material ==========\n\nM400\n;M73 P99\n\n;===== auto extrude cali start =========================\nM975 S1\nM1002 judge_flag extrude_cali_flag\n\nM622 J0\n    M983.3 F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4} A0.4 ; cali dynamic extrusion compensation\nM623\n\nM622 J1\n    M1002 set_filament_type:{filament_type[initial_no_support_extruder]}\n    M1002 gcode_claim_action : 8\n\n    M109 S{nozzle_temperature[initial_no_support_extruder]}\n\n    G90\n    M83\n    M983.3 F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4} A0.4 ; cali dynamic extrusion compensation\n\n    M400\n    M106 P1 S255\n    M400 S5\n    M106 P1 S0\n    G150.3\nM623\n\nM622 J2\n    M1002 set_filament_type:{filament_type[initial_no_support_extruder]}\n    M1002 gcode_claim_action : 8\n\n    M109 S{nozzle_temperature[initial_no_support_extruder]}\n\n    G90\n    M83\n    M983.3 F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4} A0.4 ; cali dynamic extrusion compensation\n\n    M400\n    M106 P1 S255\n    M400 S5\n    M106 P1 S0\n    G150.3\nM623\n\n;===== auto extrude cali end =========================\n\n{if filament_type[initial_no_support_extruder] == \"TPU\"}\n    G150.2\n    G150.1\n    G150.2\n    G150.1\n    G150.2\n    G150.1\n{else}\n    M106 P1 S0\n    M400 S2\n    M83\n    G1 E45 F{filament_max_volumetric_speed[initial_no_support_extruder]/2.4053*60}\n    G1 E-3 F1800\n    M400 P500\n    G150.2\n    G150.1\n{endif}\n\nG91\nG1 Y-16 F12000 ; move away from the trash bin\nG90\n\nM400\n;M73 P99\n\n;===== wipe right nozzle start =====\n\nM1002 gcode_claim_action : 14\n    G150 T{nozzle_temperature_initial_layer[initial_no_support_extruder]}\n    {if (overall_chamber_temperature >= 40)}\n        G150 T{nozzle_temperature_initial_layer[initial_no_support_extruder] - 80}\n    {endif}\nM106 S255 ; turn on fan to cool the nozzle\n\n;===== wipe left nozzle end =====\n\nM400\n;M73 P99\n\n{if (overall_chamber_temperature >= 40)}\n    M1002 gcode_claim_action : 49\n    M191 S[overall_chamber_temperature] ; wait for chamber temp\n{endif}\n\nM400\n;M73 P99\n\n;===== bed leveling ==================================\n\nM1002 judge_flag g29_before_print_flag\n\nM190 S[bed_temperature_initial_layer_single]; ensure bed temp\nM109 S140 A\nM106 S0 ; turn off fan , too noisy\n\nG91\nG1 Z5 F1200\nG90\nG1 X175 Y160 F30000\n\nM622 J1\n    M1002 gcode_claim_action : 1\n    G29.20 A3\n    G29 A1 O X{first_layer_print_min[0]} Y{first_layer_print_min[1]} I{first_layer_print_size[0]} J{first_layer_print_size[1]}\n    M400\n    M500 ; save cali data\nM623\n    \nM622 J2\n    M1002 gcode_claim_action : 1\n    {if has_tpu_in_first_layer}\n        G29.20 A3\n        G29 A1 O X{first_layer_print_min[0]} Y{first_layer_print_min[1]} I{first_layer_print_size[0]} J{first_layer_print_size[1]}\n    {else}\n        G29.20 A4\n        G29 A2 O X{first_layer_print_min[0]} Y{first_layer_print_min[1]} I{first_layer_print_size[0]} J{first_layer_print_size[1]}\n    {endif}\n    M400\n    M500 ; save cali data\nM623\n\nM622 J0\n    G28\nM623\n\n;===== bed leveling end ================================\n\n;===== z ofst cali start =====\n\n    M190 S[bed_temperature_initial_layer_single]; ensure bed temp\n\n    G383 O0 M2 T140\n    M500\n\n;===== z ofst cali end =====\n\nG39.1 ; cali nozzle wrapped detection pos\nM500\n\nM400\n;M73 P99\n\nM141 S[overall_chamber_temperature]\nM104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]} A\n\n;===== mech mode sweep start =====\n    M1002 gcode_claim_action : 3\n\n    G90\n    G1 Z5 F1200\n    G1 X187 Y160 F20000\n    T1000\n    M400 P200\n\n    M970.3 Q1 A5 K0 O1\n    M974 Q1 S2 P0\n\n    M970.3 Q0 A5 K0 O1\n    M974 Q0 S2 P0\n\n    M970.2 Q2 K0 W38 Z0.01\n    M974 Q2 S2 P0\n    M500\n\n    M975 S1\n;===== mech mode sweep end =====\n\nM400\n;M73 P99\n\nG150.3 ; move to garbage can to wait for temp\nM1026\n\n;===== xy ofst cali start =====\n\nM1002 judge_flag auto_cali_toolhead_offset_flag\n\nM622 J0\n    M1012.5 N1 R1\n    M500\nM623\n\nM622 J1\n    M1002 gcode_claim_action : 39\n    M141 S0\n    M620.17 T0 S{nozzle_temperature_initial_layer[(first_non_support_filaments[0] != -1 ? first_non_support_filaments[0] : first_filaments[0])]} L{(first_non_support_filaments[0] != -1 ? first_non_support_filaments[0] : first_filaments[0])}\n    M620.17 T1 S{nozzle_temperature_initial_layer[(first_non_support_filaments[1] != -1 ? first_non_support_filaments[1] : first_filaments[1])]} L{(first_non_support_filaments[1] != -1 ? first_non_support_filaments[1] : first_filaments[1])}\n    G383 O1 T{nozzle_temperature_initial_layer[initial_no_support_extruder]} L{initial_no_support_extruder}\n    M500\n    M141 S[overall_chamber_temperature]\nM623\n\nM622 J2\n    M1002 gcode_claim_action : 39\n    M141 S0\n    M620.17 T0 S{nozzle_temperature_initial_layer[(first_non_support_filaments[0] != -1 ? first_non_support_filaments[0] : first_filaments[0])]} L{(first_non_support_filaments[0] != -1 ? first_non_support_filaments[0] : first_filaments[0])}\n    M620.17 T1 S{nozzle_temperature_initial_layer[(first_non_support_filaments[1] != -1 ? first_non_support_filaments[1] : first_filaments[1])]} L{(first_non_support_filaments[1] != -1 ? first_non_support_filaments[1] : first_filaments[1])}\n    G383.3 T{nozzle_temperature_initial_layer[initial_no_support_extruder]} L{initial_no_support_extruder}\n    M500\n    M141 S[overall_chamber_temperature]\nM623\n;===== xy ofst cali end =====\n\nM400\n;M73 P99\n\nM1002 gcode_claim_action : 0\nM400\n\n;============switch again==================\n\nM211 X0 Y0 Z0 ;turn off soft endstop\nG91\nG1 Z6 F1200\nG90\nM1002 set_filament_type:{filament_type[initial_no_support_extruder]}\nM620 S[initial_no_support_extruder]A\nM400\nT[initial_no_support_extruder]\nM400\nM628 S0\nM629\nM400\nM621 S[initial_no_support_extruder]A\n\n;============switch again==================\n\nM400\n;M73 P99\n\n;===== wait temperature reaching the reference value =======\n\nM104 S{nozzle_temperature_initial_layer[initial_no_support_extruder]} ; rise to print tmpr\n\nM140 S[bed_temperature_initial_layer_single] \nM190 S[bed_temperature_initial_layer_single] \n\n    ;========turn off light and fans =============\n    M960 S1 P0 ; turn off laser\n    M960 S2 P0 ; turn off laser\n    M106 S0 ; turn off fan\n    M106 P2 S0 ; turn off big fan\n\n    ;============set motor current==================\n    M400 S1\n\n;===== wait temperature reaching the reference value =======\n\nM400\n;M73 P99\n\n;===== for Textured PEI Plate , lower the nozzle as the nozzle was touching topmost of the texture when homing ==\n    {if curr_bed_type==\"Textured PEI Plate\"}\n        G29.1 Z{-0.02} ; for Textured PEI Plate\n    {endif}\n    \nG150.1\n\nM975 S1 ; turn on mech mode supression\nM983.4 S1 ; turn on deformation compensation \nG29.2 S1 ; turn on pos comp\nG29.7 S1\n\nG90\nG1 Z5 F1200\nG1 Y295 F30000\nG1 Y265 F18000\n\n;===== nozzle load line ===============================\n    G29.2 S1 ; ensure z comp turn on\n    G90\n    M83\n    G1 Z5 F1200\n    G1 X270 Y-0.5 F60000\n    G28.14\n    G29.2 S0\n    G91\n    G1 Z0.8 F1200\n    G90\n    G1 X250 F60000\n    M109 S{nozzle_temperature_initial_layer[initial_no_support_extruder]}\n    M83\n    G1 E5 F{filament_max_volumetric_speed[initial_no_support_extruder]/2/2.4053*60}\n    G1 X290 E20 F{filament_max_volumetric_speed[initial_no_support_extruder]/2/2.4053*60}\n    G91\n    G3 Z0.4 I1.217 J0 P1 F60000\n    G90\n    M83\n    G29.2 S1 ; ensure z comp turn on\n;===== noozle load line end ===========================\n\nM400\n;M73 P99\n\nM993 A1 B1 C1 ; nozzle cam detection allowed.\n\n{if (filament_type[initial_no_support_extruder] == \"TPU\")}\nM1015.3 S1;enable tpu clog detect\n{else}\nM1015.3 S0;disable tpu clog detect\n{endif}\n\n{if (filament_type[initial_no_support_extruder] == \"PLA\") ||  (filament_type[initial_no_support_extruder] == \"PETG\")\n ||  (filament_type[initial_no_support_extruder] == \"PLA-CF\")  ||  (filament_type[initial_no_support_extruder] == \"PETG-CF\")}\nM1015.4 S1 K1 H[nozzle_diameter] ;enable E air printing detect\n{else}\nM1015.4 S0 K0 H[nozzle_diameter] ;disable E air printing detect\n{endif}\n\nM620.6 I[initial_no_support_extruder] W1 ;enable ams air printing detect\n\nM211 Z1\nG29.99\n\n\n",
+          "Support Cooling Filter": "1",
+          "Support Fast Purge Mode": "0",
+          "Support Object Skip Flush": "0",
+          "Time lapse G-code": ";======== H2D 20250818========\n; SKIPPABLE_START\n; SKIPTYPE: timelapse\nM622.1 S1 ; for prev firmware, default turned on\n\nM1002 judge_flag timelapse_record_flag\n\nM622 J1\nM993 A2 B2 C2\nM993 A0 B0 C0\n\n{if !spiral_mode && !(has_timelapse_safe_pos && timelapse_type == 0) }\n    {if most_used_physical_extruder_id!= curr_physical_extruder_id || timelapse_type == 1}\n        M83\n        G1 Z{max_layer_z + 0.4} F1200\n        M400\n    {endif}\n{endif}\n\n{if has_timelapse_safe_pos && timelapse_type == 0 && !spiral_mode}\n    M9711 M{timelapse_type} E{most_used_physical_extruder_id} X{timelapse_pos_x} Y{timelapse_pos_y} Z{layer_z + 0.4} S11 C10 O0 T3000\n{else}\n    {if spiral_mode}\n        M9711 M{timelapse_type} E{most_used_physical_extruder_id} Z{layer_z} S11 C10 O0 T3000\n    {else}\n        M9711 M{timelapse_type} E{most_used_physical_extruder_id} Z{layer_z + 0.4} S11 C10 O0 T3000\n    {endif}\n{endif}\n\n{if !spiral_mode && !(has_timelapse_safe_pos && timelapse_type == 0) }\n    {if most_used_physical_extruder_id!= curr_physical_extruder_id || timelapse_type == 1}\n        G90\n        G1 Z{max_layer_z + 3.0} F1200\n        G1 Y295 F30000\n        G1 Y265 F18000\n        M83\n    {endif}\n{endif}\nM993 A3 B3 C3\n\nM623\n; SKIPPABLE_END\n",
+          "upward compatible machine": "Bambu Lab H2D Pro 0.4 nozzle"
+        },
+        "Quality": {
+          "Corrections": {
+            "Elephant foot compensation": "0.15 mm"
+          }
+        },
+        "Single extruder MM setup": {
+          "Basic information": {
+            "Default Nozzle Volume Type": "Standard",
+            "Extruder printable height": "320 mm",
+            "Nozzle diameter": "0.4 mm",
+            "Nozzle volume": "130 mm³",
+            "Type (extruder_type)": "Direct Drive"
+          },
+          "Layer height limits": {
+            "Max (max_layer_height)": "0.28 mm",
+            "Min (min_layer_height)": "0.08 mm"
+          },
+          "Position": {
+            "Extruder offset": "0x0 mm"
+          },
+          "Retraction": {
+            "Deretraction Speed": "30 mm/s",
+            "Extra length on restart (retract_restart_extra)": "0 mm",
+            "Retract amount before wipe": "0%",
+            "Retract when change layer": "1",
+            "Retraction Length": "0.8 mm",
+            "Retraction Speed": "30 mm/s",
+            "Travel distance threshold": "1 mm",
+            "Wipe Distance": "2 mm",
+            "Wipe while retracting": "1",
+            "Z Hop Type": "Auto Lift",
+            "Z hop lower boundary": "0 mm",
+            "Z hop upper boundary": "319 mm",
+            "Z hop when retract": "0.4 mm"
+          },
+          "Retraction when switching material": {
+            "Extra length on restart (retract_restart_extra_toolchange)": "0 mm",
+            "Long retraction when cut (experimental)": "0",
+            "Retraction Length (Toolchange)": "2 mm",
+            "Retraction distance when cut": "10"
+          }
+        }
+      }
+    },
+    "plates": {
+      "1": {
+        "objects": [
+          {
+            "extruder": 8,
+            "filament_id": "Bambu ABS @BBL H2D",
+            "id": "2",
+            "index": 0,
+            "name": "F2 ultra power supply mount - mount.step",
+            "process_id": "0.20mm Standard @BBL H2D",
+            "process_overrides": {
+              "Quality": {
+                "Advanced": {
+                  "Order of walls": "inner-outer-inner wall"
+                },
+                "Precision": {
+                  "Auto circle contour-hole compensation": "1",
+                  "Precise Z height": "1",
+                  "Precise wall": "1"
+                },
+                "Wall generator": {
+                  "Wall generator": "arachne"
+                }
+              },
+              "Strength": {
+                "Advanced": {
+                  "Infill combination": "1"
+                },
+                "Sparse infill": {
+                  "Skeleton infill density": "20%",
+                  "Skin infill density": "20%",
+                  "Sparse infill density": "20%",
+                  "Sparse infill pattern": "zigzag"
+                },
+                "Walls": {
+                  "Wall loops": "3"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "process": {
+      "id": "0.20mm Standard @BBL H2D",
+      "settings": {
+        "Advanced": {
+          "Advanced": {
+            "Interlocking beam layers": "2",
+            "Interlocking beam width": "0.8 mm",
+            "Interlocking boundary avoidance": "2",
+            "Interlocking depth": "2",
+            "Interlocking depth of a segmented region": "0 mm",
+            "Interlocking direction": "22.5 °",
+            "Maximum width of a segmented region": "0 mm",
+            "Use beam interlocking": "0"
+          }
+        },
+        "Cooling": {
+          "Part cooling fan": {
+            "Pre start fan time": "0 s"
+          }
+        },
+        "Extruders": {
+          "Advanced": {
+            "Solid infill": "1",
+            "Sparse infill filament": "1",
+            "Walls": "1"
+          }
+        },
+        "Other": {
+          "Apply Top Surface Compensation": "0",
+          "Authorization Type": "key",
+          "Before layer change G-code": "",
+          "Between Object Gcode": "",
+          "Change filament G-code": ";======== H2D ========\n;===== 20250729 =====\nM993 A2 B2 C2 ; nozzle cam detection allow status save.\nM993 A0 B0 C0 ; nozzle cam detection not allowed.\n\n{if (filament_type[next_extruder] == \"PLA\") ||  (filament_type[next_extruder] == \"PETG\")\n ||  (filament_type[next_extruder] == \"PLA-CF\")  ||  (filament_type[next_extruder] == \"PETG-CF\")}\nM1015.4 S1 K0 ;disable E air printing detect\n{else}\nM1015.4 S0 ; disable E air printing detect\n{endif}\n\nM620 S[next_extruder]A\nM1002 gcode_claim_action : 4\nM204 S9000\n\nG1 Z{max_layer_z + 3.0} F1200\n\nM400\nM106 P1 S0\nM106 P2 S0\n\n{if toolchange_count == 2}\n; get travel path for change filament\n;M620.1 X[travel_point_1_x] Y[travel_point_1_y] F21000 P0\n;M620.1 X[travel_point_2_x] Y[travel_point_2_y] F21000 P1\n;M620.1 X[travel_point_3_x] Y[travel_point_3_y] F21000 P2\n{endif}\n\n{if ((filament_type[current_extruder] == \"PLA\") || (filament_type[current_extruder] == \"PLA-CF\") || (filament_type[current_extruder] == \"PETG\")) && (nozzle_diameter[current_extruder] == 0.2)}\nM620.10 A0 F74.8347 L[flush_length] H{nozzle_diameter[current_extruder]} T{flush_temperatures[current_extruder]} P{nozzle_temperature[current_extruder]} S1\n{else}\nM620.10 A0 F{flush_volumetric_speeds[current_extruder]/2.4053*60} L[flush_length] H{nozzle_diameter[current_extruder]} T{flush_temperatures[current_extruder]} P{nozzle_temperature[current_extruder]} S1\n{endif}\n\n{if ((filament_type[next_extruder] == \"PLA\") || (filament_type[next_extruder] == \"PLA-CF\") || (filament_type[next_extruder] == \"PETG\")) && (nozzle_diameter[next_extruder] == 0.2)}\nM620.10 A1 F74.8347 L[flush_length] H{nozzle_diameter[next_extruder]} T{flush_temperatures[next_extruder]} P{nozzle_temperature[next_extruder]} S1\n{else}\nM620.10 A1 F{flush_volumetric_speeds[next_extruder]/2.4053*60} L[flush_length] H{nozzle_diameter[next_extruder]} T{flush_temperatures[next_extruder]} P{nozzle_temperature[next_extruder]} S1\n{endif}\n\n{if long_retraction_when_cut}\nM620.11 P1 I[current_extruder] E-{retraction_distance_when_cut} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 P0 I[current_extruder] E0\n{endif}\n\n{if long_retraction_when_ec}\nM620.11 K1 I[current_extruder] R{retraction_distance_when_ec} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 K0 I[current_extruder] R0\n{endif}\n\nM628 S1\n{if filament_type[current_extruder] == \"TPU\"}\nM620.11 S0 L0 I[current_extruder] E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\n{if (filament_type[current_extruder] == \"PA\") || (filament_type[current_extruder] == \"PA-GF\")}\nM620.11 S1 L0 I[current_extruder] R4 D2 E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{else}\nM620.11 S1 L0 I[current_extruder] R10 D8 E-{retraction_distances_when_cut[current_extruder]} F{max((flush_volumetric_speeds[current_extruder]/2.4053*60), 200)}\n{endif}\n{endif}\nM629\n\n{if filament_type[current_extruder] == \"TPU\" || filament_type[next_extruder] == \"TPU\"}\nM620.11 H2 C331\n{else}\nM620.11 H0\n{endif}\n\nT[next_extruder]\n\n;deretract\n{if filament_type[next_extruder] == \"TPU\"}\n{else}\n{if (filament_type[next_extruder] == \"PA\") || (filament_type[next_extruder] == \"PA-GF\")}\n;VG1 E1 F{max(new_filament_e_feedrate, 200)}\n;VG1 E1 F{max(new_filament_e_feedrate/2, 100)}\n{else}\n;VG1 E4 F{max(new_filament_e_feedrate, 200)}\n;VG1 E4 F{max(new_filament_e_feedrate/2, 100)}\n{endif}\n{endif}\n\n; VFLUSH_START\n\n{if flush_length>41.5}\n;VG1 E41.5 F{min(old_filament_e_feedrate,new_filament_e_feedrate)}\n;VG1 E{flush_length-41.5} F{new_filament_e_feedrate}\n{else}\n;VG1 E{flush_length} F{min(old_filament_e_feedrate,new_filament_e_feedrate)}\n{endif}\n\nSYNC T{ceil(flush_length / 125) * 5}\n\n; VFLUSH_END\n\nM1002 set_filament_type:{filament_type[next_extruder]}\n\nM400\nM83\n{if next_extruder < 255}\n\nM620.10 R{retract_length_toolchange[filament_map[next_extruder]-1]}\nM628 S0\n;VM109 S[new_filament_temp]\nM629\nM400\n\nM983.3 F{filament_max_volumetric_speed[next_extruder]/2.4} A0.4 R{retract_length_toolchange[filament_map[next_extruder]-1]}\n\nM400\n{if wipe_avoid_perimeter}\nG1 Y320 F30000\nG1 X{wipe_avoid_pos_x} F30000\n{endif}\nG1 Y295 F30000\nG1 Y265 F18000\nG1 Z{max_layer_z + 3.0} F3000\n{if layer_z <= (initial_layer_print_height + 0.001)}\nM204 S[initial_layer_acceleration]\n{else}\nM204 S[default_acceleration]\n{endif}\n{else}\nG1 X[x_after_toolchange] Y[y_after_toolchange] Z[z_after_toolchange] F12000\n{endif}\nM621 S[next_extruder]A\n\nM993 A3 B3 C3 ; nozzle cam detection allow status restore.\n\n{if (filament_type[next_extruder]  == \"TPU\")}\nM1015.3 S1;enable tpu clog detect\n{else}\nM1015.3 S0;disable tpu clog detect\n{endif}\n\n{if (filament_type[next_extruder] == \"PLA\") ||  (filament_type[next_extruder] == \"PETG\")\n ||  (filament_type[next_extruder] == \"PLA-CF\")  ||  (filament_type[next_extruder] == \"PETG-CF\")}\nM1015.4 S1 K1 H[nozzle_diameter] ;enable E air printing detect\n{else}\nM1015.4 S0 ; disable E air printing detect\n{endif}\n\nM620.6 I[next_extruder] W1 ;enable ams air printing detect\nM1002 gcode_claim_action : 0\n",
+          "Custom G-code": "",
+          "Default filament profile": "Bambu PLA Basic @BBL H2D",
+          "Default process profile": "0.20mm Standard @BBL H2D",
+          "Enable (ooze_prevention)": "0",
+          "Enable Long Retraction When Cut": "2",
+          "Enable Pre Heating": "1",
+          "Fan speed (additional_cooling_fan_speed)": "0 %",
+          "Filename format": "{input_filename_base}_{filament_type[0]}_{print_time}.gcode",
+          "First layer print sequence": "0",
+          "Full fan speed at layer (full_fan_speed_layer)": "0",
+          "G-code of clumping detection by probing": ";======== H2D 20250729 clumping ========\n{if !spiral_mode}\n    M622.1 S0 ; for previous firmware, default turn off\n    M1002 set_flag g39_forced_detection_flag=1\n    M1002 judge_flag g39_forced_detection_flag\n    M622 J1\n        {if layer_num == 3 || layer_num == 10 || layer_num == 19}\n            M993 A2 B2 C2 ; nozzle cam detection allow status save.\n            M993 A0 B0 C0 ; nozzle cam detection not allowed.\n\n            M400 P100\n\n            G39\n\n            G90\n            G1 Y295 F30000\n            G1 Y265 F18000\n            \n            M993 A3 B3 C3 ; nozzle cam detection allow status restore.\n        {endif}\n    M623\n{endif}\n",
+          "Grab length": "0 mm",
+          "Has Scarf Joint Seam": "0",
+          "Host Type": "OctoPrint (octoprint)",
+          "Hotend Cooling Rate": "2",
+          "Hotend Heating Rate": "3.6",
+          "Ignore HTTPS certificate revocation checks": "0",
+          "Layer Time Smoothing": "0",
+          "Layer Time Smoothing Threshold": "30",
+          "Layer change G-code": ";======== H2D 20250710 layer_change ========\n; layer num/total_layer_count: {layer_num+1}/[total_layer_count]\n; update layer progress\nM73 L{layer_num+1}\nM991 S0 P{layer_num} ;notify layer change\n",
+          "Layers of clumping detection by probing": "20",
+          "Map the logical extruder to physical extruder": "0",
+          "Master extruder id": "2",
+          "Max volumetric speed multinomial coefficients": "0 0 0 0 0 0",
+          "No sparse layers (EXPERIMENTAL)": "0",
+          "Nozzle Flush Dataset": "2",
+          "Nozzle Volume Type": "High Flow",
+          "Nozzle height": "4 mm",
+          "Only One Wall Top": "1",
+          "Other layers print sequence": "0",
+          "Position X": "165 mm",
+          "Position Y": "250 mm",
+          "Prime Tower Flat Ironing": "1",
+          "Prime Tower Lift Height": "-1",
+          "Prime Tower Lift Speed": "90",
+          "Print Compatible Printers": "Bambu Lab H2D 0.4 nozzle",
+          "Print Settings Id": "",
+          "Print extruder id": "1",
+          "Print's extruder variant": "Direct Drive High Flow",
+          "Probing exclude area of clumping": "256x310",
+          "Process notes": "",
+          "Purge multiplier": "1",
+          "Purging volumes": "650",
+          "Purging volumes - load/unload volumes": "140",
+          "Reduce Infill Retraction": "1",
+          "Scarf Seam On Compensation Circles": "1",
+          "Skirt Per Object": "1",
+          "Start end points": "54x245",
+          "Temperature variation": "-5 ∆°C",
+          "The number of other layers print sequence": "0",
+          "Thumbnail size": "50x50",
+          "Time lapse G-code": ";======== H2D 20250818========\n; SKIPPABLE_START\n; SKIPTYPE: timelapse\nM622.1 S1 ; for prev firmware, default turned on\n\nM1002 judge_flag timelapse_record_flag\n\nM622 J1\nM993 A2 B2 C2\nM993 A0 B0 C0\n\n{if !spiral_mode && !(has_timelapse_safe_pos && timelapse_type == 0) }\n    {if most_used_physical_extruder_id!= curr_physical_extruder_id || timelapse_type == 1}\n        M83\n        G1 Z{max_layer_z + 0.4} F1200\n        M400\n    {endif}\n{endif}\n\n{if has_timelapse_safe_pos && timelapse_type == 0 && !spiral_mode}\n    M9711 M{timelapse_type} E{most_used_physical_extruder_id} X{timelapse_pos_x} Y{timelapse_pos_y} Z{layer_z + 0.4} S11 C10 O0 T3000\n{else}\n    {if spiral_mode}\n        M9711 M{timelapse_type} E{most_used_physical_extruder_id} Z{layer_z} S11 C10 O0 T3000\n    {else}\n        M9711 M{timelapse_type} E{most_used_physical_extruder_id} Z{layer_z + 0.4} S11 C10 O0 T3000\n    {endif}\n{endif}\n\n{if !spiral_mode && !(has_timelapse_safe_pos && timelapse_type == 0) }\n    {if most_used_physical_extruder_id!= curr_physical_extruder_id || timelapse_type == 1}\n        G90\n        G1 Z{max_layer_z + 3.0} F1200\n        G1 Y295 F30000\n        G1 Y265 F18000\n        M83\n    {endif}\n{endif}\nM993 A3 B3 C3\n\nM623\n; SKIPPABLE_END\n",
+          "Wall Infill Order": "inner wall/outer wall/infill",
+          "Wipe tower rotation angle": "0 °",
+          "Z travel": "0 mm/s",
+          "upward compatible machine": "Bambu Lab H2D Pro 0.4 nozzle"
+        },
+        "Others": {
+          "Advanced": {
+            "Enable clumping detection by probing": "0"
+          },
+          "Bed adhesion": {
+            "Draft shield": "Disabled (disabled)",
+            "Skirt distance": "2 mm",
+            "Skirt height": "1 layers",
+            "Skirt loops": "0"
+          },
+          "G-code output": {
+            "Add line number": "0",
+            "Exclude objects": "1",
+            "Reduce infill retraction": "Auto"
+          },
+          "Prime tower": {
+            "Brim width (prime_tower_brim_width)": "-1 mm",
+            "Enable (enable_prime_tower)": "1",
+            "Enable tower interface features": "1",
+            "Extra rib length": "0 mm",
+            "Fillet wall": "1",
+            "Infill gap": "150%",
+            "Internal ribs": "0",
+            "Max speed": "90 mm/s",
+            "Rib wall": "1",
+            "Rib width": "8 mm",
+            "Skip points": "1",
+            "Width": "60 mm"
+          },
+          "Special mode": {
+            "Apply fuzzy skin to first layer": "0",
+            "Fuzzy Skin": "none",
+            "Fuzzy skin feature size": "1.0 mm",
+            "Fuzzy skin generator mode": "displacement",
+            "Fuzzy skin noise octaves": "4",
+            "Fuzzy skin noise persistence": "0.5",
+            "Fuzzy skin noise type": "classic",
+            "Fuzzy skin point distance": "0.8 mm",
+            "Fuzzy skin thickness": "0.3 mm",
+            "Max XY Smoothing": "200%",
+            "Smooth Spiral": "0",
+            "Timelapse": "0"
+          }
+        },
+        "Plate Settings": {
+          "Plate type": "High Temp Plate",
+          "Special mode": {
+            "Print sequence": "by layer",
+            "Spiral vase": "0"
+          }
+        },
+        "Purge options": {
+          "Purge options": {
+            "Purge into objects' infill": "0",
+            "Purge into objects' support": "1",
+            "Purge into this object": "0"
+          }
+        },
+        "Quality": {
+          "Adaptive layer height": "0",
+          "Advanced": {
+            "Avoid crossing wall": "0",
+            "Avoid crossing wall - Includes support": "0",
+            "Avoid crossing wall - Max detour length": "0 mm or %",
+            "Bridge flow": "1",
+            "Detect overhang walls": "1",
+            "Initial layer flow ratio": "1",
+            "Object flow ratio": "1",
+            "Only one wall on first layer": "0",
+            "Only one wall on top surfaces": "all top",
+            "Order of walls": "inner-outer-inner wall",
+            "Print infill first": "0",
+            "Smooth coefficient": "4",
+            "Smooth speed discontinuity area": "1",
+            "Smoothing wall speed along Z(experimental)": "1",
+            "Thick bridges": "0",
+            "Top area threshold": "200%",
+            "Top surface flow ratio": "1"
+          },
+          "Corrections": {
+            "Elephant foot compensation": "0.15 mm"
+          },
+          "Ironing": {
+            "Ironing Pattern": "zig-zag",
+            "Ironing Type": "no ironing",
+            "Ironing flow": "10%",
+            "Ironing inset": "0.21 mm",
+            "Ironing line spacing": "0.15 mm",
+            "Ironing speed": "30 mm/s",
+            "ironing direction": "45 °"
+          },
+          "Layer height": {
+            "Initial layer height": "0.2 mm"
+          },
+          "Layers": {
+            "Layer height": "0.2 mm"
+          },
+          "Line width": {
+            "Default (line_width)": "0.42 mm",
+            "Initial layer (initial_layer_line_width)": "0.5 mm",
+            "Inner wall (inner_wall_line_width)": "0.45 mm",
+            "Internal solid infill (internal_solid_infill_line_width)": "0.42 mm",
+            "Outer wall (outer_wall_line_width)": "0.42 mm",
+            "Sparse infill (sparse_infill_line_width)": "0.45 mm",
+            "Support (support_line_width)": "0.42 mm",
+            "Top surface (top_surface_line_width)": "0.42 mm"
+          },
+          "Precision": {
+            "Arc fitting": "1",
+            "Auto circle contour-hole compensation": "1",
+            "Precise Z height": "1",
+            "Precise wall": "1",
+            "Resolution": "0.012 mm",
+            "User Customized Offset": "0 mm",
+            "X-Y contour compensation": "0 mm",
+            "X-Y hole compensation": "0 mm"
+          },
+          "Seam": {
+            "Override filament scarf seam setting": "0",
+            "Role-based wipe speed": "1",
+            "Scarf application angle threshold": "155 °",
+            "Scarf around entire wall": "0",
+            "Scarf joint for inner walls": "1",
+            "Scarf length (seam_slope_min_length)": "10 mm",
+            "Scarf seam type (seam_slope_type)": "none",
+            "Scarf slope gap (seam_slope_gap)": "0 mm/%",
+            "Scarf start height (seam_slope_start_height)": "10%",
+            "Scarf steps": "10",
+            "Seam gap": "15%",
+            "Seam placement away from overhangs(experimental)": "0",
+            "Seam position": "aligned",
+            "Smart scarf seam application": "1",
+            "Wipe speed": "80%"
+          },
+          "Slicing": {
+            "Slice gap closing radius": "0.049 mm"
+          },
+          "Top/bottom shells": {
+            "Interface shells": "0"
+          },
+          "Wall generator": {
+            "Minimum feature size": "25%",
+            "Minimum wall width": "85%",
+            "Wall distribution count": "1",
+            "Wall generator": "arachne",
+            "Wall transition length": "100%",
+            "Wall transitioning filter margin": "25%",
+            "Wall transitioning threshold angle": "10 °"
+          }
+        },
+        "Speed": {
+          "Acceleration": {
+            "Enable accel_to_decel": "0",
+            "Initial layer (initial_layer_acceleration)": "500 mm/s²",
+            "Initial layer travel": "6000 mm/s²",
+            "Inner wall (inner_wall_acceleration)": "0 mm/s²",
+            "Normal printing": "8000 mm/s²",
+            "Outer wall (outer_wall_acceleration)": "5000 mm/s²",
+            "Short travel": "250 mm/s²",
+            "Sparse infill (sparse_infill_acceleration)": "100%",
+            "Top surface (top_surface_acceleration)": "2000 mm/s²",
+            "Travel (travel_acceleration)": "10000 mm/s²",
+            "accel_to_decel": "50%"
+          },
+          "Initial layer speed": {
+            "Initial layer (initial_layer_speed)": "50 mm/s",
+            "Initial layer infill": "105 mm/s"
+          },
+          "Jerk(XY)": {
+            "Default (default_jerk)": "0 mm/s",
+            "First layer": "9 mm/s",
+            "Infill": "9 mm/s",
+            "Inner wall (inner_wall_jerk)": "9 mm/s",
+            "Outer wall (outer_wall_jerk)": "9 mm/s",
+            "Top surface (top_surface_jerk)": "9 mm/s",
+            "Travel (travel_jerk)": "9 mm/s"
+          },
+          "Other layers speed": {
+            "Acceleration at ending height": "100000 mm/s²",
+            "Acceleration at starting height": "100000 mm/s²",
+            "Bridge": "50 mm/s",
+            "Ending height": "400 mm",
+            "Gap infill": "250 mm/s",
+            "Inner wall (inner_wall_speed)": "300 mm/s",
+            "Internal solid infill (internal_solid_infill_speed)": "300 mm/s",
+            "Outer wall (outer_wall_speed)": "200 mm/s",
+            "Overhang speed": {
+              "10%": "0 mm/s",
+              "100%": "10 mm/s",
+              "25%": "50 mm/s",
+              "50%": "30 mm/s",
+              "75%": "10 mm/s"
+            },
+            "Slow down by height": "0",
+            "Slow down for overhangs": "1",
+            "Small perimeter threshold": "0 mm",
+            "Small perimeters": "50%",
+            "Sparse infill (sparse_infill_speed)": "600 mm/s",
+            "Speed at ending height": "1000 mm/s",
+            "Speed at starting height": "1000 mm/s",
+            "Starting height": "0 mm",
+            "Support (support_speed)": "150 mm/s",
+            "Support interface": "80 mm/s",
+            "Top surface (top_surface_speed)": "200 mm/s",
+            "Vertical shell speed": "80%"
+          },
+          "Travel speed": {
+            "Travel (travel_speed)": "1000 mm/s"
+          }
+        },
+        "Strength": {
+          "Advanced": {
+            "Bridge direction": "0 °",
+            "Detect floating vertical shells": "1",
+            "Detect narrow internal solid infill": "1",
+            "Ensure vertical shell thickness": "enabled",
+            "Infill combination": "1",
+            "Infill direction": "45 °",
+            "Infill/Wall overlap": "15%",
+            "Internal bridge support thickness": "0.8 mm",
+            "Minimum sparse infill threshold": "15 mm²",
+            "Monotonic line travel extend": "45.0 %"
+          },
+          "Sparse infill": {
+            "Fill multiline": "1",
+            "Filter out tiny gaps": "0 mm",
+            "Infill lock depth": "1 mm",
+            "Infill rotate step": "0 °",
+            "Infill shift step": "0.4 mm",
+            "Lattice angle 1": "-45 °",
+            "Lattice angle 2": "45 °",
+            "Length of sparse infill anchor": "400%",
+            "Maximum length of sparse infill anchor": "20",
+            "Skeleton infill density": "20%",
+            "Skeleton infill pattern": "zigzag",
+            "Skeleton line width": "0.45 mm",
+            "Skin infill density": "20%",
+            "Skin infill depth": "2 mm",
+            "Skin infill pattern": "crosszag",
+            "Skin line width": "0.45 mm",
+            "Sparse infill density": "20%",
+            "Sparse infill pattern": "zigzag",
+            "Symmetric infill y axis": "0"
+          },
+          "Top/bottom shells": {
+            "Bottom paint penetration layers": "3",
+            "Bottom shell layers": "3",
+            "Bottom shell thickness": "0 mm",
+            "Bottom surface density": "100 %",
+            "Bottom surface pattern": "monotonic",
+            "Internal solid infill pattern": "zig-zag",
+            "Top paint penetration layers": "5",
+            "Top shell thickness": "1 mm",
+            "Top solid layers": "5",
+            "Top surface density": "100 %",
+            "Top surface pattern": "monotonicline",
+            "Using infill instead of top and bottom surfaces": "0"
+          },
+          "Walls": {
+            "Detect thin wall": "0",
+            "Wall loops": "3"
+          }
+        },
+        "Support": {
+          "Advanced": {
+            "Base pattern": "default",
+            "Base pattern spacing": "2.5 mm",
+            "Bottom Z distance": "0.2 mm",
+            "Bottom interface layers": "2 layers",
+            "Bottom interface spacing": "0.5 mm",
+            "Don't support bridges": "0",
+            "Independent support layer height": "1",
+            "Initial layer density": "90%",
+            "Initial layer expansion": "-1 mm",
+            "Interface pattern": "auto",
+            "Interface use loop pattern": "0",
+            "Max bridge length": "0 mm",
+            "Normal Support expansion": "0 mm",
+            "Pattern angle": "0 °",
+            "Support wall loops": "-1",
+            "Support/object first layer gap": "0.2 mm",
+            "Support/object xy distance": "0.35 mm",
+            "Top Z distance": "0.2 mm",
+            "Top interface layers": "2 layers",
+            "Top interface spacing": "0.5 mm"
+          },
+          "Bed adhesion": {
+            "Brim type": "auto_brim",
+            "Brim width (brim_width)": "5 mm",
+            "Brim-object gap": "0.1 mm"
+          },
+          "Filament for Supports": {
+            "Avoid interface filament for base": "1",
+            "Support/raft base": "0",
+            "Support/raft interface": "0"
+          },
+          "Raft": {
+            "Raft contact Z distance": "0.1 mm",
+            "Raft layers": "0 layers"
+          },
+          "Raft expansion": "1.5 mm",
+          "Support": {
+            "Enable support": "0",
+            "Enforce support for the first n layers": "0 layers",
+            "On build plate only": "0",
+            "Remove small overhangs": "1",
+            "Style": "default",
+            "Support critical regions only": "0",
+            "Threshold angle": "30 °",
+            "Type (support_type)": "tree(auto)"
+          },
+          "Support ironing": {
+            "Enable ironing support interface": "0",
+            "Support ironing direction": "0 °",
+            "Support ironing flow": "10%",
+            "Support ironing inset": "0.0 mm",
+            "Support ironing line spacing": "0.15 mm",
+            "Support ironing pattern": "zig-zag",
+            "Support ironing speed": "30 mm/s"
+          },
+          "Tree Support": {
+            "Branch angle": "45 °",
+            "Branch diameter": "2 mm",
+            "Branch diameter angle": "5 °",
+            "Branch distance": "5 mm"
+          }
+        }
+      }
+    }
+  }
+}

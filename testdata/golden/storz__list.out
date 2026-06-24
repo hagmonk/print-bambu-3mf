@@ -1,0 +1,27 @@
+
+storz.3mf:
+----------------------------------------
+
+Plates:
+  Plate 1:
+    - storz pipe AP2.step
+  Plate 2:
+    - storz pipe 3 inch.step
+  Plate 3:
+    - xTool AP2 → 3in outlet.step
+  Plate 4:
+    - 3in to window.step
+  Plate 5:
+    - hose bracket.step
+
+Objects:
+  [0] hose bracket.step
+      ID: 10, Extruder: 1
+  [1] storz pipe AP2.step
+      ID: 6, Extruder: 2
+  [2] storz pipe 3 inch.step
+      ID: 2, Extruder: 3
+  [3] 3in to window.step
+      ID: 8, Extruder: 2
+  [4] xTool AP2 → 3in outlet.step
+      ID: 4, Extruder: 2

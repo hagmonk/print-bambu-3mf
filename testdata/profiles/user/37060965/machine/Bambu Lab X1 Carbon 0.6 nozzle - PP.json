@@ -1,0 +1,13 @@
+{
+    "from": "User",
+    "inherits": "Bambu Lab X1 Carbon 0.6 nozzle",
+    "name": "Bambu Lab X1 Carbon 0.6 nozzle - PP",
+    "printer_extruder_id": [
+        "1"
+    ],
+    "printer_extruder_variant": [
+        "Direct Drive Standard"
+    ],
+    "printer_settings_id": "Bambu Lab X1 Carbon 0.6 nozzle - PP",
+    "version": "2.2.0.3"
+}
